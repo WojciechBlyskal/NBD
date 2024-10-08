@@ -1,20 +1,30 @@
 package org.example;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.example.exception.GuestException;
+import org.example.exception.RoomException;
 
-public class Room {
-    int number;
-    int floor;
-    double surface;
-    boolean balcony;
-    double price;
+public abstract class Room {
+    private int number;
+    private int floor;
+    private double surface;
+    private boolean balcony;
+    private double price;
 
     public Room(int number, int floor, double surface, boolean balcony, double price) {
-        this.number = number;
-        this.floor = floor;
-        this.surface = surface;
-        this.balcony = balcony;
-        this.price = price;
+        if (number < 1) {
+            throw new RoomException("Room number cannot be lower than 1.");
+        } else if (surface <= 0) {
+            throw new RoomException("Room surface cannot be 0 or lower.");
+        } else if (price < 0) {
+            throw new RoomException("Room price cannot be lower than 0.");
+        } else {
+            this.number = number;
+            this.floor = floor;
+            this.surface = surface;
+            this.balcony = balcony;
+            this.price = price;
+        }
     }
 
     public int getNumber() {
@@ -58,13 +68,10 @@ public class Room {
     }
 
     public String getInfo() {
-        return new ToStringBuilder(this)
-                .append("number", number)
-                .append("floor", floor)
-                .append("surface", surface)
-                .append("balcony", balcony)
-                .append("price", price)
-                .toString();
+        return "Room number " + String.valueOf(getNumber()) + " on floor " + String.valueOf(getFloor())
+                + (isBalcony()?" with balcony.":" without balcony.") + " It has the surface of "
+                + String.valueOf(getSurface()) + ". Price per day equals " + String.valueOf(getPrice()) + ".";
+
     }
 }
 

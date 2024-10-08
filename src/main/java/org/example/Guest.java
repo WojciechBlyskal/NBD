@@ -1,17 +1,29 @@
 package org.example;
 
+import org.example.exception.GuestException;
+
 public class Guest
 {
-    String name;
-    String lastName;
-    String ID;
-    String phoneNumber;
+    private String name;
+    private String lastName;
+    private String ID;
+    private String phoneNumber;
 
-    public Guest(String name, String lastName, String ID, String phoneNumber) {
-        this.name = name;
-        this.lastName = lastName;
-        this.ID = ID;
-        this.phoneNumber = phoneNumber;
+    public Guest(String name, String lastName, String ID, String phoneNumber) throws GuestException {
+        if (name.isBlank()) {
+            throw new GuestException("Name cannot be empty.");
+        } else if (lastName.isBlank()) {
+            throw new GuestException("Last name cannot be empty.");
+        } else if (ID.isBlank()) {
+            throw new GuestException("ID cannot be empty.");
+        } else if (phoneNumber.isBlank()) {
+            throw new GuestException("Phone number cannot be empty.");
+        } else {
+            this.name = name;
+            this.lastName = lastName;
+            this.ID = ID;
+            this.phoneNumber = phoneNumber;
+        }
     }
 
     public String getName() {
@@ -47,11 +59,7 @@ public class Guest
     }
 
     public String getInfo() {
-        return new org.apache.commons.lang3.builder.ToStringBuilder(this)
-                .append("name", name)
-                .append("lastName", lastName)
-                .append("ID", ID)
-                .append("phoneNumber", phoneNumber)
-                .toString();
+        return "First name: " + getName() + ". Last name is: " + getLastName() + ". ID is: " + getID()
+                + "Phone number is: " + getPhoneNumber() + ".";
     }
 }

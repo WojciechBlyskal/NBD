@@ -1,7 +1,7 @@
 package org.example;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import java.util.function.Predicate;
 import java.util.ArrayList;
 
 public class Repository <T> {
@@ -31,6 +31,23 @@ public class Repository <T> {
         return new ToStringBuilder(this)
                 .append("collection", collection)
                 .toString();
+    }
+
+    public ArrayList<T> findBy(Predicate<T> predicate) {
+        ArrayList<T> found = new ArrayList<>();
+        found.clear();
+        for (int i = 0; i < size(); i++) {
+            T obj = get(i);
+            if (predicate.test(obj)) {
+                found.add(obj);
+            }
+        }
+        return found;
+    }
+
+    public ArrayList<T> findAll() {
+        Predicate<T> temp = obj -> true;
+        return findBy(temp);
     }
 
     public T get (int index) {

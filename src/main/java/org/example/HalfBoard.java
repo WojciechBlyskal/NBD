@@ -1,10 +1,10 @@
 package org.example;
 
 public class HalfBoard extends Catering {
-    String getCateringInfo() {
-        return "HalfBoard";
+    public String getCateringInfo() {
+        return "Catering:HalfBoard. Catering cost per day: " + String.valueOf(getSupplementPerDay());
     }
-    double getSupplementPerDay() {
+    public double getSupplementPerDay() {
         return 80;
     }
 }

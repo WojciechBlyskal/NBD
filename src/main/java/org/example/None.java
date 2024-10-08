@@ -1,10 +1,10 @@
 package org.example;
 
 public class None extends Catering {
-    String getCateringInfo() {
-        return "None";
+     public String getCateringInfo() {
+        return "Catering:None. Catering cost per day: " + String.valueOf(getSupplementPerDay());
     }
-    double getSupplementPerDay() {
+     public double getSupplementPerDay() {
         return 0;
     }
 }
