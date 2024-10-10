@@ -2,7 +2,7 @@ package org.example;
 
 import org.example.exception.RoomException;
 
-public abstract class MultipleRoom extends Room {
+public class MultipleRoom extends Room {
     private int forHowManyPeople;
     MultipleRoom(int number, int floor, double surface, boolean balcony, double price, int forHowManyPeople) {
         super(number, floor, surface, balcony, price);

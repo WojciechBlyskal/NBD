@@ -4,20 +4,20 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.function.Predicate;
 import java.util.ArrayList;
 
-public class Repository <T> {
-    ArrayList<T> collection;
+public class RoomRepository<Room> {
+    ArrayList<Room> collection;
 
-    public Repository() {
+    public RoomRepository() {
         this.collection = new ArrayList<>();
     }
 
-    public void add(T obj) {
+    public void add(Room obj) {
         if (obj != null) {
             collection.add(obj);
         }
     }
 
-    public void remove(T obj) {
+    public void remove(Room obj) {
         if (obj != null) {
             collection.remove(obj);
         }
@@ -33,11 +33,11 @@ public class Repository <T> {
                 .toString();
     }
 
-    public ArrayList<T> findBy(Predicate<T> predicate) {
-        ArrayList<T> found = new ArrayList<>();
+    public ArrayList<Room> findBy(Predicate<Room> predicate) {
+        ArrayList<Room> found = new ArrayList<>();
         found.clear();
         for (int i = 0; i < size(); i++) {
-            T obj = get(i);
+            Room obj = get(i);
             if (predicate.test(obj)) {
                 found.add(obj);
             }
@@ -45,12 +45,12 @@ public class Repository <T> {
         return found;
     }
 
-    public ArrayList<T> findAll() {
-        Predicate<T> temp = obj -> true;
+    public ArrayList<Room> findAll() {
+        Predicate<Room> temp = obj -> true;
         return findBy(temp);
     }
 
-    public T get (int index) {
+    public Room get (int index) {
         return this.collection.get(index);
     }
 }
