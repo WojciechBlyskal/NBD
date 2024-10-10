@@ -1,15 +1,32 @@
 package org.example;
 
 import org.example.exception.GuestException;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Version;
+import jakarta.persistence.Table;
 
-public class Guest
-{
+import javax.annotation.processing.SupportedSourceVersion;
+
+@Entity
+@Table(name = "GOSC")
+public class Guest {
+    @Column
     private String name;
+    @Column
     private String lastName;
+    @Id
     private String ID;
+    @Column
     private String phoneNumber;
+    @Version
+    private long version;
 
-    public Guest(String name, String lastName, String ID, String phoneNumber) throws GuestException {
+    public Guest() {
+    }
+
+    public Guest(String name, String lastName, String ID, String phoneNumber, long version) throws GuestException {
         if (name.isBlank()) {
             throw new GuestException("Name cannot be empty.");
         } else if (lastName.isBlank()) {
