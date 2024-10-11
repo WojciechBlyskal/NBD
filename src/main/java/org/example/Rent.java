@@ -2,37 +2,53 @@ package org.example;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
 import org.example.exception.GuestException;
 import org.example.exception.RentException;
 
+@Entity
+@Table(name = "rents")
 public class Rent {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long ID;
+    @Column
     private String rentNumber;
+    @Column
     private LocalDateTime startTime;
+    @Column
     private LocalDateTime endTime;
+    @Column
     private double cost;
+    @ManyToOne
+    @JoinColumn(name = "guest_id")
     private Guest guest;
+    @ManyToOne
+    @JoinColumn(name = "room_id")
     private Room room;
-    private Catering catering;
 
-    public Rent(String rentNumber, LocalDateTime startTime, Catering catering, Room room, Guest guest) {
+
+    public Rent(long ID, String rentNumber, LocalDateTime startTime, Room room, Guest guest) {
         if (rentNumber.isBlank()) {
             throw new RentException("Rent number cannot be empty.");
         } else if (startTime == null) {
             throw new RentException(" Improper start time.");
-        } else if (catering.equals(null)) {
-            throw new RentException("Invalid catering.");
         } else if (room.equals(null)) {
             throw new RentException("Invalid room.");
         } else if (guest.equals(null)) {
             throw new RentException("Invalid guest.");
         } else {
+            this.ID = ID;
             this.rentNumber = rentNumber;
             this.startTime = startTime;
-            this.catering = catering;
             this.room = room;
             this.guest = guest;
         }
+    }
+
+    public Rent() {
+
     }
 
     public String getRentNumber() {
@@ -59,19 +75,6 @@ public class Rent {
         return room;
     }
 
-    public Catering getCatering() {
-        return catering;
-    }
-
-    public void changeCatering(Catering new_catering) {
-        if (new_catering.equals(null)) {
-            throw new RentException("Catering cannot be null");
-        }
-        else {
-            catering = new_catering;
-        }
-    }
-
     public int getRentDays() {
         boolean isCanceled = false;
         boolean isFinished = false;
@@ -93,8 +96,16 @@ public class Rent {
     }
 
     public String getInfo() {
-        return "Your rent id number is " + getRentNumber()+".The rent started on " + String.valueOf(getStartTime())
-                + "Here's some info about your room: " + getRoom().getInfo() + "\nInfo about the catering: "
-            + catering.getCateringInfo() + "\nInfo about the guests: " + getGuest().getInfo();
+        return "Your rent id number is " + getRentNumber() + ".The rent started on " + String.valueOf(getStartTime())
+                + "Here's some info about your room: " + getRoom().getInfo() + "\nInfo about the guests: " + getGuest().getInfo();
     }
+
+    public long getID() {
+        return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
+    }
+
 }

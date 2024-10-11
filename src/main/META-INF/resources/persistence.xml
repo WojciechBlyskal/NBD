@@ -3,7 +3,15 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-  <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="hotelPersistenceUnit" transaction-type="RESOURCE_LOCAL">
+
+    <class>org.example.Guest</class>
+    <class>org.example.Room</class>
+    <class>org.example.Rent</class>
+    <class>org.example.Studio</class>
+    <class>org.example.MicroSuite</class>
+    <class>org.example.MultipleRoom</class>
+
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432"/>
@@ -12,6 +20,7 @@
       <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.connection.isolation" value="2"/> <!-- READ_COMMITTED -->
     </properties>
   </persistence-unit>
 </persistence>

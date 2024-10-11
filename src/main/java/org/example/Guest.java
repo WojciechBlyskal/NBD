@@ -40,6 +40,7 @@ public class Guest {
             this.lastName = lastName;
             this.ID = ID;
             this.phoneNumber = phoneNumber;
+            this.version = version;
         }
     }
 

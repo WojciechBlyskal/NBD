@@ -1,17 +1,32 @@
 package org.example;
 
+import jakarta.persistence.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.example.exception.GuestException;
 import org.example.exception.RoomException;
+import org.hibernate.annotations.DialectOverride;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)  // Strategia JOINED
+@Table(name = "rooms")
 public abstract class Room {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long ID;
+    @Column
     private int number;
+    @Column
     private int floor;
+    @Column
     private double surface;
+    @Column
     private boolean balcony;
+    @Column
     private double price;
+    @Version
+    private long version;
 
-    public Room(int number, int floor, double surface, boolean balcony, double price) {
+    public Room(long ID, int number, int floor, double surface, boolean balcony, double price, long version) {
         if (number < 1) {
             throw new RoomException("Room number cannot be lower than 1.");
         } else if (surface <= 0) {
@@ -19,12 +34,18 @@ public abstract class Room {
         } else if (price < 0) {
             throw new RoomException("Room price cannot be lower than 0.");
         } else {
+            this.ID = ID;
             this.number = number;
             this.floor = floor;
             this.surface = surface;
             this.balcony = balcony;
             this.price = price;
+            this.version = version;
         }
+    }
+
+    public Room() {
+
     }
 
     public int getNumber() {
@@ -72,6 +93,14 @@ public abstract class Room {
                 + (isBalcony()?" with balcony.":" without balcony.") + " It has the surface of "
                 + String.valueOf(getSurface()) + ". Price per day equals " + String.valueOf(getPrice()) + ".";
 
+    }
+
+    public long getID() {
+        return ID;
+    }
+
+    public void setID(long ID) {
+        this.ID = ID;
     }
 }
 
