@@ -5,21 +5,34 @@ public class Main {
         public static void main(String[] args) {
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("hotelPersistenceUnit");
             EntityManager em = emf.createEntityManager();
-            EntityTransaction transaction = em.getTransaction();
+//            EntityTransaction transaction = em.getTransaction();
 
-            try {
-                transaction.begin();
-                // operacje na bazie danych
-                transaction.commit();
-            } catch (Exception e) {
-                if (transaction.isActive()) {
-                    transaction.rollback();
-                }
-                e.printStackTrace();
-            } finally {
-                em.close();
-                emf.close();
-            }
+
+            Guest guest = new Guest("Jan", "Kowalski", 1, "123456789", 0);
+            GuestRepository guestRepository = new GuestRepository();
+            guestRepository.addGuest(guest, em);
+            guestRepository.getAllGuests(em);
+
+
+
+
+
+
+
+
+//            try {
+//                transaction.begin();
+//                // operacje na bazie danych
+//                transaction.commit();
+//            } catch (Exception e) {
+//                if (transaction.isActive()) {
+//                    transaction.rollback();
+//                }
+//                e.printStackTrace();
+//            } finally {
+//                em.close();
+//                emf.close();
+//            }
 
 
 

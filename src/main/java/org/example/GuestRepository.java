@@ -1,57 +1,55 @@
 package org.example;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
+import jakarta.persistence.*;
 
-public class GuestRepository<Guest> {
-    ArrayList<Guest> collection;
 
-    public GuestRepository() {
-        this.collection = new ArrayList<>();
+public class GuestRepository {
+
+    public void addGuest(Guest guest, EntityManager em) {
+            String phoneNumber = guest.getPhoneNumber();
+            List<Guest> guestByPhoneNumber = this.getGuestByPhoneNumber(em, phoneNumber);
+            if (guestByPhoneNumber.isEmpty()) {
+                em.getTransaction().begin();
+                em.persist(guest);
+                em.getTransaction().commit();
+//                em.close();
+            }
+        // MOŻE DODAĆ TRY CATCH
+
     }
 
-    public void add(Guest obj) {
-        if (obj != null) {
-            collection.add(obj);
-        }
-    }
 
-    public void remove(Guest obj) {
-        if (obj != null) {
-            collection.remove(obj);
-        }
-    }
-
-    public int size() {
-        return collection.size();
-    }
-
-    public String report() {
-        return new ToStringBuilder(this)
-                .append("collection", collection)
-                .toString();
-    }
-
-    public ArrayList<Guest> findBy(Predicate<Guest> predicate) {
-        ArrayList<Guest> found = new ArrayList<>();
-        found.clear();
-        for (int i = 0; i < size(); i++) {
-            Guest obj = get(i);
-            if (predicate.test(obj)) {
-                found.add(obj);
+    public void removeGuest(Guest guest, EntityManager em) {
+        try {
+            em.getTransaction().begin();
+            em.remove(guest);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
         }
-        return found;
     }
 
-    public ArrayList<Guest> findAll() {
-        Predicate<Guest> temp = obj -> true;
-        return findBy(temp);
+    public List<Guest> getGuestByPhoneNumber(EntityManager em, String phoneNumber) {
+        String selectQuery = "SELECT g FROM Guest g where g.phoneNumber =:phoneNumber";
+        TypedQuery<Guest> query = em.createQuery(selectQuery, Guest.class);
+        query.setParameter("phoneNumber", phoneNumber);
+        return query.getResultList();
     }
 
-    public Guest get (int index) {
-        return this.collection.get(index);
+    public List<Guest> getAllGuests(EntityManager em) {
+        String selectQuery = "SELECT g FROM Guest g";
+        em.getTransaction().begin();
+        Query query = em.createQuery(selectQuery);
+        List<Guest> guests = query.getResultList();
+        em.getTransaction().commit();
+        return guests;
     }
+
+
 }

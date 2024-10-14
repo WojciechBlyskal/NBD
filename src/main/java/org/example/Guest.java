@@ -8,16 +8,19 @@ import jakarta.persistence.Version;
 import jakarta.persistence.Table;
 
 import javax.annotation.processing.SupportedSourceVersion;
+//import lombok.Getter;
+//import lombok.Setter;
 
 @Entity
-@Table(name = "GOSC")
+@Table(name = "guests")
 public class Guest {
     @Column
+//    @Getter
     private String name;
     @Column
     private String lastName;
     @Id
-    private String ID;
+    private long ID;
     @Column
     private String phoneNumber;
     @Version
@@ -26,13 +29,13 @@ public class Guest {
     public Guest() {
     }
 
-    public Guest(String name, String lastName, String ID, String phoneNumber, long version) throws GuestException {
+    public Guest(String name, String lastName, long ID, String phoneNumber, long version) throws GuestException {
         if (name.isBlank()) {
             throw new GuestException("Name cannot be empty.");
         } else if (lastName.isBlank()) {
             throw new GuestException("Last name cannot be empty.");
-        } else if (ID.isBlank()) {
-            throw new GuestException("ID cannot be empty.");
+//        } else if (ID.isBlank()) {
+//            throw new GuestException("ID cannot be empty.");
         } else if (phoneNumber.isBlank()) {
             throw new GuestException("Phone number cannot be empty.");
         } else {
@@ -60,11 +63,11 @@ public class Guest {
         this.lastName = lastName;
     }
 
-    public String getID() {
+    public long getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(long ID) {
         this.ID = ID;
     }
 
