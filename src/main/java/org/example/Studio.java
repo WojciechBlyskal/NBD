@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 @Table(name = "studios")
 public class Studio extends Room {
 
-    Studio(int number, int floor, double surface, boolean balcony, double price, long version) {
-        super(number, floor, surface, balcony, price, version);
+    Studio(int number, int floor, double surface, boolean balcony, double price) {
+        super(number, floor, surface, balcony, price);
     }
 
     public Studio() {

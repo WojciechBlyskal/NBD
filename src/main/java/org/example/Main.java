@@ -8,7 +8,7 @@ public class Main {
 //            EntityTransaction transaction = em.getTransaction();
 
 
-            Guest guest = new Guest("Jan", "Kowalski", 1, "123456789", 0);
+            Guest guest = new Guest("Jan", "Kowalski", "123456789");
             GuestRepository guestRepository = new GuestRepository();
             guestRepository.addGuest(guest, em);
             guestRepository.getAllGuests(em);
