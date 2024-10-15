@@ -10,13 +10,13 @@ import jakarta.persistence.*;
 public class GuestRepository {
 
     public void addGuest(Guest guest, EntityManager em) {
-            String lastName = guest.getLastName();
-            List<Guest> guestByLastName = this.getGuestByLastName(em, lastName);
-//            if (guestByLastName.isEmpty()) { ani lastName ani phoneNumber nie sa unikalne wiec czemu mam wykluczac gdy ise pokrywaja?
-//                em.getTransaction().begin();
-                em.persist(guest);
-//                em.getTransaction().commit();
-//                em.close();
+//            String lastName = guest.getLastName();
+//            List<Guest> guestByLastName = this.getGuestByLastName(em, lastName);
+//            if (guestByLastName.isEmpty()) { ani lastName ani phoneNumber nie sa unikalne wiec czemu mam wykluczac gdy ise pokrywaja?/
+        em.getTransaction().begin();
+        em.persist(guest);
+        em.getTransaction().commit();
+        em.close();
 //            }
         // MOŻE DODAĆ TRY CATCH
 

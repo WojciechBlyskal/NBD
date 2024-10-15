@@ -63,7 +63,9 @@ public class Rent {
     }
 
     public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+        if (endTime == null) {
+            this.endTime = endTime;
+        }
     }
 
     public double getCost() {

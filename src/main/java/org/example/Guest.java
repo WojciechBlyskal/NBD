@@ -26,7 +26,7 @@ public class Guest {
     public Guest() {
     }
 
-    public Guest(String name, String lastName, String phoneNumber, long version) throws GuestException {
+    public Guest(String name, String lastName, String phoneNumber) throws GuestException {
         if (name.isBlank()) {
             throw new GuestException("Name cannot be empty.");
         } else if (lastName.isBlank()) {
@@ -37,7 +37,6 @@ public class Guest {
             this.name = name;
             this.lastName = lastName;
             this.phoneNumber = phoneNumber;
-            this.version = version;
         }
     }
 

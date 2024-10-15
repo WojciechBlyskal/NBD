@@ -26,7 +26,7 @@ public abstract class Room {
     @Version
     private long version;
 
-    public Room(int number, int floor, double surface, boolean balcony, double price, long version) {
+    public Room(int number, int floor, double surface, boolean balcony, double price) {
         if (number < 1) {
             throw new RoomException("Room number cannot be lower than 1.");
         } else if (surface <= 0) {
@@ -39,7 +39,6 @@ public abstract class Room {
             this.surface = surface;
             this.balcony = balcony;
             this.price = price;
-            this.version = version;
         }
     }
 
