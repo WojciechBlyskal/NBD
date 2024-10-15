@@ -96,5 +96,18 @@ public abstract class Room {
     public long getId() {
         return Id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true; // Reference equality check
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return Id == room.Id
+                && number == room.number
+                && floor == room.floor
+                && Double.compare(room.surface, surface) == 0
+                && balcony == room.balcony
+                && Double.compare(room.price, price) == 0;
+    }
 }
 

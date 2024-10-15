@@ -72,4 +72,15 @@ public class Guest {
         return "First name: " + getName() + ". Last name is: " + getLastName() + ". ID is: " + getId()
                 + "Phone number is: " + getPhoneNumber() + ".";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Guest guest = (Guest) o;
+        return Id == guest.Id
+                && name.equals(guest.name)
+                && lastName.equals(guest.lastName)
+                && phoneNumber.equals(guest.phoneNumber);
+    }
 }

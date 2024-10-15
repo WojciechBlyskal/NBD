@@ -27,6 +27,8 @@ public class Rent {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
+    @Version
+    private long version;
 
 
     public Rent(String rentNumber, LocalDateTime startTime, Room room, Guest guest) {
@@ -63,7 +65,7 @@ public class Rent {
     }
 
     public void setEndTime(LocalDateTime endTime) {
-        if (endTime == null) {
+        if (endTime != null && this.endTime == null && endTime.isAfter(this.startTime)) {
             this.endTime = endTime;
         }
     }
@@ -107,5 +109,13 @@ public class Rent {
 
     public long getId() {
         return Id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rent rent = (Rent) o;
+        return rentNumber.equals(rent.rentNumber) && room.equals(rent.room);
     }
 }

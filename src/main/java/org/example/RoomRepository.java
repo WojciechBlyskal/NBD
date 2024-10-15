@@ -15,7 +15,6 @@ public class RoomRepository {
             em.getTransaction().begin();
             em.persist(room);
             em.getTransaction().commit();
-            em.close();
         // MOŻE DODAĆ TRY CATCH I JAKIES WARUNKI
 
     }
@@ -38,6 +37,14 @@ public class RoomRepository {
         String selectQuery = "SELECT r FROM Room r where r.number =:number";
         TypedQuery<Room> query = em.createQuery(selectQuery, Room.class);
         query.setParameter("number", number);
+        query.setLockMode(LockModeType.OPTIMISTIC);
+        return query.getResultList();
+    }
+
+    public List<Room> getRoomById(EntityManager em, long Id) {
+        String selectQuery = "SELECT g FROM Room g where g.Id =:Id";
+        TypedQuery<Room> query = em.createQuery(selectQuery, Room.class);
+        query.setParameter("Id", Id);
         query.setLockMode(LockModeType.OPTIMISTIC);
         return query.getResultList();
     }
