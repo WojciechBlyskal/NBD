@@ -21,22 +21,24 @@ public class RoomRepository {
     }
 
 
-    public void removeRoom(Room room, EntityManager em) {
+    /*public void removeRoom(Room room, EntityManager em) {
         try {
+            Room managedRoom = em.find(Room.class, room.getId(), LockModeType.PESSIMISTIC_WRITE);
             em.getTransaction().begin();
-            em.remove(room);
+            em.remove(managedRoom);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
         }
-    }
+    }*/
 
     public List<Room> getRoomByNumber(EntityManager em, int number) {
         String selectQuery = "SELECT r FROM Room r where r.number =:number";
         TypedQuery<Room> query = em.createQuery(selectQuery, Room.class);
         query.setParameter("number", number);
+        query.setLockMode(LockModeType.OPTIMISTIC);
         return query.getResultList();
     }
 
@@ -44,6 +46,7 @@ public class RoomRepository {
         String selectQuery = "SELECT r FROM Room r";
         em.getTransaction().begin();
         Query query = em.createQuery(selectQuery);
+        query.setLockMode(LockModeType.OPTIMISTIC);
         List<Room> rooms = query.getResultList();
         em.getTransaction().commit();
         return rooms;

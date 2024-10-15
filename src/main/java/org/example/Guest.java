@@ -1,11 +1,7 @@
 package org.example;
 
+import jakarta.persistence.*;
 import org.example.exception.GuestException;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Version;
-import jakarta.persistence.Table;
 
 import javax.annotation.processing.SupportedSourceVersion;
 //import lombok.Getter;
@@ -20,7 +16,8 @@ public class Guest {
     @Column
     private String lastName;
     @Id
-    private long ID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long Id;
     @Column
     private String phoneNumber;
     @Version
@@ -29,19 +26,16 @@ public class Guest {
     public Guest() {
     }
 
-    public Guest(String name, String lastName, long ID, String phoneNumber, long version) throws GuestException {
+    public Guest(String name, String lastName, String phoneNumber, long version) throws GuestException {
         if (name.isBlank()) {
             throw new GuestException("Name cannot be empty.");
         } else if (lastName.isBlank()) {
             throw new GuestException("Last name cannot be empty.");
-//        } else if (ID.isBlank()) {
-//            throw new GuestException("ID cannot be empty.");
         } else if (phoneNumber.isBlank()) {
             throw new GuestException("Phone number cannot be empty.");
         } else {
             this.name = name;
             this.lastName = lastName;
-            this.ID = ID;
             this.phoneNumber = phoneNumber;
             this.version = version;
         }
@@ -63,12 +57,8 @@ public class Guest {
         this.lastName = lastName;
     }
 
-    public long getID() {
-        return ID;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
+    public long getId() {
+        return Id;
     }
 
     public String getPhoneNumber() {
@@ -80,7 +70,7 @@ public class Guest {
     }
 
     public String getInfo() {
-        return "First name: " + getName() + ". Last name is: " + getLastName() + ". ID is: " + getID()
+        return "First name: " + getName() + ". Last name is: " + getLastName() + ". ID is: " + getId()
                 + "Phone number is: " + getPhoneNumber() + ".";
     }
 }

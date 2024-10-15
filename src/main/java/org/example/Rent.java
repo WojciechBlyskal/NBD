@@ -12,7 +12,7 @@ import org.example.exception.RentException;
 public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long ID;
+    private long Id;
     @Column
     private String rentNumber;
     @Column
@@ -29,7 +29,7 @@ public class Rent {
     private Room room;
 
 
-    public Rent(long ID, String rentNumber, LocalDateTime startTime, Room room, Guest guest) {
+    public Rent(String rentNumber, LocalDateTime startTime, Room room, Guest guest) {
         if (rentNumber.isBlank()) {
             throw new RentException("Rent number cannot be empty.");
         } else if (startTime == null) {
@@ -39,7 +39,6 @@ public class Rent {
         } else if (guest.equals(null)) {
             throw new RentException("Invalid guest.");
         } else {
-            this.ID = ID;
             this.rentNumber = rentNumber;
             this.startTime = startTime;
             this.room = room;
@@ -61,6 +60,10 @@ public class Rent {
 
     public LocalDateTime getEndTime() {
         return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public double getCost() {
@@ -100,12 +103,7 @@ public class Rent {
                 + "Here's some info about your room: " + getRoom().getInfo() + "\nInfo about the guests: " + getGuest().getInfo();
     }
 
-    public long getID() {
-        return ID;
+    public long getId() {
+        return Id;
     }
-
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
 }

@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 
 public class MicroSuite extends Room {
 
-    MicroSuite(long ID, int number, int floor, double surface, boolean balcony, double price, long version) {
-        super(ID, number, floor, surface, balcony, price, version);
+    MicroSuite(int number, int floor, double surface, boolean balcony, double price, long version) {
+        super(number, floor, surface, balcony, price, version);
     }
 
     public MicroSuite() {

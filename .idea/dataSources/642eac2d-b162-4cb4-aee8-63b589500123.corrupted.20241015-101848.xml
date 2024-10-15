@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="nbddb@localhost">
-  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.49">
     <root id="1">
       <DateStyle>mdy</DateStyle>
       <Grants>1||-9223372036854775808|c|G
@@ -4835,7 +4835,8 @@ true posixrules
       <Comment>standard public schema</Comment>
       <Current>1</Current>
       <IntrospectionStateNumber>835</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-10-14.23:05:00</LastIntrospectionLocalTimestamp>
+      <IntrospectionTimestamp>2024-10-15.01:04:59.958</IntrospectionTimestamp>
+      <LocalIntrospectionTimestamp>2024-10-14.23:05:00</LocalIntrospectionTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>532</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>

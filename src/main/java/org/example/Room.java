@@ -12,7 +12,7 @@ import org.hibernate.annotations.DialectOverride;
 public abstract class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long ID;
+    private long Id;
     @Column
     private int number;
     @Column
@@ -26,7 +26,7 @@ public abstract class Room {
     @Version
     private long version;
 
-    public Room(long ID, int number, int floor, double surface, boolean balcony, double price, long version) {
+    public Room(int number, int floor, double surface, boolean balcony, double price, long version) {
         if (number < 1) {
             throw new RoomException("Room number cannot be lower than 1.");
         } else if (surface <= 0) {
@@ -34,7 +34,6 @@ public abstract class Room {
         } else if (price < 0) {
             throw new RoomException("Room price cannot be lower than 0.");
         } else {
-            this.ID = ID;
             this.number = number;
             this.floor = floor;
             this.surface = surface;
@@ -95,12 +94,8 @@ public abstract class Room {
 
     }
 
-    public long getID() {
-        return ID;
-    }
-
-    public void setID(long ID) {
-        this.ID = ID;
+    public long getId() {
+        return Id;
     }
 }
 
