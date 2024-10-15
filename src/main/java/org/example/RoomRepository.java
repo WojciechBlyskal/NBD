@@ -35,18 +35,24 @@ public class RoomRepository {
 
     public List<Room> getRoomByNumber(EntityManager em, int number) {
         String selectQuery = "SELECT r FROM Room r where r.number =:number";
+        em.getTransaction().begin();
         TypedQuery<Room> query = em.createQuery(selectQuery, Room.class);
         query.setParameter("number", number);
         query.setLockMode(LockModeType.OPTIMISTIC);
-        return query.getResultList();
+        List<Room> rooms = query.getResultList();
+        em.getTransaction().commit();
+        return rooms;
     }
 
     public List<Room> getRoomById(EntityManager em, long Id) {
         String selectQuery = "SELECT g FROM Room g where g.Id =:Id";
+        em.getTransaction().begin();
         TypedQuery<Room> query = em.createQuery(selectQuery, Room.class);
         query.setParameter("Id", Id);
         query.setLockMode(LockModeType.OPTIMISTIC);
-        return query.getResultList();
+        List<Room> rooms = query.getResultList();
+        em.getTransaction().commit();
+        return rooms;
     }
 
     public List<Room> getAllRooms(EntityManager em) {

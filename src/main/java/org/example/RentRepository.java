@@ -34,10 +34,13 @@ public class RentRepository {
 
     public List<Rent> getRentByRentNumber(EntityManager em, String rentNumber) {
         String selectQuery = "SELECT rn FROM Rent rn where rn.rentNumber =:rentNumber";
+        em.getTransaction().begin();
         TypedQuery<Rent> query = em.createQuery(selectQuery, Rent.class);
         query.setParameter("rentNumber", rentNumber);
         query.setLockMode(LockModeType.OPTIMISTIC);
-        return query.getResultList();
+        List<Rent> rents = query.getResultList();
+        em.getTransaction().commit();
+        return rents;
     }
 
     public List<Rent> getAllRents(EntityManager em) {
@@ -49,11 +52,14 @@ public class RentRepository {
         return rents;
     }
 
-    public List<Rent> getAllRentsByGuest(EntityManager entityManager, long Id) {
+    public List<Rent> getAllRentsByGuest(EntityManager em, long Id) {
         String selectQuery = "SELECT rn FROM Rent rn where rn.guest.Id =:Id";
-        TypedQuery<Rent> query = entityManager.createQuery(selectQuery, Rent.class);
+        em.getTransaction().begin();
+        TypedQuery<Rent> query = em.createQuery(selectQuery, Rent.class);
         query.setParameter("Id", Id);
         query.setLockMode(LockModeType.OPTIMISTIC);
-        return query.getResultList();
+        List<Rent> rents = query.getResultList();
+        em.getTransaction().commit();
+        return rents;
     }
 }
