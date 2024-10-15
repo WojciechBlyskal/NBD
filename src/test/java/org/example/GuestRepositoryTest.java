@@ -18,9 +18,7 @@ class GuestRepositoryTest {
 
         guestRepository.addGuest(guest, em);
         guestRepository.addGuest(guest0, em);
-        em.getTransaction().begin();
         List<Guest> list = guestRepository.getGuestByLastName(em, "Kowalski");
-        em.getTransaction().commit();
         emf.close();
         if (list.size() == 0) {
             fail("It did not add any element to the database.");
@@ -36,10 +34,8 @@ class GuestRepositoryTest {
         GuestRepository guestRepository1 = new GuestRepository();
         Guest guest1 = new Guest("Jan", "Kowalski", "123456789");
         guestRepository1.addGuest(guest1, em1);
-        em1.getTransaction().begin();
         //as long as guest1 becomes the first (ever!!!) element of the database guest1 will get id == 1
         List<Guest> list1 = guestRepository1.getGuestById(em1, 1);
-        em1.getTransaction().commit();
         emf1.close();
         if (list1.size() == 0) {
             fail("It did not add any element to the database.");
