@@ -3,10 +3,6 @@ package org.example;
 import jakarta.persistence.*;
 import org.example.exception.GuestException;
 
-import javax.annotation.processing.SupportedSourceVersion;
-//import lombok.Getter;
-//import lombok.Setter;
-
 @Entity
 @Table(name = "guests")
 public class Guest {
@@ -82,5 +78,9 @@ public class Guest {
                 && name.equals(guest.name)
                 && lastName.equals(guest.lastName)
                 && phoneNumber.equals(guest.phoneNumber);
+    }
+
+    public long getVersion() {
+        return version;
     }
 }

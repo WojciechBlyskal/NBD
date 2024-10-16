@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 class GuestRepositoryTest {
     @Test
@@ -63,5 +62,62 @@ class GuestRepositoryTest {
         assertTrue(list2.contains(guest2));
         assertTrue(list2.contains(guest3));
         assertTrue(list2.contains(guest4));
+    }
+
+    @Test
+    public void updateGuestNameTest() {
+        EntityManagerFactory emf50 = Persistence.createEntityManagerFactory("hotelPersistenceUnit");
+        EntityManager em50 = emf50.createEntityManager();
+        GuestRepository guestRepository = new GuestRepository();
+        Guest guest50 = new Guest("Jan", "Kowalski", "123456789");
+
+        guestRepository.addGuest(guest50, em50);
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            guestRepository.updateGuestName(em50, 1, " ");
+        });
+        assertEquals(exception.getMessage(), "Failed to update guest's name: New name cannot be blank.");
+
+        guestRepository.updateGuestName(em50, 1, "Marcin");
+        String name = guestRepository.getGuestName(em50, 1);
+        assertEquals("Marcin", name);
+    }
+
+    @Test
+    public void updateGuestLastNameTest() {
+        EntityManagerFactory emf51 = Persistence.createEntityManagerFactory("hotelPersistenceUnit");
+        EntityManager em51 = emf51.createEntityManager();
+        GuestRepository guestRepository = new GuestRepository();
+        Guest guest51 = new Guest("Jan", "Kowalski", "123456789");
+
+        guestRepository.addGuest(guest51, em51);
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            guestRepository.updateGuestLastName(em51, 1, " ");
+        });
+        assertEquals(exception.getMessage(), "Failed to update guest's last name: New last name cannot be blank.");
+
+        guestRepository.updateGuestLastName(em51, 1, "Nowak");
+        String lastName = guestRepository.getGuestLastName(em51, 1);
+        assertEquals("Nowak", lastName);
+    }
+
+    @Test
+    public void updateGuestPhoneNumberTest() {
+        EntityManagerFactory emf52 = Persistence.createEntityManagerFactory("hotelPersistenceUnit");
+        EntityManager em52 = emf52.createEntityManager();
+        GuestRepository guestRepository = new GuestRepository();
+        Guest guest52 = new Guest("Jan", "Kowalski", "123456789");
+
+        guestRepository.addGuest(guest52, em52);
+
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            guestRepository.updateGuestPhoneNumber(em52, 1, " ");
+        });
+        assertEquals(exception.getMessage(), "Failed to update guest's phone number: New phone number cannot be blank.");
+
+        guestRepository.updateGuestPhoneNumber(em52, 1, "987654321");
+        String phoneNumber = guestRepository.getGuestPhoneNumber(em52, 1);
+        assertEquals("987654321", phoneNumber);
     }
 }

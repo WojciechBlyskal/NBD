@@ -15,13 +15,12 @@ public class Main {
         Guest guest3 = new Guest("Zofia", "Nowak", "456123789");
 
         Studio studio1 = new Studio(12, 3, 30.13, true, 244.99);
-        MultipleRoom multipleRoom1 = new MultipleRoom(8, 1, 50.78, true, 380.5, 2);
         MicroSuite microSuite1 = new MicroSuite(56, 6, 18.28, false, 59.9);
 
         LocalDateTime startTime1 = LocalDateTime.of(2024, 10, 15, 12, 30); // 15 października 2024, 12:30
         LocalDateTime startTime2 = LocalDateTime.of(2022, 5, 19, 20, 12);
         Rent rent1 = new Rent("r1", startTime1, microSuite1, guest1);
-        Rent rent2 = new Rent("r2", startTime2, multipleRoom1, guest2);
+        Rent rent2 = new Rent("r2", startTime2, studio1, guest2);
 
         GuestRepository guestRepository = new GuestRepository();
         RoomRepository roomRepository = new RoomRepository();
@@ -32,7 +31,6 @@ public class Main {
         guestRepository.addGuest(guest3, em);
 
         roomRepository.addRoom(studio1, em);
-        roomRepository.addRoom(multipleRoom1, em);
         roomRepository.addRoom(microSuite1, em);
 
         rentRepository.addRent(rent1, em);
@@ -46,6 +44,7 @@ public class Main {
             System.out.println("Name: " + guest.getName());
             System.out.println("Last Name: " + guest.getLastName());
             System.out.println("Phone Number: " + guest.getPhoneNumber());
+            System.out.println("Version: " + guest.getVersion());
             System.out.println("---------------------------------");
         }
 
@@ -56,6 +55,7 @@ public class Main {
             System.out.println("Name: " + guest.getName());
             System.out.println("Last Name: " + guest.getLastName());
             System.out.println("Phone Number: " + guest.getPhoneNumber());
+            System.out.println("Version: " + guest.getVersion());
             System.out.println("---------------------------------");
         }
         guest1.setName("Piotr");
@@ -67,65 +67,12 @@ public class Main {
             System.out.println("Name: " + guest.getName());
             System.out.println("Last Name: " + guest.getLastName());
             System.out.println("Phone Number: " + guest.getPhoneNumber());
+            System.out.println("Version: " + guest.getVersion());
             System.out.println("---------------------------------");
         }
 
-//            System.out.println(guestRepository.getGuestByLastName(em, "Kowalski"));
-
-
-
-
-
-//            roomRepository.getAllRooms(em);
-//            rentRepository.getAllRents(em);
-
-
-
-
-
         em.close();
         emf.close();
-
-
-
-
-//            try {
-//                transaction.begin();
-//                // operacje na bazie danych
-//                transaction.commit();
-//            } catch (Exception e) {
-//                if (transaction.isActive()) {
-//                    transaction.rollback();
-//                }
-//                e.printStackTrace();
-//            } finally {
-//                em.close();
-//                emf.close();
-//            }
-
-
-
-//            RentService rentService = new RentService();
-//
-//            // Przykład tworzenia obiektów
-//            Guest guest = new Guest();
-//            guest.setName("Jan Kowalski");
-//
-//            Room room = new Room();
-//            room.setType("Studio");
-//
-//            Rent rent = new Rent();
-//            rent.setGuest(guest);
-//            rent.setRoom(room);
-//
-//            // Zapis wynajmu
-//            rentService.saveRent(rent);
-//
-//            // Zamknij serwis
-//            rentService.close();
-
-
-
     }
 
 }

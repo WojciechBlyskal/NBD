@@ -9,8 +9,6 @@
     <class>org.example.Room</class>
     <class>org.example.Rent</class>
     <class>org.example.Studio</class>
-    <class>org.example.MicroSuite</class>
-    <class>org.example.MultipleRoom</class>
 
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>

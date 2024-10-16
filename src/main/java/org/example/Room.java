@@ -58,24 +58,12 @@ public abstract class Room {
         return floor;
     }
 
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
-
     public double getSurface() {
         return surface;
     }
 
-    public void setSurface(double surface) {
-        this.surface = surface;
-    }
-
     public boolean isBalcony() {
         return balcony;
-    }
-
-    public void setBalcony(boolean balcony) {
-        this.balcony = balcony;
     }
 
     public double getPrice() {

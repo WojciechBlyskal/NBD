@@ -15,23 +15,7 @@ public class RoomRepository {
             em.getTransaction().begin();
             em.persist(room);
             em.getTransaction().commit();
-        // MOŻE DODAĆ TRY CATCH I JAKIES WARUNKI
-
     }
-
-
-    /*public void removeRoom(Room room, EntityManager em) {
-        try {
-            Room managedRoom = em.find(Room.class, room.getId(), LockModeType.PESSIMISTIC_WRITE);
-            em.getTransaction().begin();
-            em.remove(managedRoom);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-        }
-    }*/
 
     public List<Room> getRoomByNumber(EntityManager em, int number) {
         String selectQuery = "SELECT r FROM Room r where r.number =:number";
@@ -65,19 +49,83 @@ public class RoomRepository {
         return rooms;
     }
 
-//    public Room get (int index) {
-//        return this.collection.get(index);
-//    }
+    public void updateRoomNumber(EntityManager em, long roomId, int newNumber) {
+        try {
+            if (newNumber < 0) {
+                throw new RuntimeException("New room number cannot be negative.");
+            }
+            em.getTransaction().begin();
+            Room room = em.find(Room.class, roomId, LockModeType.PESSIMISTIC_WRITE);
+            room.setNumber(newNumber);
+            em.merge(room);
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to update room number: " + e.getMessage(), e);
+        }
+    }
 
-    //    public int size() {
-//        return collection.size();
-//    }
-//
-//    public String report() {
-//        return new ToStringBuilder(this)
-//                .append("collection", collection)
-//                .toString();
-//    }
+    public double getRoomPrice(EntityManager em, long Id) {
+        String selectQuery = "SELECT r FROM Room r WHERE r.Id = :Id";
+        em.getTransaction().begin();
+        TypedQuery<Room> query = em.createQuery(selectQuery, Room.class);
+        query.setParameter("Id", Id);
+        query.setLockMode(LockModeType.OPTIMISTIC);
+        Room room = query.getSingleResult();
+        em.getTransaction().commit();
+        return room.getPrice();
+    }
 
+    public void updateRoomPrice(EntityManager em, long roomId, double newPrice) {
+        try {
+            if (newPrice < 0) {
+                throw new RuntimeException("New price cannot be negative.");
+            }
+            em.getTransaction().begin();
+            Room room = em.find(Room.class, roomId, LockModeType.PESSIMISTIC_WRITE);
+            room.setPrice(newPrice);
+            em.merge(room);
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new RuntimeException("Failed to update room's price: " + e.getMessage(), e);
+        }
+    }
 
+    public int getRoomFloor(EntityManager em, long Id) {
+        String selectQuery = "SELECT r FROM Room r WHERE r.Id = :Id";
+        em.getTransaction().begin();
+        TypedQuery<Room> query = em.createQuery(selectQuery, Room.class);
+        query.setParameter("Id", Id);
+        query.setLockMode(LockModeType.OPTIMISTIC);
+        Room room = query.getSingleResult();
+        em.getTransaction().commit();
+        return room.getFloor();
+    }
+
+    public double getRoomSurface(EntityManager em, long Id) {
+        String selectQuery = "SELECT r FROM Room r WHERE r.Id = :Id";
+        em.getTransaction().begin();
+        TypedQuery<Room> query = em.createQuery(selectQuery, Room.class);
+        query.setParameter("Id", Id);
+        query.setLockMode(LockModeType.OPTIMISTIC);
+        Room room = query.getSingleResult();
+        em.getTransaction().commit();
+        return room.getSurface();
+    }
+
+    public boolean isRoomBalcony(EntityManager em, long Id) {
+        String selectQuery = "SELECT r FROM Room r WHERE r.Id = :Id";
+        em.getTransaction().begin();
+        TypedQuery<Room> query = em.createQuery(selectQuery, Room.class);
+        query.setParameter("Id", Id);
+        query.setLockMode(LockModeType.OPTIMISTIC);
+        Room room = query.getSingleResult();
+        em.getTransaction().commit();
+        return room.isBalcony();
+    }
 }

@@ -19,8 +19,6 @@ public class Rent {
     private LocalDateTime startTime;
     @Column
     private LocalDateTime endTime;
-    @Column
-    private double cost;
     @ManyToOne
     @JoinColumn(name = "guest_id")
     private Guest guest;
@@ -68,10 +66,6 @@ public class Rent {
         if (endTime != null && this.endTime == null && endTime.isAfter(this.startTime)) {
             this.endTime = endTime;
         }
-    }
-
-    public double getCost() {
-        return cost;
     }
 
     public Guest getGuest() {
