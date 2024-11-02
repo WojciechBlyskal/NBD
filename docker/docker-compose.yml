@@ -6,7 +6,7 @@ services:
       args:
         DOCKER_BUILDKIT: 1
       dockerfile: Dockerfile
-    image: mongocustom:6.0.2
+    image: mongocustom:7.0.2
     hostname: mongodb1
     container_name: mongodb1
     networks:
@@ -29,7 +29,7 @@ services:
       args:
         DOCKER_BUILDKIT: 1
       dockerfile: Dockerfile
-    image: mongocustom:6.0.2
+    image: mongocustom:7.0.2
     container_name: mongodb2
     hostname: mongodb2
     networks:
@@ -52,7 +52,7 @@ services:
       args:
         DOCKER_BUILDKIT: 1
       dockerfile: Dockerfile
-    image: mongocustom:6.0.2
+    image: mongocustom:7.0.2
     container_name: mongodb3
     hostname: mongodb3
     networks:
@@ -71,7 +71,7 @@ services:
 
   mongoinit:
     build: .
-    image: mongocustom:6.0.2
+    image: mongocustom:7.0.2
     hostname: mongodbinit
     container_name: mongodbinit
     networks:

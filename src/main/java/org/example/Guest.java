@@ -12,22 +12,20 @@ public class Guest
 {
     private String name;
     private String lastName;
-    private String ID;
+    private long id;
     private String phoneNumber;
 
-    public Guest(String name, String lastName, String ID, String phoneNumber) throws GuestException {
+    public Guest(String name, String lastName, long id, String phoneNumber) throws GuestException {
         if (name.isBlank()) {
             throw new GuestException("Name cannot be empty.");
         } else if (lastName.isBlank()) {
             throw new GuestException("Last name cannot be empty.");
-        } else if (ID.isBlank()) {
-            throw new GuestException("ID cannot be empty.");
         } else if (phoneNumber.isBlank()) {
             throw new GuestException("Phone number cannot be empty.");
         } else {
             this.name = name;
             this.lastName = lastName;
-            this.ID = ID;
+            this.id = id;
             this.phoneNumber = phoneNumber;
         }
     }
@@ -48,12 +46,12 @@ public class Guest
         this.lastName = lastName;
     }
 
-    public String getID() {
-        return ID;
+    public long getId() {
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(long Id) {
+        this.id = id;
     }
 
     public String getPhoneNumber() {
@@ -65,7 +63,7 @@ public class Guest
     }
 
     public String getInfo() {
-        return "First name: " + getName() + ". Last name is: " + getLastName() + ". ID is: " + getID()
+        return "First name: " + getName() + ". Last name is: " + getLastName() + ". ID is: " + String.valueOf(getId())
                 + "Phone number is: " + getPhoneNumber() + ".";
     }
 }
