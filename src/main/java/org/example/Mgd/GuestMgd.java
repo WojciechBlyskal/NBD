@@ -1,9 +1,13 @@
-package Mgd;
+package org.example.Mgd;
 
+import com.fasterxml.jackson.dataformat.avro.annotation.AvroNamespace;
 import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import simpleMgdTypes.UniqueIdMgd;
+import org.example.simpleMgdTypes.UniqueIdMgd;
 
+@BsonDiscriminator(key="_client", value="client")
+@AvroNamespace("avro.model")
 public class GuestMgd extends AbstractEntityMgd {
 
     @BsonProperty("id")

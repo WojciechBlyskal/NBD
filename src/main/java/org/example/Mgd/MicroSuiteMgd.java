@@ -1,8 +1,8 @@
-package Mgd;
+package org.example.Mgd;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import simpleMgdTypes.UniqueIdMgd;
+import org.example.simpleMgdTypes.UniqueIdMgd;
 
 public class MicroSuiteMgd extends RoomMgd {
     @BsonCreator

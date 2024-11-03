@@ -1,32 +1,35 @@
-package simpleMgdTypes;
+package org.example.Mgd;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.dataformat.avro.annotation.AvroNamespace;
+import org.apache.avro.reflect.AvroIgnore;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+
+import java.util.UUID;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
         property = "type")
 @AvroNamespace("avro.simpleMgdTypes")
-public class BoolMgd {
+public class UniqueIdMgd {
+    @AvroIgnore
+    @BsonProperty("uuid")
+    private UUID uuid;
 
-    @BsonProperty("boolean")
-    private Boolean aboolean;
-
-    public BoolMgd() {
+    public UniqueIdMgd() {
     }
 
     @BsonCreator
-    public BoolMgd(@BsonProperty("boolean") Boolean aboolean) {
-        this.aboolean = aboolean;
+    public UniqueIdMgd(@BsonProperty("uuid") UUID uniqieId) {
+        this.uuid = uniqieId;
     }
 
-    public Boolean getABoolean() {
-        return aboolean;
+    public UUID getUuid() {
+        return uuid;
     }
-    public void setAboolean(Boolean aboolean) {
-        this.aboolean = aboolean;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 }

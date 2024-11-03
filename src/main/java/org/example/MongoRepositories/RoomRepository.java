@@ -1,18 +1,15 @@
 package org.example.MongoRepositories;
 
-import Mgd.GuestMgd;
-import Mgd.RoomMgd;
+import org.example.Mgd.RoomMgd;
 import com.mongodb.client.ClientSession;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.InsertOneOptions;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bson.conversions.Bson;
-import simpleMgdTypes.UniqueIdMgd;
+import org.example.simpleMgdTypes.UniqueIdMgd;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.function.Predicate;
 import java.util.ArrayList;
 
 public class RoomRepository<Room> extends AbstractMongoRepository {

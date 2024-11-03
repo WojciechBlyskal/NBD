@@ -4,7 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1f97c16c-6a6b-4c22-ac52-62bf327d2f87" name="Changes" comment="" />
+    <list default="true" id="1f97c16c-6a6b-4c22-ac52-62bf327d2f87" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Mgd/AbstractEntityMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/AbstractEntityMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Mgd/GuestMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/GuestMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Mgd/MicroSuiteMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/MicroSuiteMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Mgd/RentMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RentMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Mgd/RoomMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RoomMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Mgd/StudioMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/StudioMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Guest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Guest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MicroSuite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/MicroSuite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/AbstractMongoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/AbstractMongoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/GuestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/GuestRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RoomRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Rent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Rent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Studio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Studio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/simpleMgdTypes/BoolMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/BoolMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/simpleMgdTypes/UniqueIdMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/UniqueIdMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,6 +68,8 @@
     "Docker.docker/mongoCluster.yml: Compose Deployment.executor": "Run",
     "Docker.docker: Compose Deployment (1).executor": "Run",
     "Docker.docker: Compose Deployment.executor": "Run",
+    "JUnit.MongoGuestRepositoryTest.executor": "Run",
+    "JUnit.UniqueIdCodecTest.executor": "Run",
     "Maven.hotel [clean].executor": "Run",
     "Maven.hotel [install].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -56,7 +79,7 @@
     "git-widget-placeholder": "mongo",
     "hotel.wasFacetEverAdded": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/wojte/Documents/studia/semestr 5/NBD/hotel/hotel/src/main/java",
+    "last_opened_file_path": "C:/Users/wojte/Documents/studia/semestr 5/NBD/hotel/hotel/src/main/java/org/example/avro",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -76,23 +99,25 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\Mgd" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\docker" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\docker" />
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\Mgd" />
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\MongoRepositories" />
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\test\java\org\example\MongoRepositoriesTest" />
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\test\java\org\example\codecTest" />
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\test\java\org\example" />
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\test\java\org\example\MgdTest" />
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\docker" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\docker\path\to" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\docker\etc\mongo" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.example" />
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Docker.docker: Compose Deployment (1)">
+  <component name="RunManager">
     <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
       <option name="appName" />
       <option name="appServicePlanName" />
@@ -124,7 +149,9 @@
       </method>
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
-      <deployment type="docker-compose.yml" />
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
       <method v="2" />
     </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-image" temporary="true">
@@ -230,6 +257,10 @@
       <workItem from="1730407725483" duration="3573000" />
       <workItem from="1730496165408" duration="4467000" />
       <workItem from="1730549786931" duration="19545000" />
+      <workItem from="1730637945502" duration="12660000" />
+      <workItem from="1730670880219" duration="4408000" />
+      <workItem from="1730675934686" duration="588000" />
+      <workItem from="1730676594239" duration="409000" />
     </task>
     <servers />
   </component>

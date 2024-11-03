@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 public class Studio extends Room {
     Studio(int number, int floor, double surface, boolean balcony, double price) {

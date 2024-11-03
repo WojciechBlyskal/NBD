@@ -1,0 +1,38 @@
+{
+  "type": "record",
+  "name": "GuestMgd",
+  "namespace": "avro.model",
+  "fields": [
+    {
+      "name": "entityId",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "UniqueIdMgd",
+          "namespace": "avro.simpleMgdTypes",
+          "fields": []
+        }
+      ]
+    },
+    {
+      "name": "id",
+      "type": {
+        "type": "long",
+        "java-class": "java.lang.Long"
+      }
+    },
+    {
+      "name": "name",
+      "type": ["null", "string"]
+    },
+    {
+      "name": "lastName",
+      "type": ["null", "string"]
+    },
+    {
+      "name": "phoneNumber",
+      "type": ["null", "string"]
+    }
+  ]
+}

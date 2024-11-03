@@ -1,20 +1,17 @@
 package org.example.MongoRepositories;
 
-import Mgd.GuestMgd;
-import Mgd.RentMgd;
-import Mgd.RoomMgd;
+import org.example.Mgd.GuestMgd;
+import org.example.Mgd.RentMgd;
 import com.mongodb.client.ClientSession;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.InsertOneOptions;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bson.conversions.Bson;
-import simpleMgdTypes.UniqueIdMgd;
+import org.example.simpleMgdTypes.UniqueIdMgd;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.function.Predicate;
 
 public class RentRepository<Rent> extends AbstractMongoRepository{
     private List<RentMgd> list = new ArrayList<>();
@@ -64,6 +61,10 @@ public class RentRepository<Rent> extends AbstractMongoRepository{
     public void removeRemote(UniqueIdMgd uniqueIdMgd) {
 
         Bson filter = Filters.eq("_id", uniqueIdMgd.getUuid());
+        rentCollection.findOneAndDelete(filter);
+    }
+
+    public void removeRemote(Bson filter) {
         rentCollection.findOneAndDelete(filter);
     }
 

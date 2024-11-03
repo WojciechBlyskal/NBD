@@ -1,18 +1,18 @@
 package org.example.MongoRepositories;
 
-//import codecs.CodecProviders.UniqueIdCodecProvider;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+
 import org.bson.UuidRepresentation;
-//import org.bson.codecs.UuidCodecProvider;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.example.codec.UniqueIdCodecProvider;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
                 .applyConnectionString(connectionString)
                 .uuidRepresentation(UuidRepresentation.STANDARD)
                 .codecRegistry(CodecRegistries.fromRegistries(
-                        //CodecRegistries.fromProviders(new UniqueIdCodecProvider()),
+                        CodecRegistries.fromProviders(new UniqueIdCodecProvider()),
                         MongoClientSettings.getDefaultCodecRegistry(),
                         pojoCodecRegistry
                 ))

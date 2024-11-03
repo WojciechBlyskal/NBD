@@ -1,7 +1,5 @@
-package org.example;
+package org.example.model;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.example.exception.GuestException;
 import org.example.exception.RoomException;
 
 public abstract class Room {

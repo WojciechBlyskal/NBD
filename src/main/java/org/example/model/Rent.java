@@ -1,9 +1,8 @@
-package org.example;
+package org.example.model;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import org.example.exception.GuestException;
 import org.example.exception.RentException;
 
 public class Rent {
