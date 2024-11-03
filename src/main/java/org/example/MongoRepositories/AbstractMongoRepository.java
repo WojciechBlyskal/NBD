@@ -1,13 +1,12 @@
-package org.example;
+package org.example.MongoRepositories;
 
-
+//import codecs.CodecProviders.UniqueIdCodecProvider;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.*;
 import org.bson.UuidRepresentation;
 //import org.bson.codecs.UuidCodecProvider;
 import org.bson.codecs.configuration.CodecRegistries;
@@ -29,7 +28,7 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
             .build());
     private MongoClient mongoClient;
     private MongoDatabase mongoDB;
-    private void initDbConnection() {
+    protected void initDbConnection() {
         MongoClientSettings settings = MongoClientSettings.builder()
                 .credential(credential)
                 .applyConnectionString(connectionString)
@@ -42,5 +41,25 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
                 .build();
         mongoClient = MongoClients.create(settings);
         mongoDB = mongoClient.getDatabase("hotel");
+    }
+    public MongoDatabase getMongoDB() {
+        return mongoDB;
+    }
+
+    public String getClientCollectionName() {
+        return "clientCollection";
+    }
+    public String getTrainsCollectionName() {
+        return "trainCollection";
+    }
+    public String getReservationCollectionName() {
+        return "reservationCollection";
+    }
+
+    public MongoClient getMongoClient() {
+        return mongoClient;
+    }
+
+    public void close(){
     }
 }
