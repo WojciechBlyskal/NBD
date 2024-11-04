@@ -21,11 +21,11 @@ public class RoomRepository<Room> extends AbstractMongoRepository {
         this.connectionManager = connectionManager;
 
         if(!(connectionManager.getMongoDB().listCollectionNames().into(new ArrayList<String>()).
-                contains(getClientCollectionName()))) {
-            connectionManager.getMongoDB().createCollection(getClientCollectionName());
+                contains(getGuestCollectionName()))) {
+            connectionManager.getMongoDB().createCollection(getGuestCollectionName());
         }
         roomCollection = connectionManager.getMongoDB().getCollection(
-                getClientCollectionName(),
+                getGuestCollectionName(),
                 RoomMgd.class
         );
     }

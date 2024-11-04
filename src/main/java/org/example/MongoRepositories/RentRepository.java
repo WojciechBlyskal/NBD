@@ -22,11 +22,11 @@ public class RentRepository<Rent> extends AbstractMongoRepository{
         this.connectionManager = connectionManager;
 
         if(!(connectionManager.getMongoDB().listCollectionNames().into(new ArrayList<String>()).
-                contains(getClientCollectionName()))) {
-            connectionManager.getMongoDB().createCollection(getClientCollectionName());
+                contains(getGuestCollectionName()))) {
+            connectionManager.getMongoDB().createCollection(getGuestCollectionName());
         }
         rentCollection = connectionManager.getMongoDB().getCollection(
-                getClientCollectionName(),
+                getGuestCollectionName(),
                 RentMgd.class
         );
     }

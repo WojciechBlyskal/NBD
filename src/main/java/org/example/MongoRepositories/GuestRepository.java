@@ -16,19 +16,19 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class GuestRepository extends AbstractMongoRepository implements IMongoRepository {
-    private List<GuestMgd> list = new ArrayList<>();
     private ConnectionManager connectionManager;
     private MongoCollection<GuestMgd> guestCollection;
+    private List<GuestMgd> list = new ArrayList<>();
 
     public GuestRepository(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
 
         if (!(connectionManager.getMongoDB().listCollectionNames().into(new ArrayList<String>()).
-                contains(getClientCollectionName()))) {
-            connectionManager.getMongoDB().createCollection(getClientCollectionName());
+                contains(getGuestCollectionName()))) {
+            connectionManager.getMongoDB().createCollection(getGuestCollectionName());
         }
         guestCollection = connectionManager.getMongoDB().getCollection(
-                getClientCollectionName(),
+                getGuestCollectionName(),
                 GuestMgd.class
         );
     }
@@ -38,18 +38,35 @@ public class GuestRepository extends AbstractMongoRepository implements IMongoRe
                                  ReadPreference readPreference) {
         this.connectionManager = connectionManager;
 
-        if(!(connectionManager.getMongoDB().listCollectionNames().into(new ArrayList<String>()).contains(getClientCollectionName()))) {
-            connectionManager.getMongoDB().createCollection(getClientCollectionName());
+        if(!(connectionManager.getMongoDB().listCollectionNames().into(new ArrayList<String>()).contains(getGuestCollectionName()))) {
+            connectionManager.getMongoDB().createCollection(getGuestCollectionName());
         }
 
         guestCollection = connectionManager.getMongoDB().getCollection(
-                        getClientCollectionName(),
+                        getGuestCollectionName(),
                         GuestMgd.class)
                 .withWriteConcern(writeConcern)
                 .withReadPreference(readPreference);
     }
 
     @Override
+    public void addRemote(IEntity object) {
+        /*MongoCollection<GuestMgd> guestCollection = getMongoDB().getCollection(
+                getClientCollectionName(), GuestMgd.class);*/
+        guestCollection.insertOne((GuestMgd) object);
+    }
+
+    public void addRemote(GuestMgd obj, ClientSession clientSession) {
+        Bson uuidFilter = Filters.eq("_id",
+                obj.getEntityId().getUuid());
+        ArrayList<GuestMgd> foundGuest = findRemote(uuidFilter);
+
+        if (foundGuest.isEmpty()){
+            guestCollection.insertOne(clientSession, obj,
+                    new InsertOneOptions().bypassDocumentValidation(false));
+        }
+    }
+
     public GuestMgd findRemote(UniqueIdMgd uniqueIdMgd){
 
         GuestMgd foundGuest = null;
@@ -64,22 +81,6 @@ public class GuestRepository extends AbstractMongoRepository implements IMongoRe
 
     public ArrayList<GuestMgd> findRemote(Bson filter) {
         return guestCollection.find(filter).into(new ArrayList<>());
-    }
-
-    @Override
-    public void addRemote(IEntity object) {
-        guestCollection.insertOne((GuestMgd) object);
-    }
-
-    public void addRemote(GuestMgd obj, ClientSession clientSession) {
-        Bson uuidFilter = Filters.eq("_id",
-                obj.getEntityId().getUuid());
-        ArrayList<GuestMgd> foundGuest = findRemote(uuidFilter);
-
-        if (foundGuest.isEmpty()){
-            guestCollection.insertOne(clientSession, obj,
-                    new InsertOneOptions().bypassDocumentValidation(false));
-        }
     }
 
     public void removeRemote(UniqueIdMgd uniqueIdMgd) {

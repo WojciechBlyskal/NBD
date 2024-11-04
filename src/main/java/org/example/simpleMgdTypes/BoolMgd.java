@@ -1,15 +1,9 @@
 package org.example.simpleMgdTypes;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.dataformat.avro.annotation.AvroNamespace;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "type")
-@AvroNamespace("avro.simpleMgdTypes")
+
 public class BoolMgd {
 
     @BsonProperty("boolean")

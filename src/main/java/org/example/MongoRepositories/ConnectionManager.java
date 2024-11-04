@@ -1,8 +1,6 @@
 package org.example.MongoRepositories;
 
-public class ConnectionManager
-        extends AbstractMongoRepository
-        implements AutoCloseable {
+public class ConnectionManager extends AbstractMongoRepository implements AutoCloseable {
 
     public ConnectionManager() {
         initDbConnection();
