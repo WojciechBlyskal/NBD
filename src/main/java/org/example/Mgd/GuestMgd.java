@@ -55,4 +55,8 @@ public class GuestMgd extends AbstractEntityMgd {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    /*public GuestMgd getGuest() {
+        return this;
+    }*/
 }

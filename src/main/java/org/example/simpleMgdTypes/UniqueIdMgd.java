@@ -6,7 +6,6 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import java.util.UUID;
 
 public class UniqueIdMgd {
-    //@AvroIgnore
     @BsonProperty("uuid")
     private UUID uuid;
 

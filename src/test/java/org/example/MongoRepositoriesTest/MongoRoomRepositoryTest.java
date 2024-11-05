@@ -70,18 +70,19 @@ public class MongoRoomRepositoryTest {
             testMongoRoomRepository.updateRemote(filter1, update1);
             testMongoRoomRepository.updateRemote(filter1, update2);
             testMongoRoomRepository.updateRemote(filter1, update4);
-            MicroSuiteMgd room = (MicroSuiteMgd) testMongoRoomRepository.findRemote(filter1).getFirst();
-
-            assertEquals(18, room.getNumber());
-            assertEquals(4, room.getFloor());
-            assertEquals(45.0, room.getSurface());
+            //MicroSuiteMgd room = (MicroSuiteMgd) testMongoRoomRepository.findRemote(filter1).getFirst();
+            ArrayList<RoomMgd> room;
+            room = testMongoRoomRepository.findRemote(filter1);
+            assertEquals(18, room.getFirst().getNumber());
+            assertEquals(4, room.getFirst().getFloor());
+            assertEquals(45.0, room.getFirst().getSurface());
 
             Bson update3 = Updates.set("price", 150.0);
             Bson filter2 = Filters.eq("number", 18);
             testMongoRoomRepository.updateRemote(filter2, update3);
 
-            room = (MicroSuiteMgd) testMongoRoomRepository.findRemote(filter2).getFirst();
-            assertEquals("price", room.getPrice());
+            room = testMongoRoomRepository.findRemote(filter2);
+            assertEquals(150.0, room.getFirst().getPrice());
 
             testMongoRoomRepository.dropCollection();
         }

@@ -10,11 +10,9 @@ public class RentMgd extends AbstractEntityMgd {
     @BsonProperty("rentNumber")
     private String rentNumber;
     @BsonProperty("startTime")
-    private LocalDateTime startTime;
+    private final LocalDateTime startTime;
     @BsonProperty("endTime")
-    private LocalDateTime endTime = null;
-    @BsonProperty("cost")
-    private double cost;
+    private final LocalDateTime endTime;
     @BsonProperty("guestMgd")
     private GuestMgd guest;
     @BsonProperty("roomMgd")
@@ -24,17 +22,15 @@ public class RentMgd extends AbstractEntityMgd {
     public RentMgd(@BsonProperty("_id") UniqueIdMgd entityId,
                    @BsonProperty("rentNumber") String rentNumber,
                    @BsonProperty("startTime") LocalDateTime startTime,
-                   //@BsonProperty("endTime") LocalDateTime endTime,
-                   @BsonProperty("cost") double cost,
+                   @BsonProperty("endTime") LocalDateTime endTime,
                    @BsonProperty("guestMgd") GuestMgd guest,
                    @BsonProperty("roomMgd") RoomMgd room) {
         super(entityId);
         this.rentNumber = rentNumber;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.cost = cost;
-        this.guest = guest;
-        this.room = room;
+        //this.guest = guest;
+        //this.room = room;
     }
 
     public String getRentNumber() {
@@ -49,27 +45,19 @@ public class RentMgd extends AbstractEntityMgd {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    /*public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
-    }
+    }*/
 
     public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    /*public void setEndTime(LocalDateTime endTime) {
         if (endTime != null && this.endTime == null && endTime.isAfter(startTime)) {
             this.endTime = endTime;
         }
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
+    }*/
 
     public GuestMgd getGuest() {
         return guest;

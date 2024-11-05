@@ -13,12 +13,9 @@ public class UniqueIdCodecTest {
     @Test
     public void getEncoderClassTest(){
 
-        CodecRegistry pojoCodecRegistry =
-                MongoClientSettings.getDefaultCodecRegistry();
+        CodecRegistry pojoCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
 
-        UniqueIdCodec uniqueIdCodec =
-                new UniqueIdCodec(pojoCodecRegistry);
-        assertEquals(uniqueIdCodec.getEncoderClass(),
-                UniqueIdMgd.class);
+        UniqueIdCodec uniqueIdCodec = new UniqueIdCodec(pojoCodecRegistry);
+        assertEquals(uniqueIdCodec.getEncoderClass(), UniqueIdMgd.class);
     }
 }

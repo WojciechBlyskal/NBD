@@ -6,21 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="1f97c16c-6a6b-4c22-ac52-62bf327d2f87" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/GuestMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/GuestMgd.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RentMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RentMgd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/GuestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/GuestRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RoomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/GuestException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/RentException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/exception/RoomException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Guest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/MicroSuite.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Rent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Room.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Studio.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoGuestRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoGuestRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/UniqueIdMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/UniqueIdMgd.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRentRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRoomRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRoomRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/codecTest/UniqueIdCodecTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/codecTest/UniqueIdCodecTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -286,7 +279,7 @@
       <workItem from="1730757654386" duration="709000" />
       <workItem from="1730758765610" duration="215000" />
       <workItem from="1730759493032" duration="49000" />
-      <workItem from="1730759595162" duration="7232000" />
+      <workItem from="1730759595162" duration="25241000" />
     </task>
     <servers />
   </component>

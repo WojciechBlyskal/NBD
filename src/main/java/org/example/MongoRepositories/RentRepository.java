@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class RentRepository<Rent> extends AbstractMongoRepository implements IMongoRepository {
+public class RentRepository extends AbstractMongoRepository implements IMongoRepository {
     private List<RentMgd> list = new ArrayList<>();
     private ConnectionManager connectionManager;
     private MongoCollection<RentMgd> rentCollection;
@@ -84,11 +84,12 @@ public class RentRepository<Rent> extends AbstractMongoRepository implements IMo
     }
 
     public void removeRemote(Bson filter) {
-        Bson updatedFilter = Filters.and(
-                filter,                                  // Original filter
-                Filters.ne("endTime", null)              // Ensure endTime is not null
-        );
-        rentCollection.findOneAndDelete(updatedFilter);
+        //Bson updatedFilter = Filters.and(
+         //       filter,                                  // Original filter
+         //       Filters.ne("endTime", null)              // Ensure endTime is not null
+        //);
+        //rentCollection.findOneAndDelete(updatedFilter);
+        rentCollection.findOneAndDelete(filter);
     }
 
     /*public void updateRemote(Bson filter, Bson update) {
@@ -97,8 +98,9 @@ public class RentRepository<Rent> extends AbstractMongoRepository implements IMo
 
     public void updateRemote(Bson filter, Bson update) {
         BsonDocument updateDoc = update.toBsonDocument(BsonDocument.class, rentCollection.getCodecRegistry());
-        if (containsRestrictedField(updateDoc, "roomMgd") || containsRestrictedField(updateDoc, "guestMgd")) {
-            throw new IllegalArgumentException("Updating 'roomMgd', 'guestMgd' fields is not allowed.");
+        if (containsRestrictedField(updateDoc, "roomMgd") || containsRestrictedField(updateDoc, "guestMgd")
+                || containsRestrictedField(updateDoc, "startTime") || containsRestrictedField(updateDoc, "endTime")) {
+            throw new IllegalArgumentException("Updating startTime, endTime, 'roomMgd', 'guestMgd' fields is not allowed.");
         }
         rentCollection.updateOne(filter, update);
     }
