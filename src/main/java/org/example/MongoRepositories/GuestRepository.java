@@ -51,8 +51,6 @@ public class GuestRepository extends AbstractMongoRepository implements IMongoRe
 
     @Override
     public void addRemote(IEntity object) {
-        /*MongoCollection<GuestMgd> guestCollection = getMongoDB().getCollection(
-                getClientCollectionName(), GuestMgd.class);*/
         guestCollection.insertOne((GuestMgd) object);
     }
 

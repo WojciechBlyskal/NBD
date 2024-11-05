@@ -1,14 +1,21 @@
-/*package org.example.MongoRepositoriesTest;
+package org.example.MongoRepositoriesTest;
 
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
-import model.*;
 import org.bson.conversions.Bson;
+import org.example.Mgd.GuestMgd;
+import org.example.Mgd.MicroSuiteMgd;
+import org.example.Mgd.RentMgd;
+import org.example.MongoRepositories.ConnectionManager;
+import org.example.MongoRepositories.GuestRepository;
+import org.example.MongoRepositories.RentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import simpleMgdTypes.BoolMgd;
-import simpleMgdTypes.UniqueIdMgd;
+import org.example.simpleMgdTypes.BoolMgd;
+import org.example.simpleMgdTypes.UniqueIdMgd;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -17,260 +24,114 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MongoRentRepositoryTest {
 
-    private ClientMgd testClient;
-    private InterCityMgd testTrain;
-    private ReservationMgd testReservation;
+    private GuestMgd testGuest;
+    private MicroSuiteMgd testRoom;
+    private RentMgd testRent;
 
     @BeforeEach
     public void setUp() throws Exception {
-        testClient = new ClientMgd(
+        testGuest = new GuestMgd(
                 new UniqueIdMgd(UUID.randomUUID()),
+                1234,
                 "Adam",
                 "Kowalski",
-                1000
+                "123456789"
         );
 
-        testTrain = new InterCityMgd(
+        testRoom = new MicroSuiteMgd(
                 new UniqueIdMgd(UUID.randomUUID()),
-                "Tomek",
-                1,
-                5,
-                2,
-                100,
-                new BoolMgd(false)
+                12,
+                3,
+                37.5,
+                200.0
         );
 
-        testReservation = new ReservationMgd(
+        testRent = new RentMgd(
                 new UniqueIdMgd(UUID.randomUUID()),
-                10,
-                5,
-                testClient,
-                testTrain
+                "A34",
+                LocalDateTime.of(2024, 10, 15, 14, 30, 45),
+                400.0,
+                testGuest,
+                testRoom
         );
     }
 
     @Test
-    public void RemoteRepositoryTest() throws Exception {
+    public void addFindTest() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
+            RentRepository testMongoRentRepository = new RentRepository(connectionManager);
+            MongoCollection<RentMgd> collection = connectionManager.getMongoDB().getCollection("rentCollection", RentMgd.class);
 
-            MongoReservationRepository testMongoReservationRepository = new MongoReservationRepository(connectionManager);
-            MongoClientRepository testMongoClientRepository = new MongoClientRepository(connectionManager);
-            MongoTrainRepository testMongoTrainRepository = new MongoTrainRepository(connectionManager);
+            //comparing number of documents at before and after adding document
+            long initialCount = collection.countDocuments();
+            testMongoRentRepository.addRemote(testRent);
+            long postAddCount = collection.countDocuments();
+            assertEquals(initialCount + 1, postAddCount, "Document was not added successfully");
 
-            //Create and Find Tests
-            testMongoReservationRepository.addToRemoteRepository(testReservation);
-
-            ArrayList<ReservationMgd> foundReservations;
+            //checking if added document is the one we expected and find method
             Bson filter1 = Filters.and(
-                    Filters.eq("seatnumber", 10),
-                    Filters.eq("triplengthbystations", 5));
+                    Filters.eq("rentNumber", "A34"),
+                    Filters.eq("startTime", LocalDateTime.of(2024, 10, 15, 14, 30, 45)),
+                    Filters.eq("cost", 400.0));
+            ArrayList<RentMgd> foundRents = testMongoRentRepository.findRemote(filter1);
+            assertEquals(testRent.getRentNumber(), foundRents.getFirst().getRentNumber(), "Retrieved document does not match the added document");
+            testMongoRentRepository.dropCollection();
+        }
+    }
 
-            foundReservations = testMongoReservationRepository.findOnRemoteRepository(filter1);
+    /*@Test
+    public void updateTest() {
+        try (ConnectionManager connectionManager = new ConnectionManager()) {
+            RentRepository testMongoRentRepository = new RentRepository(connectionManager);
+            testMongoRentRepository.addRemote(testGuest);
 
-            //Assertions of all the attributes
-            assertEquals(1,
-                    foundReservations.size());
-            assertEquals(10,
-                    foundReservations.get(0).getSeatNumber());
-            assertEquals(5,
-                    foundReservations.get(0).getTripLengthByStations());
-            assertEquals(testClient.getEntityId().getUuid(),
-                    foundReservations.get(0).getClient().getEntityId().getUuid());
-            assertEquals(testTrain.getEntityId().getUuid(),
-                    foundReservations.get(0).getTrain().getEntityId().getUuid());
+            Bson update1 = Updates.set("roomNumber", "B52");
+            Bson update2 = Updates.set("cost", 500.0);
+            Bson filter1 = Filters.eq("lastName", "Kowalski");
 
+            testMongoRentRepository.updateRemote(filter1, update1);
+            testMongoRentRepository.updateRemote(filter1, update2);
+            testMongoRentRepository.updateRemote(filter1, update4);
+            GuestMgd guest = testMongoRentRepository.findRemote(filter1).getFirst();
 
-            //Update Tests
-            Bson update = Updates.set("seatnumber", 20L);
+            assertEquals(1500, guest.getId());
+            assertEquals("Piotr", guest.getName());
+            assertEquals("111222333", guest.getPhoneNumber());
 
-            Bson filterUpdate = Filters.and(
-                    Filters.eq("seatnumber", 20),
-                    Filters.eq("triplengthbystations", 5));
-            testMongoReservationRepository.updateRemoteRepository(filter1,
-                    update);
-            foundReservations = testMongoReservationRepository.findOnRemoteRepository(filterUpdate);
+            Bson update3 = Updates.set("lastName", "Kot");
+            Bson filter2 = Filters.eq("name", "Piotr");
+            testMongoRentRepository.updateRemote(filter2, update3);
 
-            assertEquals(20,
-                    foundReservations.get(0).getSeatNumber());
+            guest = testMongoRentRepository.findRemote(filter2).getFirst();
+            assertEquals("Kot", guest.getLastName());
 
-
-            //More than one element tests
-            ReservationMgd testReservation2 = new ReservationMgd(
-                    new UniqueIdMgd(UUID.randomUUID()),
-                    20,
-                    10,
-                    testClient,
-                    testTrain
-            );
-
-            Bson filter2 = Filters.and(
-                    Filters.eq("seatnumber", 20));
-
-            //Finding two reservations
-            testMongoReservationRepository.addToRemoteRepository(testReservation2);
-            foundReservations = testMongoReservationRepository.findOnRemoteRepository(filter2);
-
-            assertEquals(2,
-                    foundReservations.size());
-            assertEquals(20,
-                    foundReservations.get(0).getSeatNumber());
-            assertEquals(20,
-                    foundReservations.get(1).getSeatNumber());
-
-            //Assert train limits
-            boolean exeptionChecked = false;
-            ReservationMgd testReservation3 = new ReservationMgd(
-                    new UniqueIdMgd(UUID.randomUUID()),
-                    21,
-                    10,
-                    testClient,
-                    testTrain);
-            try {
-                testMongoReservationRepository.addToRemoteRepository(testReservation3);
-            } catch (Exception e){
-                if(e.getMessage() ==
-                        "Cannot reserve seat - there are no free seats"){
-                    exeptionChecked = true;
-                }
-            }
-
-            assertTrue(exeptionChecked);
-
-            Bson reservation3Filter = Filters.eq("_id", testReservation3.getEntityId().getUuid());
-            testMongoReservationRepository.removeFromRemoteRepository(reservation3Filter);
-
-            //Find embedded objects in all reservations
-            Bson clientFilter = Filters.eq("firstname", "Adam");
-            Bson trainFilter = Filters.eq("trainname", "Tomek");
-
-            ArrayList<ClientMgd> foundClients =
-                    testMongoClientRepository.findOnRemoteRepositoryInAllReservations(clientFilter);
-            assertEquals(2,
-                    foundClients.size());
-            assertEquals("Adam",
-                    foundClients.get(0).getFirstName());
-            assertEquals("Adam",
-                    foundClients.get(1).getFirstName());
-
-            ArrayList<TrainMgd> foundTrains =
-                    testMongoTrainRepository.findOnRemoteRepositoryInAllReservations(trainFilter);
-            assertEquals(2,
-                    foundTrains.size());
-            assertEquals("Tomek",
-                    foundTrains.get(0).getName());
-            assertEquals("Tomek",
-                    foundTrains.get(1).getName());
-
-
-            //Remove tests
-            Bson firstReservationfilter = Filters.eq("_id", testReservation.getEntityId().getUuid());
-            testMongoReservationRepository.removeFromRemoteRepository(firstReservationfilter);
-            foundReservations = testMongoReservationRepository.findOnRemoteRepository(filter2);
-
-            assertEquals(1,
-                    foundReservations.size());
-            assertEquals(10,
-                    foundReservations.get(0).getTripLengthByStations());
-
-            testMongoReservationRepository.removeFromRemoteRepository(filter2);
-            foundReservations = testMongoReservationRepository.findOnRemoteRepository(filter2);
-
-            assertEquals(0,
-                    foundReservations.size());
-
-            Bson removeClientFilter = Filters.eq("_id", testClient.getEntityId().getUuid());
-            testMongoClientRepository.removeFromRemoteRepository(removeClientFilter);
-            Bson removeTrainFilter = Filters.eq("_id", testTrain.getEntityId().getUuid());
-            testMongoTrainRepository.removeFromRemoteRepository(removeTrainFilter);
-
-            testMongoClientRepository.dropCollection();
-            testMongoTrainRepository.dropCollection();
-            testMongoReservationRepository.dropCollection();
+            testMongoRentRepository.dropCollection();
         }
     }
 
     @Test
-    public void addToRepositoryTest(){
+    public void removeTest() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
+            RentRepository testMongoRentRepository = new RentRepository(connectionManager);
 
-            MongoReservationRepository testMongoReservationRepository = new MongoReservationRepository(connectionManager);
+            //providing and checking a document to remove
+            MongoCollection<RentMgd> collection = connectionManager.getMongoDB().getCollection("rentCollection", RentMgd.class);
+            long initialCount = collection.countDocuments();
+            testMongoRentRepository.addRemote(testGuest);
+            long postAddCount = collection.countDocuments();
+            assertEquals(initialCount + 1, postAddCount, "Document was not added successfully");
 
-            testMongoReservationRepository.addToLocalRepository(testReservation);
-            assertEquals(testMongoReservationRepository.getLocalRepository().size(),
-                    1);
+            //actual remove testing
+            Bson filter1 = Filters.and(
+                    Filters.eq("id", 1234),
+                    Filters.eq("name", "Adam"),
+                    Filters.eq("lastName", "Kowalski"),
+                    Filters.eq("phoneNumber", "123456789"));
+            testMongoRentRepository.removeRemote(filter1);
+            long postRemoveCount = collection.countDocuments();
+            assertEquals(initialCount, postRemoveCount, "Document was not removed successfully");
 
-            testMongoReservationRepository.addToLocalRepository(testReservation);
-            assertEquals(testMongoReservationRepository.getLocalRepository().size(),
-                    2);
-            assertEquals(testMongoReservationRepository.getLocalRepository().get(1),
-                    testReservation);
-
-            testMongoReservationRepository.dropCollection();
+            testMongoRentRepository.dropCollection();
         }
-    }
-
-    @Test
-    public void removeFromRepositoryTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoReservationRepository testMongoReservationRepository = new MongoReservationRepository(connectionManager);
-
-            testMongoReservationRepository.addToLocalRepository(testReservation);
-            assertEquals(testMongoReservationRepository.getLocalRepository().size(),
-                    1);
-
-            testMongoReservationRepository.removeFromLocalRepository(testReservation);
-            assertEquals(testMongoReservationRepository.getLocalRepository().size(),
-                    0);
-
-            testMongoReservationRepository.dropCollection();
-        }
-    }
-
-    @Test
-    public void getRepositoryTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoReservationRepository testMongoReservationRepository = new MongoReservationRepository(connectionManager);
-
-            testMongoReservationRepository.addToLocalRepository(testReservation);
-            assertEquals(testMongoReservationRepository.getLocalRepository().get(0),
-                    testReservation);
-
-            testMongoReservationRepository.dropCollection();
-        }
-    }
-
-    @Test
-    public void clearRepositoryTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoReservationRepository testMongoReservationRepository = new MongoReservationRepository(connectionManager);
-
-            testMongoReservationRepository.addToLocalRepository(testReservation);
-            testMongoReservationRepository.addToLocalRepository(testReservation);
-            assertEquals(testMongoReservationRepository.getLocalRepository().size(),
-                    2);
-            testMongoReservationRepository.clearLocalRepository();
-            assertEquals(testMongoReservationRepository.getLocalRepository().size(),
-                    0);
-
-            testMongoReservationRepository.dropCollection();
-        }
-    }
-
-    @Test
-    public void creatingCollectionsTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoReservationRepository testMongoReservationRepository = new MongoReservationRepository(connectionManager);
-            testMongoReservationRepository.dropCollection();
-
-            MongoReservationRepository testMongoReservationRepository1 = new MongoReservationRepository(connectionManager);
-
-            MongoReservationRepository testMongoReservationRepository2 = new MongoReservationRepository(connectionManager);
-
-            testMongoReservationRepository1.dropCollection();
-        }
-    }
-}*/
+    }*/
+}

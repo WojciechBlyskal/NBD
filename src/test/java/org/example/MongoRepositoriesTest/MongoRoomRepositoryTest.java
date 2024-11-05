@@ -1,11 +1,15 @@
-/*package org.example.MongoRepositoriesTest;
+package org.example.MongoRepositoriesTest;
 
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.conversions.Bson;
+import org.example.Mgd.MicroSuiteMgd;
+import org.example.Mgd.RoomMgd;
+import org.example.MongoRepositories.ConnectionManager;
+import org.example.MongoRepositories.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-//import simpleMgdTypes.BoolMgd;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
 import java.util.ArrayList;
@@ -15,22 +19,147 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MongoRoomRepositoryTest {
-    private InterCityMgd testTrain;
+    private MicroSuiteMgd testRoom;
 
     @BeforeEach
     public void setUp(){
-        testTrain = new InterCityMgd(
+        testRoom = new MicroSuiteMgd(
                 new UniqueIdMgd(UUID.randomUUID()),
-                "Tomek",
-                10,
-                5,
-                4,
-                100,
-                new BoolMgd(false)
+                12,
+                3,
+                37.5,
+                200.0
         );
     }
 
     @Test
+    public void addFindTest() {
+        try (ConnectionManager connectionManager = new ConnectionManager()) {
+            RoomRepository testMongoRoomRepository = new RoomRepository(connectionManager);
+            MongoCollection<RoomMgd> collection = connectionManager.getMongoDB().getCollection("roomCollection", RoomMgd.class);
+
+            //comparing number of documents at before and after adding document
+            long initialCount = collection.countDocuments();
+            testMongoRoomRepository.addRemote(testRoom);
+            long postAddCount = collection.countDocuments();
+            assertEquals(initialCount + 1, postAddCount, "Document was not added successfully");
+
+            //checking if added document is the one we expected and find method
+            Bson filter1 = Filters.and(
+                    Filters.eq("number", 12),
+                    Filters.eq("floor", 3),
+                    Filters.eq("surface", 37.5),
+                    Filters.eq("price", 200.0));
+            ArrayList<RoomMgd> foundRooms = testMongoRoomRepository.findRemote(filter1);
+            assertEquals(testRoom.getNumber(), foundRooms.getFirst().getNumber(), "Retrieved document does not match the added document");
+            testMongoRoomRepository.dropCollection();
+        }
+    }
+
+    @Test
+    public void updateTest() {
+        try (ConnectionManager connectionManager = new ConnectionManager()) {
+            RoomRepository testMongoRoomRepository = new RoomRepository(connectionManager);
+            testMongoRoomRepository.addRemote(testRoom);
+
+            Bson update1 = Updates.set("number", 18);
+            Bson update2 = Updates.set("floor", 4);
+            Bson update4 = Updates.set("surface", 45.0);
+            Bson filter1 = Filters.eq("price", 200.0);
+
+            testMongoRoomRepository.updateRemote(filter1, update1);
+            testMongoRoomRepository.updateRemote(filter1, update2);
+            testMongoRoomRepository.updateRemote(filter1, update4);
+            MicroSuiteMgd room = (MicroSuiteMgd) testMongoRoomRepository.findRemote(filter1).getFirst();
+
+            assertEquals(18, room.getNumber());
+            assertEquals(4, room.getFloor());
+            assertEquals(45.0, room.getSurface());
+
+            Bson update3 = Updates.set("price", 150.0);
+            Bson filter2 = Filters.eq("number", 18);
+            testMongoRoomRepository.updateRemote(filter2, update3);
+
+            room = (MicroSuiteMgd) testMongoRoomRepository.findRemote(filter2).getFirst();
+            assertEquals("price", room.getPrice());
+
+            testMongoRoomRepository.dropCollection();
+        }
+    }
+
+    @Test
+    public void removeTest() {
+        try (ConnectionManager connectionManager = new ConnectionManager()) {
+            RoomRepository testMongoRoomRepository = new RoomRepository(connectionManager);
+
+            //providing and checking a document to remove
+            MongoCollection<RoomMgd> collection = connectionManager.getMongoDB().getCollection("roomCollection", RoomMgd.class);
+            long initialCount = collection.countDocuments();
+            testMongoRoomRepository.addRemote(testRoom);
+            long postAddCount = collection.countDocuments();
+            assertEquals(initialCount + 1, postAddCount, "Document was not added successfully");
+
+            //actual remove testing
+            Bson filter1 = Filters.and(
+                    Filters.eq("number", 12),
+                    Filters.eq("floor", 3),
+                    Filters.eq("surface", 37.5),
+                    Filters.eq("price", 200.0));
+            testMongoRoomRepository.removeRemote(filter1);
+            long postRemoveCount = collection.countDocuments();
+            assertEquals(initialCount, postRemoveCount, "Document was not removed successfully");
+
+            testMongoRoomRepository.dropCollection();
+        }
+    }
+
+    /*@Test
+    public void RemoteRepositoryTest() {
+        try (ConnectionManager connectionManager = new ConnectionManager()) {
+            RoomRepository testMongoRoomRepository = new RoomRepository(connectionManager);
+
+            //Create and Find Tests
+            testMongoRoomRepository.addRemote(testRoom);
+
+            ArrayList<GuestMgd> foundGuests;
+            //Bson filter1 = Filters.eq("lastName", "Kowalski");
+            Bson filter1 = Filters.eq("lastName", "Kowalski");
+            foundGuests = testMongoRoomRepository.findRemote(filter1);
+            //Assertions of all the attributes
+            assertEquals(1, foundGuests.size());
+            assertEquals("Kowalski", foundGuests.getFirst().getLastName());
+            assertEquals("123456789", foundGuests.getFirst().getPhoneNumber());
+
+            //Update Tests
+            Bson update = Updates.set("id", 1500);
+
+            testMongoRoomRepository.updateRemote(filter1,
+                    update);
+            foundGuests = testMongoRoomRepository.findRemote(filter1);
+
+            assertEquals(1500, foundGuests.getFirst().getId());
+
+
+            GuestMgd testClient2 = new GuestMgd(
+                    new UniqueIdMgd(UUID.randomUUID()),
+                    4321,
+                    "Jan",
+                    "Nowak",
+                    "987654321"
+            );
+
+            testMongoRoomRepository.addRemote(testClient2);
+            Bson filter2 = Filters.eq("lastName", "Nowak");
+            foundGuests.add(testMongoRoomRepository.findRemote(filter2).getFirst());
+
+            assertEquals(2, foundGuests.size());
+            assertEquals("Adam", foundGuests.get(0).getName());
+            assertEquals("Jan", foundGuests.get(1).getName());
+            testMongoRoomRepository.dropCollection();
+        }
+    }*/
+
+    /*@Test
     public void RemoteRepositoryTest() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
 
@@ -198,5 +327,5 @@ public class MongoRoomRepositoryTest {
 
             testMongoTrainRepository1.dropCollection();
         }
-    }
-}*/
+    }*/
+}

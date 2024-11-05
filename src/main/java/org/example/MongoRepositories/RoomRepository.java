@@ -1,5 +1,7 @@
 package org.example.MongoRepositories;
 
+import org.example.Mgd.GuestMgd;
+import org.example.Mgd.IEntity;
 import org.example.Mgd.RoomMgd;
 import com.mongodb.client.ClientSession;
 import com.mongodb.client.MongoCollection;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ArrayList;
 
-public class RoomRepository<Room> extends AbstractMongoRepository {
+public class RoomRepository<Room> extends AbstractMongoRepository implements IMongoRepository {
     private List<RoomMgd> list = new ArrayList<>();
     private ConnectionManager connectionManager;
     private MongoCollection<RoomMgd> roomCollection;
@@ -21,13 +23,29 @@ public class RoomRepository<Room> extends AbstractMongoRepository {
         this.connectionManager = connectionManager;
 
         if(!(connectionManager.getMongoDB().listCollectionNames().into(new ArrayList<String>()).
-                contains(getGuestCollectionName()))) {
-            connectionManager.getMongoDB().createCollection(getGuestCollectionName());
+                contains(getRoomCollectionName()))) {
+            connectionManager.getMongoDB().createCollection(getRoomCollectionName());
         }
         roomCollection = connectionManager.getMongoDB().getCollection(
-                getGuestCollectionName(),
+                getRoomCollectionName(),
                 RoomMgd.class
         );
+    }
+
+    @Override
+    public void addRemote(IEntity object) {
+        roomCollection.insertOne((RoomMgd) object, new InsertOneOptions().bypassDocumentValidation(false));
+    }
+
+    public void addRemote(RoomMgd obj, ClientSession clientSession) {
+        Bson uuidFilter = Filters.eq("_id",
+                obj.getEntityId().getUuid());
+        ArrayList<RoomMgd> foundRoom = findRemote(uuidFilter);
+
+        if (foundRoom.isEmpty()){
+            roomCollection.insertOne(clientSession, obj,
+                    new InsertOneOptions().bypassDocumentValidation(false));
+        }
     }
 
     public RoomMgd findRemote(UniqueIdMgd uniqueIdMgd){
@@ -43,17 +61,6 @@ public class RoomRepository<Room> extends AbstractMongoRepository {
         return foundRoom;
     }
 
-    public void addRemote(RoomMgd obj, ClientSession clientSession) {
-        Bson uuidFilter = Filters.eq("_id",
-                obj.getEntityId().getUuid());
-        ArrayList<RoomMgd> foundRoom = findRemote(uuidFilter);
-
-        if (foundRoom.isEmpty()){
-            roomCollection.insertOne(clientSession, obj,
-                    new InsertOneOptions().bypassDocumentValidation(false));
-        }
-    }
-
     public ArrayList<RoomMgd> findRemote(Bson filter){
         return roomCollection.find(filter).into(new ArrayList<>());
     }
@@ -61,6 +68,10 @@ public class RoomRepository<Room> extends AbstractMongoRepository {
     public void removeRemote(UniqueIdMgd uniqueIdMgd) {
 
         Bson filter = Filters.eq("_id", uniqueIdMgd.getUuid());
+        roomCollection.findOneAndDelete(filter);
+    }
+
+    public void removeRemote(Bson filter) {
         roomCollection.findOneAndDelete(filter);
     }
 

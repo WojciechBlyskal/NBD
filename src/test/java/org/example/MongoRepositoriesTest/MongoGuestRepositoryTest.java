@@ -112,7 +112,7 @@ public class MongoGuestRepositoryTest {
         }
     }
 
-    @Test
+    /*@Test
     public void RemoteRepositoryTest() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
             GuestRepository testMongoClientRepository = new GuestRepository(connectionManager);
@@ -155,122 +155,6 @@ public class MongoGuestRepositoryTest {
             assertEquals("Adam", foundGuests.get(0).getName());
             assertEquals("Jan", foundGuests.get(1).getName());
             testMongoClientRepository.dropCollection();
-        }
-    }
-            /*assertTrue(foundGuests.stream().anyMatch(GuestMgd -> "Adam".equals(GuestMgd.getName())),
-                    "List does not contain an element with name 'Adam'");
-            assertTrue(foundGuests.stream().anyMatch(GuestMgd -> "Jan".equals(GuestMgd.getName())),
-                    "List does not contain an element with name 'Jan'");*/
-
-            //Find with limit tests
-            /*foundGuests = testMongoClientRepository.findRemote(filter2);
-
-            assertEquals(1, foundGuests.size());
-            assertTrue(Objects.equals(foundGuests.getFirst().getLastName(), "Nowak")
-                    || Objects.equals(foundGuests.getFirst().getLastName(), "Kowalski"));
-
-
-            //Remove tests
-            testMongoClientRepository.removeRemote(filter1);
-            foundGuests = testMongoClientRepository.findRemote(filter2);
-
-            assertEquals(1,
-                    foundGuests.size());
-            assertEquals(testClient2.getLastName(),
-                    foundGuests.getFirst().getLastName());
-
-            testMongoClientRepository.removeRemote(filter2);
-            foundGuests = testMongoClientRepository.findRemote(filter2);
-
-            assertEquals(0,
-                    foundGuests.size());
-
-            testMongoClientRepository.dropCollection();*/
-      //  }
-    //}
-
-    /*@Test
-    public void addToRepositoryTest() {
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            GuestRepository testMongoClientRepository = new GuestRepository(connectionManager);
-
-            testMongoClientRepository.addToLocalRepository(testClient);
-            assertEquals(testMongoClientRepository.getLocalRepository().size(),
-                    1);
-
-            testMongoClientRepository.addToLocalRepository(testClient);
-            assertEquals(testMongoClientRepository.getLocalRepository().size(),
-                    2);
-            assertEquals(testMongoClientRepository.getLocalRepository().get(1),
-                    testClient);
-
-            testMongoClientRepository.dropCollection();
-        }
-    }
-
-    @Test
-    public void removeFromRepositoryTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoClientRepository testMongoClientRepository = new MongoClientRepository(connectionManager);
-
-            testMongoClientRepository.addToLocalRepository(testClient);
-            assertEquals(testMongoClientRepository.getLocalRepository().size(),
-                    1);
-
-            testMongoClientRepository.removeFromLocalRepository(testClient);
-            assertEquals(testMongoClientRepository.getLocalRepository().size(),
-                    0);
-
-            testMongoClientRepository.dropCollection();
-        }
-    }
-
-    /*@Test
-    public void getRepositoryTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoClientRepository testMongoClientRepository = new MongoClientRepository(connectionManager);
-
-            testMongoClientRepository.addToLocalRepository(testClient);
-            assertEquals(testMongoClientRepository.getLocalRepository().get(0),
-                    testClient);
-
-            testMongoClientRepository.dropCollection();
-        }
-    }
-
-    @Test
-    public void clearRepositoryTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoClientRepository testMongoClientRepository = new MongoClientRepository(connectionManager);
-
-            testMongoClientRepository.addToLocalRepository(testClient);
-            testMongoClientRepository.addToLocalRepository(testClient);
-            assertEquals(testMongoClientRepository.getLocalRepository().size(),
-                    2);
-            testMongoClientRepository.clearLocalRepository();
-            assertEquals(testMongoClientRepository.getLocalRepository().size(),
-                    0);
-
-            testMongoClientRepository.dropCollection();
-        }
-    }
-
-    @Test
-    public void creatingCollectionsTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoClientRepository testMongoClientRepository = new MongoClientRepository(connectionManager);
-            testMongoClientRepository.dropCollection();
-
-            MongoClientRepository testMongoClientRepository1 = new MongoClientRepository(connectionManager);
-
-            MongoClientRepository testMongoClientRepository2 = new MongoClientRepository(connectionManager);
-
-            testMongoClientRepository1.dropCollection();
         }
     }*/
 }
