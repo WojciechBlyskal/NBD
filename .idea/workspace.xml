@@ -6,11 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="1f97c16c-6a6b-4c22-ac52-62bf327d2f87" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/docker/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/GuestMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/GuestMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RentMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RentMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RoomMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RoomMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/AbstractMongoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/AbstractMongoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/GuestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/GuestRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/UniqueIdMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/UniqueIdMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RoomRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/BoolMgd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoGuestRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoGuestRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRentRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRoomRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRoomRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/codecTest/UniqueIdCodecTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/codecTest/UniqueIdCodecTest.java" afterDir="false" />
@@ -65,6 +71,7 @@
     "JUnit.UniqueIdCodecTest.executor": "Run",
     "Maven.hotel [clean].executor": "Run",
     "Maven.hotel [install].executor": "Run",
+    "Maven.hotel [test].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -110,7 +117,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.MongoRoomRepositoryTest">
     <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
       <option name="appName" />
       <option name="appServicePlanName" />
@@ -173,6 +180,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MongoRoomRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="hotel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.MongoRepositoriesTest.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.MongoRepositoriesTest" />
+      <option name="MAIN_CLASS_NAME" value="org.example.MongoRepositoriesTest.MongoRoomRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
       <deployment type="docker-compose.yml">
         <settings />
@@ -207,21 +229,13 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker/mongoCluster.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="sourceFilePath" value="docker/mongoCluster.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MongoRoomRepositoryTest" />
         <item itemvalue="Docker.docker: Compose Deployment (1)" />
         <item itemvalue="JUnit.MongoGuestRepositoryTest.addFindTest" />
         <item itemvalue="JUnit.MongoGuestRepositoryTest.RemoteRepositoryTest" />
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-        <item itemvalue="Docker.docker/mongoCluster.yml: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -279,7 +293,11 @@
       <workItem from="1730757654386" duration="709000" />
       <workItem from="1730758765610" duration="215000" />
       <workItem from="1730759493032" duration="49000" />
-      <workItem from="1730759595162" duration="25241000" />
+      <workItem from="1730759595162" duration="32937000" />
+      <workItem from="1730842901630" duration="10964000" />
+      <workItem from="1730854445993" duration="120000" />
+      <workItem from="1730898166032" duration="5627000" />
+      <workItem from="1730904230307" duration="313000" />
     </task>
     <servers />
   </component>

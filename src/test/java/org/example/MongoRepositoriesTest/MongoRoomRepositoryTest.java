@@ -3,10 +3,13 @@ package org.example.MongoRepositoriesTest;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import org.bson.*;
 import org.bson.conversions.Bson;
+import org.example.Mgd.GuestMgd;
 import org.example.Mgd.MicroSuiteMgd;
 import org.example.Mgd.RoomMgd;
 import org.example.MongoRepositories.ConnectionManager;
+import org.example.MongoRepositories.GuestRepository;
 import org.example.MongoRepositories.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -88,6 +91,7 @@ public class MongoRoomRepositoryTest {
         }
     }
 
+
     @Test
     public void removeTest() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
@@ -114,219 +118,82 @@ public class MongoRoomRepositoryTest {
         }
     }
 
-    /*@Test
-    public void RemoteRepositoryTest() {
+    @Test
+    public void testDropCollection() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
-            RoomRepository testMongoRoomRepository = new RoomRepository(connectionManager);
+            RoomRepository testMongoClientRepository = new RoomRepository(connectionManager);
+            testMongoClientRepository.addRemote(testRoom);
 
-            //Create and Find Tests
-            testMongoRoomRepository.addRemote(testRoom);
-
-            ArrayList<GuestMgd> foundGuests;
-            //Bson filter1 = Filters.eq("lastName", "Kowalski");
-            Bson filter1 = Filters.eq("lastName", "Kowalski");
-            foundGuests = testMongoRoomRepository.findRemote(filter1);
-            //Assertions of all the attributes
-            assertEquals(1, foundGuests.size());
-            assertEquals("Kowalski", foundGuests.getFirst().getLastName());
-            assertEquals("123456789", foundGuests.getFirst().getPhoneNumber());
-
-            //Update Tests
-            Bson update = Updates.set("id", 1500);
-
-            testMongoRoomRepository.updateRemote(filter1,
-                    update);
-            foundGuests = testMongoRoomRepository.findRemote(filter1);
-
-            assertEquals(1500, foundGuests.getFirst().getId());
-
-
-            GuestMgd testClient2 = new GuestMgd(
+            RoomMgd testRoom2 = new MicroSuiteMgd(
                     new UniqueIdMgd(UUID.randomUUID()),
-                    4321,
-                    "Jan",
-                    "Nowak",
-                    "987654321"
+                    12,
+                    3,
+                    37.5,
+                    200.0
             );
 
-            testMongoRoomRepository.addRemote(testClient2);
-            Bson filter2 = Filters.eq("lastName", "Nowak");
-            foundGuests.add(testMongoRoomRepository.findRemote(filter2).getFirst());
+            testMongoClientRepository.addRemote(testRoom2);
 
-            assertEquals(2, foundGuests.size());
-            assertEquals("Adam", foundGuests.get(0).getName());
-            assertEquals("Jan", foundGuests.get(1).getName());
-            testMongoRoomRepository.dropCollection();
-        }
-    }*/
+            testMongoClientRepository.dropCollection();
 
-    /*@Test
-    public void RemoteRepositoryTest() {
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoTrainRepository testMongoTrainRepository = new MongoTrainRepository(connectionManager);
-
-            //Create and Find Tests
-            testMongoTrainRepository.addToRemoteRepository(testTrain);
-
-            ArrayList<TrainMgd> foundTrains;
-            Bson filter1 = Filters.and(
-                    Filters.eq("trainname", "Tomek"),
-                    Filters.eq("amountofcars", 10));
-
-            foundTrains = testMongoTrainRepository.findOnRemoteRepository(filter1);
-
-            //Assertions of all the attributes
-            assertEquals(1,
-                    foundTrains.size());
-            assertEquals("Tomek",
-                    foundTrains.get(0).getName());
-            assertEquals(10,
-                    foundTrains.get(0).getAmountOfCars());
-            assertEquals(5,
-                    foundTrains.get(0).getAmountOfStations());
-            assertEquals(4,
-                    ((InterCityMgd)foundTrains.get(0)).getAmountOfSeatsPerCar());
-            assertEquals(100,
-                    ((InterCityMgd)foundTrains.get(0)).getMaxSpeed());
-            assertEquals(false,
-                    ((InterCityMgd)foundTrains.get(0)).getIsInternational().getABoolean());
-
-
-            //Update Tests
-            Bson update = Updates.set("amountofstations", 7);
-
-            testMongoTrainRepository.updateRemoteRepository(filter1,
-                    update);
-            foundTrains = testMongoTrainRepository.findOnRemoteRepository(filter1);
-
-            assertEquals(7,
-                    foundTrains.get(0).getAmountOfStations());
-
-
-            //More than one element tests
-            TLKMgd testTrain2 = new TLKMgd(
-                    new UniqueIdMgd(UUID.randomUUID()),
-                    "Tomek",
-                    20,
-                    5,
-                    4,
-                    100
-            );
-            Bson filter2 = Filters.and(
-                    Filters.eq("trainname", "Tomek"));
-
-            testMongoTrainRepository.addToRemoteRepository(testTrain2);
-            foundTrains = testMongoTrainRepository.findOnRemoteRepository(filter2);
-
-            assertEquals(2,
-                    foundTrains.size());
-            assertEquals("Tomek",
-                    foundTrains.get(0).getName());
-            assertEquals("Tomek",
-                    foundTrains.get(1).getName());
-
-            //Remove tests
-            testMongoTrainRepository.removeFromRemoteRepository(filter1);
-            foundTrains = testMongoTrainRepository.findOnRemoteRepository(filter2);
-
-            assertEquals(1,
-                    foundTrains.size());
-            assertEquals(testTrain2.getAmountOfCars(),
-                    foundTrains.get(0).getAmountOfCars());
-
-            testMongoTrainRepository.removeFromRemoteRepository(filter2);
-            foundTrains = testMongoTrainRepository.findOnRemoteRepository(filter2);
-
-            assertEquals(0,
-                    foundTrains.size());
-
-            testMongoTrainRepository.dropCollection();
+            ArrayList<RoomMgd> allGuests = testMongoClientRepository.findRemote(Filters.empty());
+            assertTrue(allGuests.isEmpty());
         }
     }
 
     @Test
-    public void addToRepositoryTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
+    public void testRoomToBsonDocument() {
+        BsonDocument document = new BsonDocument();
+        document.append("number", new BsonInt32(testRoom.getNumber()));
+        document.append("floor", new BsonInt32(testRoom.getFloor()));
+        document.append("surface", new BsonDouble(testRoom.getSurface()));
+        document.append("price", new BsonDouble(testRoom.getPrice()));
+        document.append("_id", new BsonString(testRoom.getEntityId().toString()));
 
-            MongoTrainRepository testMongoTrainRepository = new MongoTrainRepository(connectionManager);
-
-            testMongoTrainRepository.addToLocalRepository(testTrain);
-            assertEquals(testMongoTrainRepository.getLocalRepository().size(),
-                    1);
-
-            testMongoTrainRepository.addToLocalRepository(testTrain);
-            assertEquals(testMongoTrainRepository.getLocalRepository().size(),
-                    2);
-            assertEquals(testMongoTrainRepository.getLocalRepository().get(1),
-                    testTrain);
-
-            testMongoTrainRepository.dropCollection();
-        }
+        assertEquals(12, document.getInt32("number").getValue());
+        assertEquals(3, document.getInt32("floor").getValue());
+        assertEquals(37.5, document.getDouble("surface").getValue());
+        assertEquals(200.0, document.getDouble("price").getValue());
     }
 
     @Test
-    public void removeFromRepositoryTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
+    public void testBsonDocumentToRoom() {
+        Document document = new Document("_id", 7)
+                .append("number", 8)
+                .append("floor", 3)
+                .append("surface", 25.0)
+                .append("price", 100.0);
 
-            MongoTrainRepository testMongoTrainRepository = new MongoTrainRepository(connectionManager);
-
-            testMongoTrainRepository.addToLocalRepository(testTrain);
-            assertEquals(testMongoTrainRepository.getLocalRepository().size(),
-                    1);
-
-            testMongoTrainRepository.removeFromLocalRepository(testTrain);
-            assertEquals(testMongoTrainRepository.getLocalRepository().size(),
-                    0);
-
-            testMongoTrainRepository.dropCollection();
-        }
+        UUID uuid = UUID.fromString("00000000-0000-0000-0000-000000000007");
+        UniqueIdMgd entityId = new UniqueIdMgd(uuid);
+        RoomMgd room = new RoomMgd(entityId,
+                document.getInteger("number"),
+                document.getInteger("floor"),
+                document.getDouble("surface"),
+                document.getDouble("price"));
+        assertEquals(8, room.getNumber());
+        assertEquals(3, room.getFloor());
+        assertEquals(25.0, room.getSurface());
+        assertEquals(100.0, room.getPrice());
     }
 
     @Test
-    public void getRepositoryTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
+    public void testDataConsistencyAfterConversion() {
+        Document document = new Document("number", testRoom.getNumber())
+                .append("floor", testRoom.getFloor())
+                .append("surface", testRoom.getSurface())
+                .append("price", testRoom.getPrice());
 
-            MongoTrainRepository testMongoTrainRepository = new MongoTrainRepository(connectionManager);
+        UniqueIdMgd entityId = new UniqueIdMgd(UUID.fromString("00000000-0000-0000-0000-000000000008"));
+        RoomMgd convertedRoom = new RoomMgd(entityId,
+                document.getInteger("number"),
+                document.getInteger("floor"),
+                document.getDouble("surface"),
+                document.getDouble("price"));
 
-            testMongoTrainRepository.addToLocalRepository(testTrain);
-            assertEquals(testMongoTrainRepository.getLocalRepository().get(0),
-                    testTrain);
-
-            testMongoTrainRepository.dropCollection();
-        }
+        assertEquals(testRoom.getNumber(), convertedRoom.getNumber());
+        assertEquals(testRoom.getFloor(), convertedRoom.getFloor());
+        assertEquals(testRoom.getSurface(), convertedRoom.getSurface());
+        assertEquals(testRoom.getPrice(), convertedRoom.getPrice());
     }
-
-    @Test
-    public void clearRepositoryTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoTrainRepository testMongoTrainRepository = new MongoTrainRepository(connectionManager);
-
-            testMongoTrainRepository.addToLocalRepository(testTrain);
-            testMongoTrainRepository.addToLocalRepository(testTrain);
-            assertEquals(testMongoTrainRepository.getLocalRepository().size(),
-                    2);
-            testMongoTrainRepository.clearLocalRepository();
-            assertEquals(testMongoTrainRepository.getLocalRepository().size(),
-                    0);
-
-            testMongoTrainRepository.dropCollection();
-        }
-    }
-
-    @Test
-    public void creatingCollectionsTest(){
-        try (ConnectionManager connectionManager = new ConnectionManager()) {
-
-            MongoTrainRepository testMongoTrainRepository = new MongoTrainRepository(connectionManager);
-            testMongoTrainRepository.dropCollection();
-
-            MongoTrainRepository testMongoTrainRepository1 = new MongoTrainRepository(connectionManager);
-
-            MongoTrainRepository testMongoTrainRepository2 = new MongoTrainRepository(connectionManager);
-
-            testMongoTrainRepository1.dropCollection();
-        }
-    }*/
 }

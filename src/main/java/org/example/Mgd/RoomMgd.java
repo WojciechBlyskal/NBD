@@ -14,18 +14,22 @@ public class RoomMgd extends AbstractEntityMgd {
     private double surface;
     @BsonProperty("price")
     private double price;
+    /*@BsonProperty("isRented")
+    private boolean isRented = false;*/
 
     @BsonCreator
     public RoomMgd(@BsonProperty("_id") UniqueIdMgd entityId,
                     @BsonProperty("number") int number,
                     @BsonProperty("floor") int floor,
                     @BsonProperty("surface") double surface,
-                    @BsonProperty("price") double price) {
+                    @BsonProperty("price") double price){//,
+                    //@BsonProperty("isRented") boolean isRented){
         super(entityId);
         this.number = number;
         this.floor = floor;
         this.surface = surface;
         this.price = price;
+        //this.isRented = isRented;
     }
 
     public int getNumber() {
@@ -59,4 +63,12 @@ public class RoomMgd extends AbstractEntityMgd {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    /*public boolean isRented() {
+        return isRented;
+    }
+
+    public void setRented(boolean rented) {
+        isRented = rented;
+    }*/
 }

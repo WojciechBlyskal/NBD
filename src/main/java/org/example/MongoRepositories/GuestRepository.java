@@ -33,48 +33,9 @@ public class GuestRepository extends AbstractMongoRepository implements IMongoRe
         );
     }
 
-    public GuestRepository(ConnectionManager connectionManager,
-                                 WriteConcern writeConcern,
-                                 ReadPreference readPreference) {
-        this.connectionManager = connectionManager;
-
-        if(!(connectionManager.getMongoDB().listCollectionNames().into(new ArrayList<String>()).contains(getGuestCollectionName()))) {
-            connectionManager.getMongoDB().createCollection(getGuestCollectionName());
-        }
-
-        guestCollection = connectionManager.getMongoDB().getCollection(
-                        getGuestCollectionName(),
-                        GuestMgd.class)
-                .withWriteConcern(writeConcern)
-                .withReadPreference(readPreference);
-    }
-
     @Override
     public void addRemote(IEntity object) {
         guestCollection.insertOne((GuestMgd) object);
-    }
-
-    public void addRemote(GuestMgd obj, ClientSession clientSession) {
-        Bson uuidFilter = Filters.eq("_id",
-                obj.getEntityId().getUuid());
-        ArrayList<GuestMgd> foundGuest = findRemote(uuidFilter);
-
-        if (foundGuest.isEmpty()){
-            guestCollection.insertOne(clientSession, obj,
-                    new InsertOneOptions().bypassDocumentValidation(false));
-        }
-    }
-
-    public GuestMgd findRemote(UniqueIdMgd uniqueIdMgd){
-
-        GuestMgd foundGuest = null;
-
-        Bson filter = Filters.eq("_id", uniqueIdMgd.getUuid());
-        try {
-            foundGuest = guestCollection.find(filter).into(new ArrayList<>()).getFirst();
-        } catch (NoSuchElementException e) {
-        }
-        return foundGuest;
     }
 
     public ArrayList<GuestMgd> findRemote(Bson filter) {
@@ -95,23 +56,6 @@ public class GuestRepository extends AbstractMongoRepository implements IMongoRe
         guestCollection.updateOne(filter, update);
     }
 
-    public void addLocal(GuestMgd obj) {
-        list.add(obj);
-    }
-
-    public void removeLocal(GuestMgd obj) {
-        list.remove(obj);
-    }
-
-    public List<GuestMgd> getLocal() {
-        return list;
-    }
-
-    public void clearLocal() {
-        while(!list.isEmpty()){
-            list.removeFirst();
-        }
-    }
     public void dropCollection(){
         this.guestCollection.drop();
     }

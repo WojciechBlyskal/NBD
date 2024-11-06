@@ -12,7 +12,7 @@ public class RentMgd extends AbstractEntityMgd {
     @BsonProperty("startTime")
     private final LocalDateTime startTime;
     @BsonProperty("endTime")
-    private final LocalDateTime endTime;
+    private LocalDateTime endTime = null;
     @BsonProperty("guestMgd")
     private GuestMgd guest;
     @BsonProperty("roomMgd")
@@ -22,13 +22,13 @@ public class RentMgd extends AbstractEntityMgd {
     public RentMgd(@BsonProperty("_id") UniqueIdMgd entityId,
                    @BsonProperty("rentNumber") String rentNumber,
                    @BsonProperty("startTime") LocalDateTime startTime,
-                   @BsonProperty("endTime") LocalDateTime endTime,
+                   //@BsonProperty("endTime") LocalDateTime endTime,
                    @BsonProperty("guestMgd") GuestMgd guest,
                    @BsonProperty("roomMgd") RoomMgd room) {
         super(entityId);
         this.rentNumber = rentNumber;
         this.startTime = startTime;
-        this.endTime = endTime;
+        //this.endTime = endTime;
         //this.guest = guest;
         //this.room = room;
     }
@@ -53,11 +53,11 @@ public class RentMgd extends AbstractEntityMgd {
         return endTime;
     }
 
-    /*public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         if (endTime != null && this.endTime == null && endTime.isAfter(startTime)) {
             this.endTime = endTime;
         }
-    }*/
+    }
 
     public GuestMgd getGuest() {
         return guest;

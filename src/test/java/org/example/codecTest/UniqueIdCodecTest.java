@@ -6,7 +6,9 @@ import org.example.codec.UniqueIdCodec;
 import org.junit.jupiter.api.Test;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+//import static junit.framework.Assert.assertEquals;
 
 public class UniqueIdCodecTest {
 

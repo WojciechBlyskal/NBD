@@ -3,6 +3,10 @@ package org.example.MongoRepositoriesTest;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
+import org.bson.BsonDocument;
+import org.bson.BsonInt64;
+import org.bson.BsonString;
+import org.bson.Document;
 import org.example.Mgd.GuestMgd;
 import org.example.MongoRepositories.ConnectionManager;
 import org.example.MongoRepositories.GuestRepository;
@@ -112,49 +116,151 @@ public class MongoGuestRepositoryTest {
         }
     }
 
-    /*@Test
-    public void RemoteRepositoryTest() {
+    @Test
+    public void testDropCollection() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
             GuestRepository testMongoClientRepository = new GuestRepository(connectionManager);
-
-            //Create and Find Tests
             testMongoClientRepository.addRemote(testGuest);
 
-            ArrayList<GuestMgd> foundGuests;
-            //Bson filter1 = Filters.eq("lastName", "Kowalski");
-            Bson filter1 = Filters.eq("lastName", "Kowalski");
-            foundGuests = testMongoClientRepository.findRemote(filter1);
-            //Assertions of all the attributes
-            assertEquals(1, foundGuests.size());
-            assertEquals("Kowalski", foundGuests.getFirst().getLastName());
-            assertEquals("123456789", foundGuests.getFirst().getPhoneNumber());
-
-            //Update Tests
-            Bson update = Updates.set("id", 1500);
-
-            testMongoClientRepository.updateRemote(filter1,
-                    update);
-            foundGuests = testMongoClientRepository.findRemote(filter1);
-
-            assertEquals(1500, foundGuests.getFirst().getId());
-
-
-            GuestMgd testClient2 = new GuestMgd(
+            GuestMgd guest2 = new GuestMgd(
                     new UniqueIdMgd(UUID.randomUUID()),
-                    4321,
+                    1235,
                     "Jan",
-                    "Nowak",
-                    "987654321"
+                    "Kowalski",
+                    "123456789"
             );
 
-            testMongoClientRepository.addRemote(testClient2);
-            Bson filter2 = Filters.eq("lastName", "Nowak");
-            foundGuests.add(testMongoClientRepository.findRemote(filter2).getFirst());
+            testMongoClientRepository.addRemote(guest2);
 
-            assertEquals(2, foundGuests.size());
-            assertEquals("Adam", foundGuests.get(0).getName());
-            assertEquals("Jan", foundGuests.get(1).getName());
             testMongoClientRepository.dropCollection();
+
+            ArrayList<GuestMgd> allGuests = testMongoClientRepository.findRemote(Filters.empty());
+            assertTrue(allGuests.isEmpty());
+        }
+    }
+
+    @Test
+    public void testGuestToBsonDocument() {
+        BsonDocument document = new BsonDocument();
+        document.append("id", new BsonInt64(testGuest.getId()));
+        document.append("name", new BsonString(testGuest.getName()));
+        document.append("lastName", new BsonString(testGuest.getLastName()));
+        document.append("phoneNumber", new BsonString(testGuest.getPhoneNumber()));
+        document.append("_id", new BsonString(testGuest.getEntityId().toString()));
+
+        assertEquals(1234, document.getInt64("id").getValue());
+        assertEquals("Adam", document.getString("name").getValue());
+        assertEquals("Kowalski", document.getString("lastName").getValue());
+        assertEquals("123456789", document.getString("phoneNumber").getValue());
+    }
+
+    @Test
+    public void testBsonDocumentToGuest() {
+        Document document = new Document("_id", 7)
+                .append("id", 8)
+                .append("name", "Jan")
+                .append("lastName", "Nowak")
+                .append("phoneNumber", "888999000");
+
+        UUID uuid = UUID.fromString("00000000-0000-0000-0000-000000000007");
+        UniqueIdMgd entityId = new UniqueIdMgd(uuid);
+        GuestMgd guest = new GuestMgd(entityId,
+                document.getInteger("id"),
+                document.getString("name"),
+                document.getString("lastName"),
+                document.getString("phoneNumber"));
+        assertEquals(8, guest.getId());
+        assertEquals("Jan", guest.getName());
+        assertEquals("Nowak", guest.getLastName());
+        assertEquals("888999000", guest.getPhoneNumber());
+    }
+
+    @Test
+    public void testDataConsistencyAfterConversion() {
+        Document document = new Document("id", 1234)
+                .append("name", testGuest.getName())
+                .append("lastName", testGuest.getLastName())
+                .append("phoneNumber", testGuest.getPhoneNumber());
+
+        UniqueIdMgd entityId = new UniqueIdMgd(UUID.fromString("00000000-0000-0000-0000-000000000008"));
+        GuestMgd convertedGuest = new GuestMgd(entityId,
+                document.getInteger("id"),
+                document.getString("name"),
+                document.getString("lastName"),
+                document.getString("phoneNumber"));
+        assertEquals(testGuest.getId(), convertedGuest.getId());
+        assertEquals(testGuest.getName(), convertedGuest.getName());
+        assertEquals(testGuest.getLastName(), convertedGuest.getLastName());
+        assertEquals(testGuest.getPhoneNumber(), convertedGuest.getPhoneNumber());
+    }
+
+    /*@Test
+    public void testClusterCrudOperationsWithMajorityNodesActive() {
+        try (ConnectionManager connectionManager = new ConnectionManager()) {
+            GuestRepository testMongoClientRepository = new GuestRepository(connectionManager);
+            //Guest guest = new Guest("Mark", "Williams", 10, "999888777");
+            testMongoClientRepository.addRemote(testGuest);
+
+            // Odczytaj dokument i sprawdź, czy dane są poprawne
+            Guest retrievedGuest = (Guest) testMongoClientRepository.findRemote(guest.getId());
+            assertNotNull(retrievedGuest);
+            assertEquals("Mark", retrievedGuest.getName());
+            assertEquals("Williams", retrievedGuest.getLastName());
+
+            // Zaktualizuj dokument
+            Bson update = Updates.set("phoneNumber", "000111222");
+            testMongoClientRepository.updateRemote(Filters.eq("_id", guest.getId()), update);
+
+            // Sprawdź, czy dane zostały poprawnie zaktualizowane
+            Guest updatedGuest = (Guest) testMongoClientRepository.findRemote(guest.getId());
+            assertEquals("000111222", updatedGuest.getPhoneNumber());
+
+            // Usuń dokument
+            testMongoClientRepository.removeRemote(guest.getId());
+
+            // Sprawdź, czy dokument został usunięty
+            Guest deletedGuest = (Guest) testMongoClientRepository.findRemote(guest.getId());
+            assertNull(deletedGuest);
         }
     }*/
+    /*{@Test
+    public void testFailoverAndCrudOperations() throws InterruptedException {
+        try (ConnectionManager connectionManager = new ConnectionManager()) {
+            GuestRepository testMongoGuestRepository = new GuestRepository(connectionManager);
+            // 1. Dodaj dokument, aby upewnić się, że klaster działa
+            //Guest guest = new Guest("Tom", "Jackson", 11, "123123123");
+            testMongoGuestRepository.addRemote(testGuest);
+
+            // 2. Wyłącz węzeł primary (zakładając, że masz sposób na to w testach)
+            clusterManager.shutdownPrimaryNode();
+
+            // 3. Poczekaj, aż węzeł secondary stanie się primary
+            Thread.sleep(5000); // Oczekiwanie na przełączenie - może być inny sposób
+
+            // 4. Sprawdź, czy operacje CRUD nadal działają
+            Bson filter1 = Filters.and(
+                    Filters.eq("id", 1234),
+                    Filters.eq("name", "Adam"),
+                    Filters.eq("lastName", "Kowalski"),
+                    Filters.eq("phoneNumber", "123456789"));
+            ArrayList<GuestMgd> foundGuests = testMongoGuestRepository.findRemote(filter1);
+            //GuestMgd retrievedGuest = (GuestMgd) testMongoGuestRepository.findRemote(testGuest.getId());
+            assertNotNull(foundGuests);
+            assertEquals("Adam", foundGuests.getFirst().getName());
+
+            // Zaktualizuj dokument
+            Bson update = Updates.set("phoneNumber", "321321321");
+            testMongoGuestRepository.updateRemote(Filters.eq("_id", testGuest.getId()), update);
+
+            // Sprawdź aktualizację
+            GuestMgd updatedGuest = (GuestMgd) testMongoGuestRepository.findRemote(testGuest.getId());
+            assertEquals("321321321", updatedGuest.getPhoneNumber());
+
+            // Usuń dokument
+            testMongoGuestRepository.removeRemote(testGuest.getId());
+            GuestMgd deletedGuest = (GuestMgd) testMongoGuestRepository.findRemote(testGuest.getId());
+            assertNull(deletedGuest);
+        }
+    }*/
+
 }

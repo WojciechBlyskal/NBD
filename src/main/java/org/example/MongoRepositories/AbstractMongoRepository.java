@@ -17,8 +17,8 @@ import org.example.codec.UniqueIdCodecProvider;
 import java.util.List;
 
 public abstract class AbstractMongoRepository implements AutoCloseable {
-    private static ConnectionString connectionString = new ConnectionString("mongodb://mongodb1:27017, " +
-            "mongodb2:27018, mongodb3:27019/?replicaSet=replica_set_single"); //"mongodb://localhost:27017,localhost:27018,localhost:27019/?replicaSet=replica_set_single");
+    private static ConnectionString connectionString = new ConnectionString("mongodb://mongodb1:27017," +
+            "mongodb2:27018,mongodb3:27019/?replicaSet=replica_set_single"); //"mongodb://localhost:27017,localhost:27018,localhost:27019/?replicaSet=replica_set_single");
     private MongoCredential credential = MongoCredential.createCredential("admin", "admin",
             "adminpassword".toCharArray());
     private CodecRegistry pojoCodecRegistry =
@@ -28,6 +28,7 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
                     .build());
     private MongoClient mongoClient;
     private MongoDatabase mongoDB;
+
     protected void initDbConnection() {
         MongoClientSettings settings = MongoClientSettings.builder()
                 .credential(credential)
