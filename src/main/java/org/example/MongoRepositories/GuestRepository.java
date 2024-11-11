@@ -38,6 +38,18 @@ public class GuestRepository extends AbstractMongoRepository implements IMongoRe
         guestCollection.insertOne((GuestMgd) object);
     }
 
+    public void addRemote(GuestMgd object, ClientSession clientSession) {
+
+        Bson uuidFilter = Filters.eq("_id", object.getEntityId().getUuid());
+        ArrayList<GuestMgd> foundClients = findRemote(uuidFilter);
+
+        if(foundClients.isEmpty()) {
+            guestCollection.insertOne(clientSession,
+                    object,
+                    new InsertOneOptions().bypassDocumentValidation(false));
+        }
+    }
+
     public ArrayList<GuestMgd> findRemote(Bson filter) {
         return guestCollection.find(filter).into(new ArrayList<>());
     }

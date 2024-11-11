@@ -1,11 +1,6 @@
-version: '3.8'
 services:
   mongodb1:
-    build:
-      context: .
-      #args:
-        #DOCKER_BUILDKIT: 1
-      dockerfile: Dockerfile
+    build: .
     image: mongocustom:8.0.1
     hostname: mongodb1
     container_name: mongodb1
@@ -18,17 +13,13 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=adminpassword
     command: --config /etc/mongod.conf --port 27017
     healthcheck:
-      test: mongosh --port 27017 --eval "db.adminCommand('ping')"
-      interval: 15s
-      timeout: 5s
+      test: [ "CMD","mongosh", "--port", "27017" , "--eval", "db.adminCommand('ping')" ]
+      interval: 20s
+      timeout: 6s
       retries: 5
 
   mongodb2:
-    build:
-      context: .
-      #args:
-      #  DOCKER_BUILDKIT: 1
-      dockerfile: Dockerfile
+    build: .
     image: mongocustom:8.0.1
     container_name: mongodb2
     hostname: mongodb2
@@ -41,17 +32,13 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=adminpassword
     command: --config /etc/mongod.conf --port 27018
     healthcheck:
-      test: mongosh --port 27018 --eval "db.adminCommand('ping')"
-      interval: 15s
-      timeout: 5s
+      test: [ "CMD","mongosh", "--port", "27018" , "--eval", "db.adminCommand('ping')" ]
+      interval: 20s
+      timeout: 6s
       retries: 5
 
   mongodb3:
-    build:
-      context: .
-      #args:
-      #  DOCKER_BUILDKIT: 1
-      dockerfile: Dockerfile
+    build: .
     image: mongocustom:8.0.1
     container_name: mongodb3
     hostname: mongodb3
@@ -64,9 +51,9 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=adminpassword
     command: --config /etc/mongod.conf --port 27019
     healthcheck:
-      test: mongosh --port 27019 --eval "db.adminCommand('ping')"
-      interval: 15s
-      timeout: 5s
+      test: [ "CMD","mongosh", "--port", "27019" , "--eval", "db.adminCommand('ping')" ]
+      interval: 20s
+      timeout: 6s
       retries: 5
 
   mongoinit:

@@ -31,7 +31,8 @@ public class MongoRoomRepositoryTest {
                 12,
                 3,
                 37.5,
-                200.0
+                200.0,
+                0
         );
     }
 
@@ -129,7 +130,8 @@ public class MongoRoomRepositoryTest {
                     12,
                     3,
                     37.5,
-                    200.0
+                    200.0,
+                    0
             );
 
             testMongoClientRepository.addRemote(testRoom2);
@@ -162,15 +164,17 @@ public class MongoRoomRepositoryTest {
                 .append("number", 8)
                 .append("floor", 3)
                 .append("surface", 25.0)
-                .append("price", 100.0);
+                .append("price", 100.0)
+                .append("rented", 0);
 
         UUID uuid = UUID.fromString("00000000-0000-0000-0000-000000000007");
         UniqueIdMgd entityId = new UniqueIdMgd(uuid);
-        RoomMgd room = new RoomMgd(entityId,
+        MicroSuiteMgd room = new MicroSuiteMgd(entityId,
                 document.getInteger("number"),
                 document.getInteger("floor"),
                 document.getDouble("surface"),
-                document.getDouble("price"));
+                document.getDouble("price"),
+                document.getInteger("rented"));
         assertEquals(8, room.getNumber());
         assertEquals(3, room.getFloor());
         assertEquals(25.0, room.getSurface());
@@ -182,14 +186,16 @@ public class MongoRoomRepositoryTest {
         Document document = new Document("number", testRoom.getNumber())
                 .append("floor", testRoom.getFloor())
                 .append("surface", testRoom.getSurface())
-                .append("price", testRoom.getPrice());
+                .append("price", testRoom.getPrice())
+                .append("rented", testRoom.getRented());
 
         UniqueIdMgd entityId = new UniqueIdMgd(UUID.fromString("00000000-0000-0000-0000-000000000008"));
-        RoomMgd convertedRoom = new RoomMgd(entityId,
+        MicroSuiteMgd convertedRoom = new MicroSuiteMgd(entityId,
                 document.getInteger("number"),
                 document.getInteger("floor"),
                 document.getDouble("surface"),
-                document.getDouble("price"));
+                document.getDouble("price"),
+                document.getInteger("rented"));
 
         assertEquals(testRoom.getNumber(), convertedRoom.getNumber());
         assertEquals(testRoom.getFloor(), convertedRoom.getFloor());

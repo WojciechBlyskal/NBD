@@ -1,9 +1,11 @@
 package org.example.Mgd;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
+@BsonDiscriminator(key="_guest", value="guest")
 public class GuestMgd extends AbstractEntityMgd {
 
     @BsonProperty("id")

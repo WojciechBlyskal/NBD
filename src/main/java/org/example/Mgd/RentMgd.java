@@ -28,9 +28,6 @@ public class RentMgd extends AbstractEntityMgd {
         super(entityId);
         this.rentNumber = rentNumber;
         this.startTime = startTime;
-        //this.endTime = endTime;
-        //this.guest = guest;
-        //this.room = room;
     }
 
     public String getRentNumber() {
@@ -44,10 +41,6 @@ public class RentMgd extends AbstractEntityMgd {
     public LocalDateTime getStartTime() {
         return startTime;
     }
-
-    /*public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }*/
 
     public LocalDateTime getEndTime() {
         return endTime;

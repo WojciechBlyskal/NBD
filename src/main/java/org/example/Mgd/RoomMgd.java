@@ -1,9 +1,12 @@
 package org.example.Mgd;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
+@BsonDiscriminator(key="_room")
 public class RoomMgd extends AbstractEntityMgd {
 
     @BsonProperty("number")
@@ -14,21 +17,22 @@ public class RoomMgd extends AbstractEntityMgd {
     private double surface;
     @BsonProperty("price")
     private double price;
-    /*@BsonProperty("isRented")
-    private boolean isRented = false;*/
+    @BsonProperty("rented")
+    private int rented = 0;
 
     @BsonCreator
     public RoomMgd(@BsonProperty("_id") UniqueIdMgd entityId,
                     @BsonProperty("number") int number,
                     @BsonProperty("floor") int floor,
                     @BsonProperty("surface") double surface,
-                    @BsonProperty("price") double price){//,
-                    //@BsonProperty("isRented") boolean isRented){
+                    @BsonProperty("price") double price,//,
+                    @BsonProperty("rented") int rented){
         super(entityId);
         this.number = number;
         this.floor = floor;
         this.surface = surface;
         this.price = price;
+        this.rented = rented;
         //this.isRented = isRented;
     }
 
@@ -64,11 +68,22 @@ public class RoomMgd extends AbstractEntityMgd {
         this.price = price;
     }
 
-    /*public boolean isRented() {
-        return isRented;
+    public int getRented() {
+        return rented;
     }
 
-    public void setRented(boolean rented) {
-        isRented = rented;
-    }*/
+    public void setRented(int rented) {
+        this.rented = rented;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("number", number)
+                .append("floor", floor)
+                .append("surface", surface)
+                .append("price", price)
+                .append("rented", rented)
+                .toString();
+    }
 }

@@ -1,7 +1,15 @@
 package org.example.MongoRepositories;
 
+import com.mongodb.MongoWriteException;
 import com.mongodb.ReadPreference;
 import com.mongodb.WriteConcern;
+import com.mongodb.client.ClientSession;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
+import com.mongodb.client.model.Updates;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+import org.example.Mgd.GuestMgd;
 import org.example.Mgd.IEntity;
 import org.example.Mgd.RentMgd;
 import com.mongodb.client.MongoCollection;
@@ -22,18 +30,14 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
     private ConnectionManager connectionManager;
     private MongoCollection<RentMgd> rentCollection;
 
-    /*public RentRepository(ConnectionManager connectionManager) {
+    public RentRepository(ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
 
-        if(!(connectionManager.getMongoDB().listCollectionNames().into(new ArrayList<String>()).
-                contains(getRentCollectionName()))) {
+        if (!connectionManager.getMongoDB().listCollectionNames().into(new ArrayList<>()).contains(getRentCollectionName())) {
             connectionManager.getMongoDB().createCollection(getRentCollectionName());
         }
-        rentCollection = connectionManager.getMongoDB().getCollection(
-                getRentCollectionName(),
-                RentMgd.class
-        );
-    }*/
+        this.rentCollection = connectionManager.getMongoDB().getCollection(getRentCollectionName(), RentMgd.class);
+    }
 
     public RentRepository(ConnectionManager connectionManager,
                                       WriteConcern writeConcern,
@@ -49,33 +53,35 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
                         RentMgd.class)
                 .withWriteConcern(writeConcern)
                 .withReadPreference(readPreference);
-        /*this.connectionManager = connectionManager;
-
-        if (!connectionManager.getMongoDB().listCollectionNames()
-                .into(new ArrayList<>()).contains(getRentCollectionName())) {
-            connectionManager.getMongoDB().createCollection(getRentCollectionName());
-        }
-
-        rentCollection = connectionManager.getMongoDB().getCollection(
-                        getRentCollectionName(),
-                        RentMgd.class)
-                .withWriteConcern(writeConcern)
-                .withReadPreference(readPreference);*/
-    }
-
-    @Override
-    public void addRemote(IEntity object) {
-        //RentMgd rent = (RentMgd) object;
-        //if (rent.getRoom().isRented() == false) {
-          //  rent.getRoom().setRented(true);
-            rentCollection.insertOne((RentMgd) object);
-        //} else {
-          //  throw new RuntimeException("Room is rented");
-        //}
     }
 
     public ArrayList<RentMgd> findRemote(Bson filter){
         return rentCollection.find(filter).into(new ArrayList<>());
+    }
+
+    @Override
+    public void addRemote(IEntity rentMgd) throws Exception {
+        ClientSession clientSession = connectionManager.getMongoClient().startSession();
+        try (RoomRepository roomRepository = new RoomRepository(connectionManager);
+             GuestRepository guestRepository = new GuestRepository(connectionManager)){
+            clientSession.startTransaction();
+            roomRepository.addRemote(((RentMgd) rentMgd).getRoom(),
+                    clientSession);
+            guestRepository.addRemote(((RentMgd) rentMgd).getGuest(),
+                    clientSession);
+
+            rentCollection.insertOne(clientSession, (RentMgd) rentMgd);
+            Bson filter = Filters.eq("_id", ((RentMgd) rentMgd).getRoom().getEntityId().getUuid());
+            Bson update = Updates.inc("rented", 1);
+            roomRepository.updateRemote(filter, update, clientSession);
+            clientSession.commitTransaction();
+        } catch (Exception exception){
+            clientSession.abortTransaction();
+            throw new Exception("Cannot rent room, there are no free rooms.");
+        } finally {
+            clientSession.close();
+        }
+        //rentCollection.insertOne((RentMgd) object);
     }
 
     public void removeRemote(UniqueIdMgd uniqueIdMgd) {
@@ -128,3 +134,21 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
         this.rentCollection.drop();
     }
 }
+
+/*
+@Override
+    public void addRemote(IEntity object) {
+        RentMgd newRent = (RentMgd) object;
+        Bson filter = Filters.eq("roomId", newRent.getRoom().getEntityId());
+
+        // Check if there’s already an existing rent for this room
+        long existingRents = rentCollection.countDocuments(filter);
+
+        if (existingRents > 0) {
+            throw new IllegalStateException("Room already has an active rent. Cannot create another rent for this room.");
+        }
+
+            rentCollection.insertOne((RentMgd) object);
+
+    }
+*/

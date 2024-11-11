@@ -1,7 +1,6 @@
 package org.example.MongoRepositoriesTest;
 
-import com.mongodb.ReadPreference;
-import com.mongodb.WriteConcern;
+
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
@@ -14,6 +13,7 @@ import org.example.Mgd.RoomMgd;
 import org.example.MongoRepositories.ConnectionManager;
 import org.example.MongoRepositories.GuestRepository;
 import org.example.MongoRepositories.RentRepository;
+import org.example.MongoRepositories.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.example.simpleMgdTypes.UniqueIdMgd;
@@ -31,8 +31,6 @@ public class MongoRentRepositoryTest {
     private GuestMgd testGuest;
     private MicroSuiteMgd testRoom;
     private RentMgd testRent;
-    WriteConcern writeConcern = WriteConcern.JOURNALED; // or any WriteConcern of your choice
-    ReadPreference readPreference = ReadPreference.primary();
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -49,7 +47,8 @@ public class MongoRentRepositoryTest {
                 12,
                 3,
                 37.5,
-                200.0
+                200.0,
+                0
         );
 
         testRent = new RentMgd(
@@ -64,12 +63,16 @@ public class MongoRentRepositoryTest {
     @Test
     public void addFindTest() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
-            RentRepository testMongoRentRepository = new RentRepository(connectionManager, writeConcern, readPreference);
+            GuestRepository testMongoGuestRepository = new GuestRepository(connectionManager);
+            RoomRepository testMongoRoomRepository = new RoomRepository(connectionManager);
+            RentRepository testMongoRentRepository = new RentRepository(connectionManager);
             MongoCollection<RentMgd> collection = connectionManager.getMongoDB().getCollection("rentCollection", RentMgd.class);
 
             //comparing number of documents at before and after adding document
             long initialCount = collection.countDocuments();
+            System.out.println(String.valueOf(testRent.getRoom().getNumber()) + "!!!!!!!!!!!!!");
             testMongoRentRepository.addRemote(testRent);
+
             long postAddCount = collection.countDocuments();
             assertEquals(initialCount + 1, postAddCount, "Document was not added successfully");
 
@@ -80,13 +83,16 @@ public class MongoRentRepositoryTest {
             ArrayList<RentMgd> foundRents = testMongoRentRepository.findRemote(filter1);
             assertEquals(testRent.getRentNumber(), foundRents.getFirst().getRentNumber(), "Retrieved document does not match the added document");
             testMongoRentRepository.dropCollection();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Test
     public void updateTest() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
-            RentRepository testMongoRentRepository = new RentRepository(connectionManager, writeConcern, readPreference);
+            //RoomRepository testMongoRoomRepository = new RoomRepository(connectionManager);
+            RentRepository testMongoRentRepository = new RentRepository(connectionManager);
             testMongoRentRepository.addRemote(testRent);
 
             Bson update1 = Updates.set("rentNumber", "B52");
@@ -130,7 +136,8 @@ public class MongoRentRepositoryTest {
                     2005,
                     4,
                     2.0,
-                    2137.0
+                    2137.0,
+                    0
             );
 
             Bson update5 = Updates.set("roomMgd", testRoom2);
@@ -140,13 +147,16 @@ public class MongoRentRepositoryTest {
             assertEquals("Updating startTime, 'roomMgd', 'guestMgd' fields is not allowed.", exception.getMessage());
 
             testMongoRentRepository.dropCollection();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Test
     public void removeTest() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
-            RentRepository testMongoRentRepository = new RentRepository(connectionManager, writeConcern, readPreference);
+            //RoomRepository testMongoRoomRepository = new RoomRepository(connectionManager);
+            RentRepository testMongoRentRepository = new RentRepository(connectionManager);
 
             //providing and checking a document to remove
             MongoCollection<RentMgd> collection = connectionManager.getMongoDB().getCollection("rentCollection", RentMgd.class);
@@ -164,19 +174,21 @@ public class MongoRentRepositoryTest {
             assertEquals(initialCount, postRemoveCount, "Document was removed, despite it should not be");
 
             testMongoRentRepository.dropCollection();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
-    /*@Test
+    @Test
     public void concurrentTest() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
-            RentRepository testMongoRentRepository = new RentRepository(connectionManager, writeConcern, readPreference);
+            RentRepository testMongoRentRepository = new RentRepository(connectionManager);
             GuestMgd testGuest2 = new GuestMgd(
                     new UniqueIdMgd(UUID.randomUUID()),
-                    1234,
-                    "Adam",
-                    "Kowalski",
-                    "123456789"
+                    1500,
+                    "Jan",
+                    "Nowak",
+                    "567898754"
             );
 
             RentMgd testRent2 = new RentMgd(
@@ -186,13 +198,16 @@ public class MongoRentRepositoryTest {
                     testGuest2,
                     testRoom
             );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-    }*/
+    }
 
     @Test
     public void testDropCollection() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
-            RentRepository testMongoRentRepository = new RentRepository(connectionManager, writeConcern, readPreference);
+            //RoomRepository testMongoRoomRepository = new RoomRepository(connectionManager);
+            RentRepository testMongoRentRepository = new RentRepository(connectionManager);
             testMongoRentRepository.addRemote(testRent);
 
             GuestMgd guest2 = new GuestMgd(
@@ -208,7 +223,8 @@ public class MongoRentRepositoryTest {
                     12,
                     3,
                     37.5,
-                    200.0
+                    200.0,
+                    0
             );
 
             RentMgd rent2 = new RentMgd(
@@ -225,13 +241,16 @@ public class MongoRentRepositoryTest {
 
             ArrayList<RentMgd> allRents = testMongoRentRepository.findRemote(Filters.empty());
             assertTrue(allRents.isEmpty());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Test
     public void testRentToBsonDocument() {
         try (ConnectionManager connectionManager = new ConnectionManager()) {
-            RentRepository testMongoRentRepository = new RentRepository(connectionManager, writeConcern, readPreference);
+            //RoomRepository testMongoRoomRepository = new RoomRepository(connectionManager);
+            RentRepository testMongoRentRepository = new RentRepository(connectionManager);
             LocalDateTime startTime = testRent.getStartTime();
             Date date1 = Date.from(startTime.toInstant(ZoneOffset.UTC));
 
@@ -299,5 +318,4 @@ public class MongoRentRepositoryTest {
         assertEquals(testGuest.getLastName(), convertedGuest.getLastName());
         assertEquals(testGuest.getPhoneNumber(), convertedGuest.getPhoneNumber());
     }
-
 }

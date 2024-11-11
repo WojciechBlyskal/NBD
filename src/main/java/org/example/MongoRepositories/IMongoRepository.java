@@ -1,5 +1,6 @@
 package org.example.MongoRepositories;
 
+import org.example.Mgd.AbstractEntityMgd;
 import org.example.Mgd.IEntity;
 import org.bson.conversions.Bson;
 import org.example.simpleMgdTypes.UniqueIdMgd;
