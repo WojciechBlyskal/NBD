@@ -62,7 +62,5 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
     }
 
     public void close() {
-        mongoDB.drop();
-        mongoClient.close();
     }
 }

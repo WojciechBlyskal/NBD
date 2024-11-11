@@ -1,6 +1,7 @@
 package org.example.MongoRepositories;
 
 import com.mongodb.client.ClientSession;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.*;
 import org.bson.Document;
 import org.example.Mgd.GuestMgd;
@@ -12,10 +13,10 @@ import org.example.simpleMgdTypes.UniqueIdMgd;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.NoSuchElementException;
 
 public class RoomRepository<Room> extends AbstractMongoRepository implements IMongoRepository {
-
     private List<RoomMgd> list = new ArrayList<>();
     private ConnectionManager connectionManager;
     private MongoCollection<RoomMgd> roomCollection;
@@ -32,24 +33,6 @@ public class RoomRepository<Room> extends AbstractMongoRepository implements IMo
                 contains(getRoomCollectionName()))) {
             connectionManager.getMongoDB().createCollection(getRoomCollectionName());
         }
-        /*ValidationOptions options = new ValidationOptions().validator(
-                Document.parse("""
-                        {
-                            $jsonSchema:{
-                                "bsonType": "object",
-                                "properties": {
-                                    "rented": {
-                                    "bsonType": "int",
-                                    "minimum": 0,
-                                    "maximum": 1,
-                                    "description": "must be 1 for rented and 0 for available"
-                                    }
-                                }
-                            }
-                        }
-                        """)).validationAction(ValidationAction.ERROR);
-        CreateCollectionOptions createCollectionOptions = new CreateCollectionOptions().validationOptions(options);
-        getMongoDB().createCollection("rooms", createCollectionOptions);*/
         roomCollection = connectionManager.getMongoDB().getCollection(
                 getRoomCollectionName(),
                 RoomMgd.class
@@ -65,15 +48,19 @@ public class RoomRepository<Room> extends AbstractMongoRepository implements IMo
 
         Bson uuidFilter = Filters.eq("_id", object.getEntityId().getUuid());
         ArrayList<RoomMgd> foundRooms = findRemote(uuidFilter);
-
-        if(foundRooms.isEmpty()) {
+        if (foundRooms.isEmpty()) {
             roomCollection.insertOne(clientSession, object,
                     new InsertOneOptions().bypassDocumentValidation(false));
         }
     }
 
     public ArrayList<RoomMgd> findRemote(Bson filter) {
-        return roomCollection.find(filter).into(new ArrayList<>());
+        //return roomCollection.find(filter).into(new ArrayList<>());
+        ArrayList<RoomMgd> foundRooms = roomCollection
+                .find(filter)
+                .into(new ArrayList<>());
+
+        return foundRooms;
     }
 
     //@Override
@@ -103,7 +90,10 @@ public class RoomRepository<Room> extends AbstractMongoRepository implements IMo
     }
 
     public void updateRemote(Bson filter, Bson update) {
-        roomCollection.updateOne(filter, update);
+        roomCollection
+                .updateOne(filter,
+                        update,
+                        new UpdateOptions().bypassDocumentValidation(false));
     }
 
     public void updateRemote(Bson filter, Bson update, ClientSession clientSession) {

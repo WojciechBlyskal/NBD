@@ -9,13 +9,16 @@ public abstract class AbstractEntityMgd implements Serializable, IEntity {
     @BsonProperty("_id")
     private UniqueIdMgd entityId;
 
+    public AbstractEntityMgd(){
+    }
+
+    public AbstractEntityMgd(UniqueIdMgd uniqueIdMgd) {
+        this.entityId = uniqueIdMgd;
+    }
+
     @Override
     public UniqueIdMgd getEntityId() {
         return entityId;
-    }
-
-    public AbstractEntityMgd(UniqueIdMgd entityId) {
-        this.entityId = entityId;
     }
 
     public void setEntityId(UniqueIdMgd entityId) {

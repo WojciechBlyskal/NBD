@@ -65,6 +65,7 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
         try (RoomRepository roomRepository = new RoomRepository(connectionManager);
              GuestRepository guestRepository = new GuestRepository(connectionManager)){
             clientSession.startTransaction();
+
             roomRepository.addRemote(((RentMgd) rentMgd).getRoom(),
                     clientSession);
             guestRepository.addRemote(((RentMgd) rentMgd).getGuest(),
@@ -73,21 +74,20 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
             rentCollection.insertOne(clientSession, (RentMgd) rentMgd);
             Bson filter = Filters.eq("_id", ((RentMgd) rentMgd).getRoom().getEntityId().getUuid());
             Bson update = Updates.inc("rented", 1);
-            roomRepository.updateRemote(filter, update, clientSession);
+            roomRepository.updateRemote(filter, update/*, clientSession*/);
             clientSession.commitTransaction();
-        } catch (Exception exception){
+        } catch (Exception exception) {
             clientSession.abortTransaction();
-            throw new Exception("Cannot rent room, there are no free rooms.");
+            throw new Exception("Cannot rent room, there are no free rooms." + exception.getMessage());
         } finally {
             clientSession.close();
         }
-        //rentCollection.insertOne((RentMgd) object);
     }
 
     public void removeRemote(UniqueIdMgd uniqueIdMgd) {
         Bson filter = Filters.and(
-                Filters.eq("_id", uniqueIdMgd.getUuid()), // Match on unique ID
-                Filters.ne("endTime", null)               // Ensure endTime is not null
+                Filters.eq("_id", uniqueIdMgd.getUuid()),
+                Filters.ne("endTime", null)
         );
         rentCollection.findOneAndDelete(filter);
     }
@@ -102,18 +102,6 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
                 || containsRestrictedField(updateDoc, "startTime")) {
             throw new IllegalArgumentException("Updating startTime, 'roomMgd', 'guestMgd' fields is not allowed.");
         }
-        /*if (containsRestrictedField(updateDoc, "endTime")) {
-            // Retrieve the associated RoomMgd object
-            Bson filter2 = Filters.eq("number", ),
-                            RoomMgd room = findRemote(filter2);
-
-            if (room != null) {
-                // Set the desired field in RoomMgd
-                room.setSpecialField(true); // replace 'setSpecialField' with the actual field and method name
-                updateRoom(room); // save changes in RoomMgd collection
-            }
-        }*/
-
         rentCollection.updateOne(filter, update);
     }
 

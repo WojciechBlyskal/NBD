@@ -28,6 +28,8 @@ public class RentMgd extends AbstractEntityMgd {
         super(entityId);
         this.rentNumber = rentNumber;
         this.startTime = startTime;
+        this.guest = guest;
+        this.room = room;
     }
 
     public String getRentNumber() {

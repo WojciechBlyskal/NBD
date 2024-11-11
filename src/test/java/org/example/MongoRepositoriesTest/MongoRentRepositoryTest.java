@@ -70,7 +70,6 @@ public class MongoRentRepositoryTest {
 
             //comparing number of documents at before and after adding document
             long initialCount = collection.countDocuments();
-            System.out.println(String.valueOf(testRent.getRoom().getNumber()) + "!!!!!!!!!!!!!");
             testMongoRentRepository.addRemote(testRent);
 
             long postAddCount = collection.countDocuments();
@@ -82,7 +81,7 @@ public class MongoRentRepositoryTest {
                     Filters.eq("startTime", LocalDateTime.of(2024, 10, 15, 14, 30, 45)));
             ArrayList<RentMgd> foundRents = testMongoRentRepository.findRemote(filter1);
             assertEquals(testRent.getRentNumber(), foundRents.getFirst().getRentNumber(), "Retrieved document does not match the added document");
-            testMongoRentRepository.dropCollection();
+            //testMongoRentRepository.dropCollection();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -198,6 +197,7 @@ public class MongoRentRepositoryTest {
                     testGuest2,
                     testRoom
             );
+            assertEquals(0,testRoom.getRented());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -275,7 +275,9 @@ public class MongoRentRepositoryTest {
             document.append("room", roomDocument);
 
             assertEquals("A34", document.getString("rentNumber").getValue());
-            assertEquals(document.getDateTime("startTime").getValue(), document.getDateTime("startTime").getValue());
+            assertEquals(document.getDateTime("startTime").getValue(),
+                    document.getDateTime("startTime").getValue());
+
         }
     }
 
