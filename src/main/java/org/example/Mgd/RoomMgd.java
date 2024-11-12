@@ -77,17 +77,4 @@ public abstract class RoomMgd extends AbstractEntityMgd {
     public void setRented(int rented) {
         this.rented = rented;
     }
-
-
-
-    /*@Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("number", number)
-                .append("floor", floor)
-                .append("surface", surface)
-                .append("price", price)
-                .append("rented", rented)
-                .toString();
-    }*/
 }

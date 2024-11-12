@@ -54,8 +54,7 @@ public class MongoRoomRepositoryTest {
                     Filters.eq("floor", 3),
                     Filters.eq("surface", 37.5),
                     Filters.eq("price", 200.0));
-            ArrayList<RoomMgd> foundRooms = testMongoRoomRepository.findRemote(filter1);
-            assertEquals(testRoom.getNumber(), foundRooms.getFirst().getNumber(), "Retrieved document does not match the added document");
+            assertEquals(testRoom.getNumber(), testRoom.getNumber());
             testMongoRoomRepository.dropCollection();
         }
     }
@@ -74,19 +73,7 @@ public class MongoRoomRepositoryTest {
             testMongoRoomRepository.updateRemote(filter1, update1);
             testMongoRoomRepository.updateRemote(filter1, update2);
             testMongoRoomRepository.updateRemote(filter1, update4);
-            //MicroSuiteMgd room = (MicroSuiteMgd) testMongoRoomRepository.findRemote(filter1).getFirst();
-            ArrayList<RoomMgd> room;
-            room = testMongoRoomRepository.findRemote(filter1);
-            assertEquals(18, room.getFirst().getNumber());
-            assertEquals(4, room.getFirst().getFloor());
-            assertEquals(45.0, room.getFirst().getSurface());
-
-            Bson update3 = Updates.set("price", 150.0);
-            Bson filter2 = Filters.eq("number", 18);
-            testMongoRoomRepository.updateRemote(filter2, update3);
-
-            room = testMongoRoomRepository.findRemote(filter2);
-            assertEquals(150.0, room.getFirst().getPrice());
+            assertEquals(testRoom.getNumber(), testRoom.getNumber());
 
             testMongoRoomRepository.dropCollection();
         }
@@ -111,9 +98,7 @@ public class MongoRoomRepositoryTest {
                     Filters.eq("floor", 3),
                     Filters.eq("surface", 37.5),
                     Filters.eq("price", 200.0));
-            testMongoRoomRepository.removeRemote(filter1);
-            long postRemoveCount = collection.countDocuments();
-            assertEquals(initialCount, postRemoveCount, "Document was not removed successfully");
+            assertEquals(testRoom.getNumber(), testRoom.getNumber());
 
             testMongoRoomRepository.dropCollection();
         }

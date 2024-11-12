@@ -6,14 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1f97c16c-6a6b-4c22-ac52-62bf327d2f87" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/AbstractEntityMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/AbstractEntityMgd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/MicroSuiteMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/MicroSuiteMgd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RoomMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RoomMgd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/StudioMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/StudioMgd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/AbstractMongoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/AbstractMongoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/IMongoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/IMongoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRoomRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRoomRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/codec/RoomTypeCodec.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/codec/RoomTypeCodec.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,7 +236,7 @@
       <workItem from="1731327034899" duration="15574000" />
       <workItem from="1731356935452" duration="51000" />
       <workItem from="1731359312504" duration="4418000" />
-      <workItem from="1731437405449" duration="11934000" />
+      <workItem from="1731437405449" duration="13083000" />
     </task>
     <servers />
   </component>
