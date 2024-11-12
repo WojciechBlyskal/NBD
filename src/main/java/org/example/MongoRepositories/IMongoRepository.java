@@ -10,5 +10,6 @@ public interface IMongoRepository {
     void addRemote(IEntity object)
             throws Exception;
     void removeRemote(UniqueIdMgd uniqueIdMgd);
-    void updateRemote(Bson filter, Bson update);
+
+    //void updateRemote(Bson filter, Bson update);
 }

@@ -1,11 +1,11 @@
 package org.example.Mgd;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.types.ObjectId;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 import java.io.Serializable;
 
 public abstract class AbstractEntityMgd implements Serializable, IEntity {
-
     @BsonProperty("_id")
     private UniqueIdMgd entityId;
 
@@ -24,4 +24,5 @@ public abstract class AbstractEntityMgd implements Serializable, IEntity {
     public void setEntityId(UniqueIdMgd entityId) {
         this.entityId = entityId;
     }
+
 }

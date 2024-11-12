@@ -6,8 +6,8 @@ import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
-@BsonDiscriminator(key="_room", value = "room")
-public class RoomMgd extends AbstractEntityMgd {
+@BsonDiscriminator(key="_room")
+public abstract class RoomMgd extends AbstractEntityMgd {
 
     @BsonProperty("number")
     private int number;
@@ -36,7 +36,6 @@ public class RoomMgd extends AbstractEntityMgd {
         this.surface = surface;
         this.price = price;
         this.rented = rented;
-        //this.isRented = isRented;
     }
 
     public int getNumber() {
@@ -78,6 +77,8 @@ public class RoomMgd extends AbstractEntityMgd {
     public void setRented(int rented) {
         this.rented = rented;
     }
+
+
 
     /*@Override
     public String toString() {

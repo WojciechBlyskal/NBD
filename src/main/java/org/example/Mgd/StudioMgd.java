@@ -5,7 +5,7 @@ import org.bson.codecs.pojo.annotations.BsonDiscriminator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
-@BsonDiscriminator(key="_room", value="studio")
+@BsonDiscriminator(key="_room", value="studiomgd")
 public class StudioMgd extends RoomMgd {
 
     @BsonProperty("balcony")
@@ -21,6 +21,9 @@ public class StudioMgd extends RoomMgd {
                    @BsonProperty("balcony") boolean balcony) {
         super(entityId, number, floor, surface, price, rented);
         this.balcony = balcony;
+    }
+
+    public StudioMgd() {
     }
 
     public boolean isBalcony() {

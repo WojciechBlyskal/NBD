@@ -81,7 +81,6 @@ public class MongoRentRepositoryTest {
                     Filters.eq("startTime", LocalDateTime.of(2024, 10, 15, 14, 30, 45)));
             ArrayList<RentMgd> foundRents = testMongoRentRepository.findRemote(filter1);
             assertEquals(testRent.getRentNumber(), foundRents.getFirst().getRentNumber(), "Retrieved document does not match the added document");
-            //testMongoRentRepository.dropCollection();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

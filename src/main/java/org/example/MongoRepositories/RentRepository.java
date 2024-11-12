@@ -74,7 +74,7 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
             rentCollection.insertOne(clientSession, (RentMgd) rentMgd);
             Bson filter = Filters.eq("_id", ((RentMgd) rentMgd).getRoom().getEntityId().getUuid());
             Bson update = Updates.inc("rented", 1);
-            roomRepository.updateRemote(filter, update/*, clientSession*/);
+            roomRepository.updateRemote(filter, update, clientSession);
             clientSession.commitTransaction();
         } catch (Exception exception) {
             clientSession.abortTransaction();
@@ -89,10 +89,26 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
                 Filters.eq("_id", uniqueIdMgd.getUuid()),
                 Filters.ne("endTime", null)
         );
+        Bson update = Updates.combine(
+                Updates.inc("rented", -1),
+                Updates.set("endTime", LocalDateTime.now())
+        );
+        ClientSession clientSession = connectionManager.getMongoClient().startSession();
+        try (RoomRepository roomRepository = new RoomRepository(connectionManager)) {
+        roomRepository.updateRemote(filter, update, clientSession);
+        }
         rentCollection.findOneAndDelete(filter);
     }
 
     public void removeRemote(Bson filter) {
+        Bson update = Updates.combine(
+                Updates.inc("rented", -1),
+                Updates.set("endTime", LocalDateTime.now())
+        );
+        ClientSession clientSession = connectionManager.getMongoClient().startSession();
+        try (RoomRepository roomRepository = new RoomRepository(connectionManager)) {
+            roomRepository.updateRemote(filter, update, clientSession);
+        }
         rentCollection.findOneAndDelete(filter);
     }
 
@@ -104,6 +120,7 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
         }
         rentCollection.updateOne(filter, update);
     }
+
 
     private boolean containsRestrictedField(BsonDocument updateDoc, String fieldName) {
         for (String key : updateDoc.keySet()) {
@@ -122,21 +139,3 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
         this.rentCollection.drop();
     }
 }
-
-/*
-@Override
-    public void addRemote(IEntity object) {
-        RentMgd newRent = (RentMgd) object;
-        Bson filter = Filters.eq("roomId", newRent.getRoom().getEntityId());
-
-        // Check if there’s already an existing rent for this room
-        long existingRents = rentCollection.countDocuments(filter);
-
-        if (existingRents > 0) {
-            throw new IllegalStateException("Room already has an active rent. Cannot create another rent for this room.");
-        }
-
-            rentCollection.insertOne((RentMgd) object);
-
-    }
-*/
