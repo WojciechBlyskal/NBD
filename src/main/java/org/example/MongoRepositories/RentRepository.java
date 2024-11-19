@@ -24,6 +24,7 @@ import org.example.simpleMgdTypes.UniqueIdMgd;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class RentRepository extends AbstractMongoRepository implements IMongoRepository {
     private List<RentMgd> list = new ArrayList<>();
@@ -59,6 +60,22 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
         return rentCollection.find(filter).into(new ArrayList<>());
     }
 
+    @Override
+    public RentMgd findRemote(UniqueIdMgd uniqueIdMgd){
+
+        RentMgd foundRent = null;
+
+        Bson filter = Filters.eq("_id", uniqueIdMgd.getUuid());
+        try {
+            foundRent =
+                    rentCollection
+                            .find(filter)
+                            .into(new ArrayList<>()).getFirst();
+        } catch (NoSuchElementException e){
+        }
+
+        return foundRent;
+    }
     @Override
     public void addRemote(IEntity rentMgd) throws Exception {
         ClientSession clientSession = connectionManager.getMongoClient().startSession();

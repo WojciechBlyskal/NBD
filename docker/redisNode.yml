@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  redis-stack:
+    image: redis/redis-stack:7.2.0-v13
+    volumes:
+      - redis-stack-data:/bitnami/redis/data
+    ports:
+      - "6379:6379"
+    networks:
+      - redisnet
+volumes:
+  redis-stack-data:
+    driver: local
+
+networks:
+  redisnet: { }

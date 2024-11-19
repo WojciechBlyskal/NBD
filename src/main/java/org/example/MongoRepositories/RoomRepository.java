@@ -55,7 +55,6 @@ public class RoomRepository<Room> extends AbstractMongoRepository implements IMo
     }
 
     public ArrayList<RoomMgd> findRemote(Bson filter) {
-        //return roomCollection.find(filter).into(new ArrayList<>());
         ArrayList<RoomMgd> foundRooms = roomCollection
                 .find(filter)
                 .into(new ArrayList<>());

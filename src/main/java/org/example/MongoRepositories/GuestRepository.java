@@ -54,6 +54,23 @@ public class GuestRepository extends AbstractMongoRepository implements IMongoRe
         return guestCollection.find(filter).into(new ArrayList<>());
     }
 
+    @Override
+    public GuestMgd findRemote(UniqueIdMgd uniqueIdMgd){
+
+        GuestMgd foundGuest = null;
+
+        Bson filter = Filters.eq("_id", uniqueIdMgd.getUuid());
+        try {
+            foundGuest =
+                    guestCollection
+                            .find(filter)
+                            .into(new ArrayList<>()).getFirst();
+        } catch (NoSuchElementException e){
+        }
+
+        return foundGuest;
+    }
+
     public void removeRemote(UniqueIdMgd uniqueIdMgd) {
 
         Bson filter = Filters.eq("_id", uniqueIdMgd.getUuid());
