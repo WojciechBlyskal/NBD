@@ -1,7 +1,5 @@
-package org.example.MongoRepositories;
+package org.example.mongoRepositories;
 
-import com.mongodb.ReadPreference;
-import com.mongodb.WriteConcern;
 import com.mongodb.client.ClientSession;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
@@ -54,7 +52,6 @@ public class GuestRepository extends AbstractMongoRepository implements IMongoRe
         return guestCollection.find(filter).into(new ArrayList<>());
     }
 
-    @Override
     public GuestMgd findRemote(UniqueIdMgd uniqueIdMgd){
 
         GuestMgd foundGuest = null;

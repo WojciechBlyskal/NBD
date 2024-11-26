@@ -1,15 +1,9 @@
-package org.example.MongoRepositories;
+package org.example.mongoRepositories;
 
-import com.mongodb.MongoWriteException;
 import com.mongodb.ReadPreference;
 import com.mongodb.WriteConcern;
 import com.mongodb.client.ClientSession;
-import com.mongodb.client.model.FindOneAndUpdateOptions;
-import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Updates;
-import org.bson.Document;
-import org.bson.types.ObjectId;
-import org.example.Mgd.GuestMgd;
 import org.example.Mgd.IEntity;
 import org.example.Mgd.RentMgd;
 import com.mongodb.client.MongoCollection;
@@ -17,7 +11,6 @@ import com.mongodb.client.model.Filters;
 import org.bson.conversions.Bson;
 import org.bson.BsonDocument;
 import org.bson.BsonValue;
-import org.example.Mgd.RoomMgd;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
 
@@ -60,7 +53,6 @@ public class RentRepository extends AbstractMongoRepository implements IMongoRep
         return rentCollection.find(filter).into(new ArrayList<>());
     }
 
-    @Override
     public RentMgd findRemote(UniqueIdMgd uniqueIdMgd){
 
         RentMgd foundRent = null;

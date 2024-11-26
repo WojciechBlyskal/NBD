@@ -3,7 +3,7 @@ package org.example.redisRepositories;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.Mgd.IEntity;
 import org.bson.conversions.Bson;
-import org.example.MongoRepositories.IMongoRepository;
+import org.example.mongoRepositories.IMongoRepository;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
@@ -51,8 +51,6 @@ public class RedisDecoratedRepository
             throws JedisConnectionException {
         iRedisRepositorywrapper.deleteFromCache(uniqueIdMgd);
     }
-
-
 
 
     @Override

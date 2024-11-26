@@ -1,4 +1,4 @@
-package org.example.MongoRepositories;
+package org.example.mongoRepositories;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -22,28 +22,7 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
             "mongodb2:27018,mongodb3:27019/?replicaSet=replica_set_single"); //"mongodb://localhost:27017,localhost:27018,localhost:27019/?replicaSet=replica_set_single");
     private MongoCredential credential = MongoCredential.createCredential("admin", "admin",
             "adminpassword".toCharArray());
-    /*private CodecRegistry pojoCodecRegistry =
-            CodecRegistries.fromProviders(PojoCodecProvider.builder()
-                    .automatic(true)
-                    .conventions(List.of(Conventions.ANNOTATION_CONVENTION))
-                    .build());
-    private MongoClient mongoClient;
-    private MongoDatabase mongoDB;
-    protected void initDbConnection() {
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .credential(credential)
-                .applyConnectionString(connectionString)
-                .uuidRepresentation(UuidRepresentation.STANDARD)
-                .codecRegistry(CodecRegistries.fromRegistries(
-                        CodecRegistries.fromProviders(new UniqueIdCodecProvider()),
-                        MongoClientSettings.getDefaultCodecRegistry(),
-                        pojoCodecRegistry
-                ))
-                .build();
-        mongoClient = MongoClients.create(settings);
-        mongoDB = mongoClient.getDatabase("db");
-    }
-*/
+
     private CodecRegistry pojoCodecRegistry =
             CodecRegistries.fromProviders(PojoCodecProvider.builder()
                     .automatic(true)
@@ -51,33 +30,6 @@ public abstract class AbstractMongoRepository implements AutoCloseable {
                     .build());
     private MongoClient mongoClient;
     private MongoDatabase mongoDB;
-
-    /*protected void initDbConnection() {
-        // Add custom codecs
-        CodecRegistry customCodecs = CodecRegistries.fromCodecs(
-                new RoomTypeCodec(pojoCodecRegistry) // Register RoomTypeCodec
-        );
-
-        // Combine all codec registries
-        CodecRegistry combinedCodecRegistry = CodecRegistries.fromRegistries(
-                customCodecs, // Add custom codecs
-                CodecRegistries.fromProviders(new UniqueIdCodecProvider()), // Existing custom codec provider
-                MongoClientSettings.getDefaultCodecRegistry(), // Default MongoDB codecs
-                pojoCodecRegistry // Automatic POJO codec registry
-        );
-
-        // Build MongoClientSettings
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .credential(credential)
-                .applyConnectionString(connectionString)
-                .uuidRepresentation(UuidRepresentation.STANDARD)
-                .codecRegistry(combinedCodecRegistry) // Use the combined codec registry
-                .build();
-
-        // Initialize the MongoClient and MongoDatabase
-        mongoClient = MongoClients.create(settings);
-        mongoDB = mongoClient.getDatabase("db");
-    }*/
 
     protected void initDbConnection() {
         CodecRegistry customCodecs = CodecRegistries.fromCodecs(new RoomTypeCodec(pojoCodecRegistry));

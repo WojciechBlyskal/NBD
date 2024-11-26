@@ -1,10 +1,7 @@
-package org.example.MongoRepositories;
+package org.example.mongoRepositories;
 
 import com.mongodb.client.ClientSession;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.*;
-import org.bson.Document;
-import org.example.Mgd.GuestMgd;
 import org.example.Mgd.IEntity;
 import org.example.Mgd.RoomMgd;
 import com.mongodb.client.MongoCollection;
@@ -13,7 +10,6 @@ import org.example.simpleMgdTypes.UniqueIdMgd;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.UUID;
 import java.util.NoSuchElementException;
 
 public class RoomRepository<Room> extends AbstractMongoRepository implements IMongoRepository {

@@ -7,7 +7,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
 @BsonDiscriminator(key="_room")
-public abstract class RoomMgd extends AbstractEntityMgd {
+public class RoomMgd extends AbstractEntityMgd {
 
     @BsonProperty("number")
     private int number;

@@ -5,12 +5,10 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import org.bson.*;
 import org.bson.conversions.Bson;
-import org.example.Mgd.GuestMgd;
 import org.example.Mgd.MicroSuiteMgd;
 import org.example.Mgd.RoomMgd;
-import org.example.MongoRepositories.ConnectionManager;
-import org.example.MongoRepositories.GuestRepository;
-import org.example.MongoRepositories.RoomRepository;
+import org.example.mongoRepositories.ConnectionManager;
+import org.example.mongoRepositories.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.example.simpleMgdTypes.UniqueIdMgd;
@@ -54,7 +52,6 @@ public class MongoRoomRepositoryTest {
                     Filters.eq("floor", 3),
                     Filters.eq("surface", 37.5),
                     Filters.eq("price", 200.0));
-            assertEquals(testRoom.getNumber(), testRoom.getNumber());
             testMongoRoomRepository.dropCollection();
         }
     }
@@ -73,7 +70,6 @@ public class MongoRoomRepositoryTest {
             testMongoRoomRepository.updateRemote(filter1, update1);
             testMongoRoomRepository.updateRemote(filter1, update2);
             testMongoRoomRepository.updateRemote(filter1, update4);
-            assertEquals(testRoom.getNumber(), testRoom.getNumber());
 
             testMongoRoomRepository.dropCollection();
         }
@@ -98,7 +94,6 @@ public class MongoRoomRepositoryTest {
                     Filters.eq("floor", 3),
                     Filters.eq("surface", 37.5),
                     Filters.eq("price", 200.0));
-            assertEquals(testRoom.getNumber(), testRoom.getNumber());
 
             testMongoRoomRepository.dropCollection();
         }

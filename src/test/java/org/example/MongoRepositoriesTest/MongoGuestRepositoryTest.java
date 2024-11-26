@@ -8,8 +8,8 @@ import org.bson.BsonInt64;
 import org.bson.BsonString;
 import org.bson.Document;
 import org.example.Mgd.GuestMgd;
-import org.example.MongoRepositories.ConnectionManager;
-import org.example.MongoRepositories.GuestRepository;
+import org.example.mongoRepositories.ConnectionManager;
+import org.example.mongoRepositories.GuestRepository;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
 import org.bson.conversions.Bson;
