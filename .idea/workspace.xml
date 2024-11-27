@@ -5,23 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f97c16c-6a6b-4c22-ac52-62bf327d2f87" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/AbstractEntityMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/AbstractEntityMgd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/GuestMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/GuestMgd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RentMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RentMgd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RoomMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RoomMgd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/AbstractMongoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mongoRepositories/AbstractMongoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/ConnectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mongoRepositories/ConnectionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/GuestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mongoRepositories/GuestRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/IMongoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mongoRepositories/IMongoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mongoRepositories/RentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MongoRepositories/RoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mongoRepositories/RoomRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/redisRepositories/RedisDecoratedRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/redisRepositories/RedisDecoratedRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoGuestRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoGuestRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mongoRepositories/AbstractMongoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mongoRepositories/AbstractMongoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/redisRepositories/Decorators/GuestDecorator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/redisRepositories/Decorators/RentDecorator.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRentRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRoomRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRoomRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/redisRepositories/RedisGuestDecoratedRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/redisRepositories/RedisRentDecoratedRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/redisRepositories/RedisRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/redisRepositories/RedisRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/redisRepositories/RedisRoomDecoratedRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/redisRepositories/RedisRoomDecoratedRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +61,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.BenchmarkRunner.executor": "Run",
     "Docker.Docker Image (1).executor": "Run",
     "Docker.Docker Image (2).executor": "Run",
     "Docker.Docker Image (3).executor": "Run",
@@ -104,7 +98,7 @@
     "git-widget-placeholder": "redis",
     "hotel.wasFacetEverAdded": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/wojte/Documents/studia/semestr 5/NBD/hotel/hotel/src/main/java/org/example/mongoRepositories",
+    "last_opened_file_path": "C:/Users/wojte/Documents/studia/semestr 5/NBD/hotel/hotel/src/main/java/org/example",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -124,11 +118,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\mongoRepositories" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\test\java\org\example" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\docker" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\Mgd" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\docker\path" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\docker" />
@@ -279,7 +273,8 @@
       <workItem from="1732053613281" duration="112000" />
       <workItem from="1732107505797" duration="3783000" />
       <workItem from="1732572230475" duration="787000" />
-      <workItem from="1732621819193" duration="20290000" />
+      <workItem from="1732621819193" duration="22536000" />
+      <workItem from="1732738519474" duration="4727000" />
     </task>
     <servers />
   </component>

@@ -1,10 +1,10 @@
 package org.example.redisRepositories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.example.Mgd.GuestMgd;
+import org.example.Mgd.MicroSuiteMgd;
+import org.example.Mgd.RoomMgd;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.example.redisRepositories.Decorators.GuestDecorator;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
 import java.util.UUID;
@@ -13,19 +13,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RedisRepositoryTest {
 
-    GuestMgd testGuest;
+    RoomMgd testRoom;
 
     @BeforeEach
     public void setUp(){
 
-        testGuest = new GuestMgd(
+        testRoom = new MicroSuiteMgd(
                 new UniqueIdMgd(UUID.randomUUID()),
-                3000,
-                "Adam",
-                "Kowalski",
-                "123456789"
+                12,
+                3,
+                37.5,
+                200.0,
+                0
         );
-
     }
 
     @Test
@@ -34,21 +34,21 @@ public class RedisRepositoryTest {
         try (RedisRepository redisRepository
                      = new RedisRepository("redisConnectionFiles/notExistingCluster")) {
 
-            RedisDecoratedRepository testGuestRedisDecoratedRepository =
+            RedisDecoratedRepository testRoomRedisDecoratedRepository =
                     new RedisDecoratedRepository(
-                            new GuestDecorator(
+                            new RoomDecorator(
                                     redisRepository
                             )
                     );
 
-            testGuestRedisDecoratedRepository.addToCache(testGuest);
+            testRoomRedisDecoratedRepository.addToCache(testRoom);
 
-            GuestMgd foundGuest = (GuestMgd) testGuestRedisDecoratedRepository.findInCache(testGuest
+            RoomMgd foundRoom = (RoomMgd) testRoomRedisDecoratedRepository.findInCache(testRoom
                     .getEntityId());
-            assertEquals(foundGuest.getEntityId().getUuid(),
-                    testGuest.getEntityId().getUuid());
+            assertEquals(foundRoom.getEntityId().getUuid(),
+                    testRoom.getEntityId().getUuid());
 
-            testGuestRedisDecoratedRepository.deleteFromCache(testGuest
+            testRoomRedisDecoratedRepository.deleteFromCache(testRoom
                     .getEntityId());
         }
     }

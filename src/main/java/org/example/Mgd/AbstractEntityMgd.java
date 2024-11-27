@@ -3,7 +3,6 @@ package org.example.Mgd;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.bson.types.ObjectId;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 import java.io.Serializable;
 

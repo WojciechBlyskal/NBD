@@ -1,12 +1,9 @@
-package org.example.redisRepositories.Decorators;
+package org.example.redisRepositories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.Mgd.IEntity;
 import org.example.Mgd.RoomMgd;
 import redis.clients.jedis.exceptions.JedisConnectionException;
-import org.example.redisRepositories.IRedisRepository;
-import org.example.redisRepositories.RedisDecoratedRepository;
-import org.example.redisRepositories.RedisRepository;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
 import java.util.NoSuchElementException;

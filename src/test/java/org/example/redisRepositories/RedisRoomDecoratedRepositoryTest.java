@@ -1,16 +1,14 @@
 package org.example.redisRepositories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.example.Mgd.RentMgd;
+
 import org.example.Mgd.RoomMgd;
-import org.example.Mgd.StudioMgd;
 import org.example.Mgd.MicroSuiteMgd;
 import org.example.mongoRepositories.ConnectionManager;
 import org.example.mongoRepositories.MongoDecoratedRepository;
 import org.example.mongoRepositories.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.example.redisRepositories.Decorators.RoomDecorator;
 
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
@@ -34,7 +32,6 @@ public class RedisRoomDecoratedRepositoryTest {
                 200.0,
                 0
         );
-
     }
 
     @Test
