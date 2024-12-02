@@ -39,7 +39,7 @@ public class RedisBenchmarkPreparator {
         );
 
         redisRepository =
-                new RedisRepository("redisConnectionFiles/workingCluster");
+                new RedisRepository("docker/redisCluster");
         mongoDecoratedRepository =
                 new MongoDecoratedRepository(
                         new RedisDecoratedRepository(
