@@ -27,16 +27,11 @@ public class RedisRepository
     private ObjectMapper mapper;
 
     public RedisRepository(String filePath) {
-        //this.gson = new Gson();
         this.jsonb = JsonbBuilder.create();
 
         ptv = BasicPolymorphicTypeValidator.builder()
-                .allowIfSubType("java.util.ArrayList")
-                .allowIfSubType("org.example.Mgd.GuestMgd")
-                .allowIfSubType("org.example.Mgd.RoomMgd")
                 .allowIfSubType("org.example.Mgd.StudioMgd")
-                .allowIfSubType("org.example.Mgd.MicroSuitegd")
-                .allowIfSubType("org.example.Mgd.RentMgd")
+                .allowIfSubType("org.example.Mgd.MicroSuiteMgd")
                 .allowIfSubType("org.example.simpleMgdTypes.UniqueIdMgd")
                 .build();
         mapper = new ObjectMapper().activateDefaultTyping(
@@ -67,7 +62,7 @@ public class RedisRepository
 
         ArrayList<String> fileContent = new ArrayList<>();
 
-        try(BufferedReader bufferedReader = new BufferedReader(
+        try (BufferedReader bufferedReader = new BufferedReader(
                 new FileReader(filePath))){
 
             String line;
@@ -103,7 +98,7 @@ public class RedisRepository
                 .getEntityId()
                 .getUuid()
                 .toString(),
-                60);
+                60); //na jak dlugo sa cachowane
     }
 
     @Override
@@ -122,7 +117,7 @@ public class RedisRepository
         jedisPooled.expire(hashPrefix + uniqueIdMgd
                         .getUuid()
                         .toString(),
-                60,
+                60, //przedluzenie czasu przechowywania w cache
                 ExpiryOption.GT);
 
         if (foundObject == null){
@@ -153,11 +148,12 @@ public class RedisRepository
     public void setHashPrefix(String hashPrefix) {
         this.hashPrefix = hashPrefix;
     }
+
     public void setAClass(Class aClass) {
         this.aClass = aClass;
     }
 
-    public void cleanCashe() throws JedisConnectionException{
+    public void cleanCache() throws JedisConnectionException{
         try {
             Connection connection = jedisPooled.getPool().getResource();
             jedisPooled.flushAll();
@@ -165,10 +161,11 @@ public class RedisRepository
             throw jedisConnectionException;
         }
     }
+
     @Override
     public void close() {
         try {
-            cleanCashe();
+            cleanCache();
         } catch (JedisConnectionException e){
         }
         jedisPooled.close();

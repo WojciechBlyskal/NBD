@@ -8,6 +8,7 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 public class RedisDecoratedRepository
         implements IRedisRepository, IMongoRepository {
@@ -37,7 +38,6 @@ public class RedisDecoratedRepository
     public void addToCache(IEntity object)
             throws JedisConnectionException
             ,JsonProcessingException {
-
             iRedisRepositorywrapper.addToCache(object);
     }
     @Override
@@ -81,7 +81,6 @@ public class RedisDecoratedRepository
                 addToCache(foundEntity);
             }
         }
-
         return foundEntity;
     }
 
@@ -90,12 +89,55 @@ public class RedisDecoratedRepository
 
         try {
             deleteFromCache(uniqueIdMgd);
-        } catch (JedisConnectionException e){
+        } catch (JedisConnectionException e) {
             System.out.println("Could not connect to Redis");
         }
         iMongoRepositorywrapper.removeRemote(uniqueIdMgd);
     }
 
+    @Override
     public void updateRemote(Bson filter, Bson update) {
+        iMongoRepositorywrapper.updateRemote(filter, update);
+
+        String uniqueIdString = filter.toBsonDocument().getString("_id").getValue();
+        UniqueIdMgd uniqueId = new UniqueIdMgd(UUID.fromString(uniqueIdString));
+
+        if (uniqueId != null) {
+            try {
+                deleteFromCache(uniqueId);
+                IEntity updatedEntity = iMongoRepositorywrapper.findRemote(uniqueId);
+
+                if (updatedEntity != null) {
+                    addToCache(updatedEntity);
+                }
+            } catch (JedisConnectionException e) {
+                System.out.println("Could not connect to Redis for cache update");
+            } catch (JsonProcessingException e) {
+                System.err.println("Failed to serialize the updated object for caching");
+            }
+        }
+    }
+
+    public void cleanCache() {
+        try {
+            iRedisRepositorywrapper.cleanCache();
+        } catch (JedisConnectionException e) {
+            System.out.println("Could not connect to Redis");
+        }
     }
 }
+
+/*@Override
+    public void updateRemote(Bson filter, Bson update) {
+        iMongoRepositorywrapper.updateRemote(filter, update);
+
+        String uniqueIdString = filter.toBsonDocument().getString("_id").getValue();
+        UniqueIdMgd uniqueId = new UniqueIdMgd(UUID.fromString(uniqueIdString));
+        if (uniqueId != null) {
+            try {
+                deleteFromCache(uniqueId);
+            } catch (JedisConnectionException e) {
+                System.out.println("Could not connect to Redis");
+            }
+        }
+    }*/

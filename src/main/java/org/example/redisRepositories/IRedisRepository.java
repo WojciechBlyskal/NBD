@@ -9,10 +9,11 @@ import java.util.NoSuchElementException;
 
 public interface IRedisRepository {
 
-    public void addToCache (IEntity object)
+    void addToCache (IEntity object)
             throws JedisConnectionException, JsonProcessingException;
-    public IEntity findInCache (UniqueIdMgd uniqueIdMgd)
+    IEntity findInCache (UniqueIdMgd uniqueIdMgd)
             throws JedisConnectionException, NoSuchElementException, JsonProcessingException;
-    public void deleteFromCache(UniqueIdMgd uniqueIdMgd)
+    void deleteFromCache(UniqueIdMgd uniqueIdMgd)
             throws JedisConnectionException;
+    void cleanCache() throws JedisConnectionException;
 }

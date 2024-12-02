@@ -32,7 +32,7 @@ public class RedisRepositoryTest {
     public void wrongFileTest() throws JsonProcessingException {
 
         try (RedisRepository redisRepository
-                     = new RedisRepository("redisConnectionFiles/notExistingCluster")) {
+                     = new RedisRepository("docker/notExistingCluster")) {
 
             RedisDecoratedRepository testRoomRedisDecoratedRepository =
                     new RedisDecoratedRepository(

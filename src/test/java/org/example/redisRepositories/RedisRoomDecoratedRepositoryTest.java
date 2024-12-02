@@ -2,6 +2,9 @@ package org.example.redisRepositories;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import org.bson.conversions.Bson;
 import org.example.Mgd.RoomMgd;
 import org.example.Mgd.MicroSuiteMgd;
 import org.example.mongoRepositories.ConnectionManager;
@@ -16,6 +19,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RedisRoomDecoratedRepositoryTest {
 
@@ -36,8 +40,7 @@ public class RedisRoomDecoratedRepositoryTest {
 
     @Test
     public void remoteRedisTest() throws JsonProcessingException {
-        try (RedisRepository redisRepository
-                     = new RedisRepository("redisConnectionFiles/workingCluster")){
+        try (RedisRepository redisRepository = new RedisRepository("docker/redisCluster")){
 
             RedisDecoratedRepository testRoomRedisDecoratedRepository =
                     new RedisDecoratedRepository(
@@ -69,10 +72,71 @@ public class RedisRoomDecoratedRepositoryTest {
     }
 
     @Test
+    public void updateRemoteTest() throws Exception {
+        try (RedisRepository redisRepository = new RedisRepository("docker/redisCluster")) {
+            ConnectionManager connectionManager = new ConnectionManager();
+            RedisDecoratedRepository redisDecoratedRepository =
+                    new RedisDecoratedRepository(
+                            new RoomDecorator(redisRepository),
+                            new RoomRepository(connectionManager));
+
+            redisDecoratedRepository.addRemote(testRoom);
+
+            RoomMgd foundRoomInCache = (RoomMgd) redisDecoratedRepository.findInCache(testRoom.getEntityId());
+            assertEquals(foundRoomInCache.getEntityId().getUuid(), testRoom.getEntityId().getUuid());
+
+            Bson filter = Filters.eq("_id", testRoom.getEntityId().getUuid().toString());
+            Bson update = Updates.set("price", 300.0);
+            redisDecoratedRepository.updateRemote(filter, update);
+
+            boolean notFoundInCache = false;
+            try {
+                redisDecoratedRepository.findInCache(testRoom.getEntityId());
+            } catch (NoSuchElementException e) {
+                notFoundInCache = true;
+            }
+            assertTrue(notFoundInCache);
+        }
+    }
+
+    @Test
+    public void cleanCacheTest() throws JsonProcessingException {
+        try (RedisRepository redisRepository
+                     = new RedisRepository("docker/redisCluster")){
+
+            RedisDecoratedRepository testRoomRedisDecoratedRepository =
+                    new RedisDecoratedRepository(
+                            new RoomDecorator(
+                                    redisRepository
+                            )
+                    );
+
+            testRoomRedisDecoratedRepository.addToCache(testRoom);
+
+            RoomMgd foundRoom = (RoomMgd) testRoomRedisDecoratedRepository.findInCache(testRoom
+                    .getEntityId());
+            assertEquals(foundRoom.getEntityId().getUuid(),
+                    testRoom.getEntityId().getUuid());
+
+            testRoomRedisDecoratedRepository.cleanCache();
+
+            boolean notFound = false;
+            try {
+                foundRoom = (RoomMgd) testRoomRedisDecoratedRepository.findInCache(testRoom
+                        .getEntityId());
+            } catch (NoSuchElementException noSuchElementException){
+                notFound = true;
+            }
+            assertEquals(notFound,
+                    true);
+        }
+    }
+
+    @Test
     public void notConnectedTest() throws Exception {
 
         try (RedisRepository redisRepository
-                     = new RedisRepository("redisConnectionFiles/notWorkingCluster");
+                     = new RedisRepository("docker/notWorkingCluster");
              ConnectionManager connectionManager
                      = new ConnectionManager()) {
 
