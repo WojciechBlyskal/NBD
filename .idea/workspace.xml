@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1f97c16c-6a6b-4c22-ac52-62bf327d2f87" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/benchmarks/MongoBenchmarkPreparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/benchmarks/MongoBenchmarkPreparator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/benchmarks/RedisBenchmarkPreparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/benchmarks/RedisBenchmarkPreparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/redisRepositories/RedisRoomDecoratedRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/redisRepositories/RedisRoomDecoratedRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,77 +51,77 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.BenchmarkRunner.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.Docker Image (1).executor&quot;: &quot;Run&quot;,
-    &quot;Docker.Docker Image (2).executor&quot;: &quot;Run&quot;,
-    &quot;Docker.Docker Image (3).executor&quot;: &quot;Run&quot;,
-    &quot;Docker.Docker Image.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker.mongodb1: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker.mongodb2: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker.mongodb3: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker.mongoinit: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker/Dockerfile.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker/mongoCluster.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker/redisNode.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker: Compose Deployment (1).executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MongoGuestRepositoryTest.RemoteRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MongoGuestRepositoryTest.addFindTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MongoGuestRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MongoRentRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MongoRoomRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.RedisGuestDecoratedRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.RedisRentDecoratedRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.RedisRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.RedisRoomDecoratedRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UniqueIdCodecTest.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel [test].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;redis&quot;,
-    &quot;hotel.wasFacetEverAdded&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/wojte/Documents/studia/semestr 5/NBD/hotel/hotel/src/main/java/org/example&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.31839082&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.BenchmarkRunner.executor": "Run",
+    "Docker.Docker Image (1).executor": "Run",
+    "Docker.Docker Image (2).executor": "Run",
+    "Docker.Docker Image (3).executor": "Run",
+    "Docker.Docker Image.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "Docker.docker.mongodb1: Compose Deployment.executor": "Run",
+    "Docker.docker.mongodb2: Compose Deployment.executor": "Run",
+    "Docker.docker.mongodb3: Compose Deployment.executor": "Run",
+    "Docker.docker.mongoinit: Compose Deployment.executor": "Run",
+    "Docker.docker/Dockerfile.executor": "Run",
+    "Docker.docker/mongoCluster.yml: Compose Deployment.executor": "Run",
+    "Docker.docker/redisNode.yml: Compose Deployment.executor": "Run",
+    "Docker.docker: Compose Deployment (1).executor": "Run",
+    "Docker.docker: Compose Deployment.executor": "Run",
+    "JUnit.MongoGuestRepositoryTest.RemoteRepositoryTest.executor": "Run",
+    "JUnit.MongoGuestRepositoryTest.addFindTest.executor": "Run",
+    "JUnit.MongoGuestRepositoryTest.executor": "Run",
+    "JUnit.MongoRentRepositoryTest.executor": "Run",
+    "JUnit.MongoRoomRepositoryTest.executor": "Run",
+    "JUnit.RedisGuestDecoratedRepositoryTest.executor": "Run",
+    "JUnit.RedisRentDecoratedRepositoryTest.executor": "Run",
+    "JUnit.RedisRepositoryTest.executor": "Run",
+    "JUnit.RedisRoomDecoratedRepositoryTest.executor": "Run",
+    "JUnit.UniqueIdCodecTest.executor": "Run",
+    "Maven.hotel [clean].executor": "Run",
+    "Maven.hotel [install].executor": "Run",
+    "Maven.hotel [test].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "redis",
+    "hotel.wasFacetEverAdded": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/wojte/Documents/studia/semestr 5/NBD/hotel/hotel/docker",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.31839082",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mongo&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mongo"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\docker" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\mongoRepositories" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\test\java\org\example" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\docker" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\Mgd" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\redisRepositories" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\docker" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\.idea" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\avro" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.example.redisRepositories" />
@@ -275,7 +274,8 @@
       <workItem from="1732816426248" duration="9770000" />
       <workItem from="1733057661566" duration="9000" />
       <workItem from="1733132248028" duration="103000" />
-      <workItem from="1733134268664" duration="570000" />
+      <workItem from="1733134268664" duration="1029000" />
+      <workItem from="1733307645009" duration="2913000" />
     </task>
     <servers />
   </component>

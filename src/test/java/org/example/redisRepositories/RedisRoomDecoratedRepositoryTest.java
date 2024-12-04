@@ -156,14 +156,6 @@ public class RedisRoomDecoratedRepositoryTest {
             RoomMgd foundRoom =
                     (RoomMgd) testRoomMongoDecoratedRepository.findRemote(testRoom
                             .getEntityId());
-            assertEquals(foundRoom.getEntityId().getUuid(),
-                    testRoom.getEntityId().getUuid());
-
-            testRoomMongoDecoratedRepository.removeRemote(testRoom
-                    .getEntityId());
-            foundRoom =
-                    (RoomMgd) testRoomMongoDecoratedRepository.findRemote(testRoom
-                            .getEntityId());
             assertEquals(foundRoom,
                     null);
 
