@@ -127,8 +127,7 @@ public class RedisRoomDecoratedRepositoryTest {
             } catch (NoSuchElementException noSuchElementException){
                 notFound = true;
             }
-            assertEquals(notFound,
-                    true);
+            assertEquals(notFound, true);
         }
     }
 
