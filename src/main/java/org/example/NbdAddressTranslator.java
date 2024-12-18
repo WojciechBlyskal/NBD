@@ -1,11 +1,14 @@
 package org.example;
 
 import java.net.InetSocketAddress;
+import com.datastax.oss.driver.api.core.addresstranslation.AddressTranslator;
+import com.datastax.oss.driver.api.core.context.DriverContext;
 
 public class NbdAddressTranslator implements AddressTranslator {
-    public NbdAddressTranslator(DriverContext dctx) {}
+    public NbdAddressTranslator(DriverContext dctx) {
+    }
 
-    public InetSockerAddress translate(InetSocketAddress address) {
+    public InetSocketAddress translate(InetSocketAddress address) {
         String hostAddress = address.getAddress().getHostAddress();
         String hostName = address.getHostName();
         return switch (hostAddress) {
@@ -16,5 +19,6 @@ public class NbdAddressTranslator implements AddressTranslator {
     }
 
     @Override
-    public void close() {}
+    public void close() {
+    }
 }
