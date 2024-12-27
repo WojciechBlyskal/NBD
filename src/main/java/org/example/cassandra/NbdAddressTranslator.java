@@ -1,8 +1,8 @@
-package org.example;
+package org.example.cassandra;
 
-import java.net.InetSocketAddress;
 import com.datastax.oss.driver.api.core.addresstranslation.AddressTranslator;
 import com.datastax.oss.driver.api.core.context.DriverContext;
+import java.net.InetSocketAddress;
 
 public class NbdAddressTranslator implements AddressTranslator {
     public NbdAddressTranslator(DriverContext dctx) {

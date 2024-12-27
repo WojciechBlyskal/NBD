@@ -1,27 +1,58 @@
 package org.example.model;
 
 import org.example.exception.GuestException;
+import com.datastax.oss.driver.api.mapper.annotations.*;
 
-public class Guest
-{
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+@Entity(defaultKeyspace = "rent_a_room")
+@CqlName("guests")
+public class Guest {
+    @CqlName("name")
     private String name;
+    @CqlName("lastname")
     private String lastName;
-    private String ID;
+    @CqlName("phoneNumber")
     private String phoneNumber;
 
-    public Guest(String name, String lastName, String ID, String phoneNumber) throws GuestException {
+    @PartitionKey
+    private UUID id;
+
+    @CqlName("rent_ids")
+    private Set<UUID> rentIds = new HashSet<>();
+
+    public Guest() {
+    }
+
+    public Guest(String name, String lastName, String phoneNumber, UUID id, Set<UUID> rentIds) throws GuestException {
         if (name.isBlank()) {
             throw new GuestException("Name cannot be empty.");
         } else if (lastName.isBlank()) {
             throw new GuestException("Last name cannot be empty.");
-        } else if (ID.isBlank()) {
-            throw new GuestException("ID cannot be empty.");
         } else if (phoneNumber.isBlank()) {
             throw new GuestException("Phone number cannot be empty.");
         } else {
             this.name = name;
             this.lastName = lastName;
-            this.ID = ID;
+            this.phoneNumber = phoneNumber;
+            this.id = id;
+            this.rentIds = rentIds;
+        }
+    }
+
+    public Guest(String name, String lastName, String phoneNumber) throws GuestException {
+        if (name.isBlank()) {
+            throw new GuestException("Name cannot be empty.");
+        } else if (lastName.isBlank()) {
+            throw new GuestException("Last name cannot be empty.");
+        } else if (phoneNumber.isBlank()) {
+            throw new GuestException("Phone number cannot be empty.");
+        } else {
+            this.id = UUID.randomUUID();
+            this.name = name;
+            this.lastName = lastName;
             this.phoneNumber = phoneNumber;
         }
     }
@@ -42,24 +73,11 @@ public class Guest
         this.lastName = lastName;
     }
 
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getInfo() {
-        return "First name: " + getName() + ". Last name is: " + getLastName() + ". ID is: " + getID()
-                + "Phone number is: " + getPhoneNumber() + ".";
     }
 }

@@ -5,11 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f97c16c-6a6b-4c22-ac52-62bf327d2f87" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.conf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/cassandra/CassandraRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker/application.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/NbdAddressTranslator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/NbdAddressTranslator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/CassandraRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/NbdAddressTranslator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/cassandra/NbdAddressTranslator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Guest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Guest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/GuestRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repositories/GuestRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/MicroSuite.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Rent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/RentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repositories/RentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/RoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/repositories/RoomRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Studio.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.conf" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.conf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +72,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "cassandra",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/wojte/Documents/studia/semestr 5/NBD/hotel/hotel/src/main/java/org/example/mappers",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -77,7 +86,13 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\mappers" />
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\dao" />
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\repositories" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\resources" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\docker" />
     </key>
@@ -106,7 +121,12 @@
       <workItem from="1728477321889" duration="3069000" />
       <workItem from="1728580945460" duration="1601000" />
       <workItem from="1734385987331" duration="3372000" />
-      <workItem from="1734468345488" duration="4056000" />
+      <workItem from="1734468345488" duration="4914000" />
+      <workItem from="1734529846982" duration="442000" />
+      <workItem from="1735119914234" duration="1483000" />
+      <workItem from="1735211499663" duration="519000" />
+      <workItem from="1735212030614" duration="2000" />
+      <workItem from="1735315624527" duration="16539000" />
     </task>
     <servers />
   </component>
@@ -115,5 +135,16 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

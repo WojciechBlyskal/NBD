@@ -1,99 +1,52 @@
 package org.example.model;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
+import com.datastax.oss.driver.api.mapper.annotations.*;
 import org.example.exception.RentException;
 
+@Entity(defaultKeyspace = "rent_a_room")
+@CqlName("rents")
 public class Rent {
-    private String rentNumber;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private double cost;
-    private Guest guest;
-    private Room room;
-    private Catering catering;
+    @PartitionKey
+    private UUID id;
+    private LocalDate startTime;
+    private LocalDate endTime;
+    @CqlName("rent_by_guest")
+    private Set<UUID> guestIds = new HashSet<>();
+    @CqlName("rent_by_room")
+    private Set<UUID> roomIds = new HashSet<>();
 
-    public Rent(String rentNumber, LocalDateTime startTime, Catering catering, Room room, Guest guest) {
-        if (rentNumber.isBlank()) {
-            throw new RentException("Rent number cannot be empty.");
-        } else if (startTime == null) {
+    public Rent(LocalDate startTime, Set<UUID> guestIds, Set<UUID> roomIds, UUID id) throws RentException {
+        if (startTime == null) {
             throw new RentException(" Improper start time.");
-        } else if (catering.equals(null)) {
-            throw new RentException("Invalid catering.");
-        } else if (room.equals(null)) {
-            throw new RentException("Invalid room.");
-        } else if (guest.equals(null)) {
-            throw new RentException("Invalid guest.");
         } else {
-            this.rentNumber = rentNumber;
             this.startTime = startTime;
-            this.catering = catering;
-            this.room = room;
-            this.guest = guest;
+            this.id = id;
         }
     }
 
-    public String getRentNumber() {
-        return rentNumber;
+    public Rent(LocalDate startTime, Room room, Guest guest) throws RentException {
+        if (startTime == null) {
+            throw new RentException(" Improper start time.");
+        }else {
+            this.startTime = startTime;
+            this.id = UUID.randomUUID();
+        }
     }
 
-    public LocalDateTime getStartTime() {
+    public LocalDate getStartTime() {
         return startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalDate getEndTime() {
         return endTime;
     }
 
-    public double getCost() {
-        return cost;
-    }
-
-    public Guest getGuest() {
-        return guest;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public Catering getCatering() {
-        return catering;
-    }
-
-    public void changeCatering(Catering new_catering) {
-        if (new_catering.equals(null)) {
-            throw new RentException("Catering cannot be null");
-        }
-        else {
-            catering = new_catering;
-        }
-    }
-
-    public int getRentDays() {
-        boolean isCanceled = false;
-        boolean isFinished = false;
-
-        if (getEndTime() != null) {
-            isFinished = true;
-        }
-        if (isFinished) {
-            Duration period = Duration.between(getStartTime(), getEndTime());
-            if (period.toHours() == 0 && period.toMinutes() < 1) {
-                isCanceled = true;
-            }
-            if (isCanceled) {
-                return 0;
-            }
-            return (int) (period.toHours() / 24) + 1;
-        }
-        return 0;
-    }
-
-    public String getInfo() {
-        return "Your rent id number is " + getRentNumber()+".The rent started on " + String.valueOf(getStartTime())
-                + "Here's some info about your room: " + getRoom().getInfo() + "\nInfo about the catering: "
-            + catering.getCateringInfo() + "\nInfo about the guests: " + getGuest().getInfo();
+    public void setEndTime(LocalDate endTime) {
+        this.endTime = endTime;
     }
 }
