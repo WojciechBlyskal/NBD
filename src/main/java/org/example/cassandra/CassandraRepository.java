@@ -37,9 +37,9 @@ public class CassandraRepository {
     private void createKeyspaceIfNotExists() {
         SimpleStatement keyspaceStatement = SchemaBuilder.createKeyspace(CqlIdentifier.fromCql("site"))
                 .ifNotExists()
-                .withSimpleStrategy(2)
-                .withDurableWrites(true)
-                .build();
+                .withSimpleStrategy(2) //poziom replikacji, oznacza na ilu wezlach powinny byc przechowaywane dane
+                .withDurableWrites(true) //mamy 2 wezly wiec danie poziomu wiekszego od 2 nie ma sensu, a warto miec redundancje
+                .build(); //wiec pojedynczy tez odpada, zatem droga eliminacji wybieramy 2.
 
         session.execute(keyspaceStatement);
     }

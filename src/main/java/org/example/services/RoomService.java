@@ -2,19 +2,19 @@ package org.example.services;
 
 import org.example.model.Room;
 import org.example.repositories.RoomRepository;
-import org.example.services.Interfaces.IRoomService;
+//import org.example.services.Interfaces.IRoomService;
 
 import java.util.List;
 import java.util.UUID;
 
-public class RoomService implements IRoomService {
+public class RoomService /*implements IRoomService*/ {
     private final RoomRepository roomRepository;
 
     public RoomService(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
     }
 
-    @Override
+    //@Override
     public Room createRoom(int number, int floor, double surface, double price, boolean isStudio) {
         try {
             Room.RoomType roomType;
@@ -32,7 +32,7 @@ public class RoomService implements IRoomService {
         }
     }
 
-    @Override
+    //@Override
     public boolean deleteRoom(UUID roomId) {
         try {
             Room room = roomRepository.getById(roomId);
@@ -48,7 +48,7 @@ public class RoomService implements IRoomService {
         }
     }
 
-    @Override
+    //@Override
     public boolean updateRoom(Room room) {
         try {
             Room existingRoom = roomRepository.getById(room.getId());
@@ -65,7 +65,7 @@ public class RoomService implements IRoomService {
         }
     }
 
-    @Override
+    //@Override
     public Room getRoomById(UUID roomId) {
         try {
             return roomRepository.getById(roomId);
@@ -75,7 +75,7 @@ public class RoomService implements IRoomService {
         }
     }
 
-    @Override
+    //@Override
     public List<Room> getAllRooms() {
         try {
             return roomRepository.getAll();

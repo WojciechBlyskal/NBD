@@ -2,19 +2,19 @@ package org.example.services;
 
 import org.example.model.Guest;
 import org.example.repositories.GuestRepository;
-import org.example.services.Interfaces.IGuestService;
+//import org.example.services.Interfaces.IGuestService;
 
 import java.util.List;
 import java.util.UUID;
 
-public class GuestService implements IGuestService {
+public class GuestService /* implements IGuestService */{
     private final GuestRepository guestRepository;
 
     public GuestService(GuestRepository guestRepository) {
         this.guestRepository = guestRepository;
     }
 
-    @Override
+    //@Override
     public Guest createGuest(String name, String lastname, String phonenumber) {
         try {
             Guest guest = new Guest(name, lastname, phonenumber);
@@ -26,7 +26,7 @@ public class GuestService implements IGuestService {
         }
     }
 
-    @Override
+    //@Override
     public boolean deleteGuest(UUID guestId) {
         try {
             Guest guest = guestRepository.getById(guestId);
@@ -41,7 +41,7 @@ public class GuestService implements IGuestService {
         }
     }
 
-    @Override
+    //@Override
     public boolean updateGuest(Guest guest) {
         try {
             Guest existingGuest = guestRepository.getById(guest.getId());
@@ -57,12 +57,12 @@ public class GuestService implements IGuestService {
         }
     }
 
-    @Override
+    //@Override
     public Guest getGuestById(UUID guestId) {
         return guestRepository.getById(guestId);
     }
 
-    @Override
+    //@Override
     public List<Guest> getAllGuests() {
         return guestRepository.getAll();
     }

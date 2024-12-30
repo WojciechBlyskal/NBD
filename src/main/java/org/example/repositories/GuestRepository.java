@@ -23,7 +23,7 @@ public class GuestRepository implements EntityRepository<Guest> {
     public GuestRepository(CqlSession session, CqlIdentifier keyspace) {
         setTables(session, keyspace);
 
-        RepositoryMapper builder = new RepositoryMapperBuilder(session).build();;
+        RepositoryMapper builder = new RepositoryMapperBuilder(session).build();
         this.guestDao = builder.guestDao(keyspace);
         this.session = session;
     }

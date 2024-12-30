@@ -4,23 +4,23 @@ import org.example.model.Guest;
 import org.example.model.Rent;
 import org.example.model.Room;
 import org.example.repositories.EntityRepository;
-import org.example.services.Interfaces.IRentService;
+//import org.example.services.Interfaces.IRentService;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-public class RentService implements IRentService {
+public class RentService /*implements IRentService*/ {
     private final EntityRepository<Rent> rentRepository;
 
     public RentService(EntityRepository<Rent> rentRepository) {
         this.rentRepository = rentRepository;
     }
 
-    @Override
-    public Rent addRent(LocalDate startTime, Guest guest, Room room) {
+    //@Override
+    public Rent addRent(LocalDate startTime, LocalDate endTime, Guest guest, Room room) {
         try {
-            Rent rent = new Rent(startTime, guest, room);
+            Rent rent = new Rent(startTime, endTime, guest, room);
             rentRepository.create(rent);
             return rent;
         } catch (Exception e) {
@@ -29,7 +29,7 @@ public class RentService implements IRentService {
         }
     }
 
-    @Override
+    //@Override
     public boolean deleteRent(UUID rentId, UUID userId) {
         try {
             Rent rent = rentRepository.getById(rentId);
@@ -45,7 +45,7 @@ public class RentService implements IRentService {
         }
     }
 
-    @Override
+   // @Override
     public boolean updateRent(Rent rent, UUID userId) {
         try {
             Rent existingRent = rentRepository.getById(rent.getId());
@@ -60,12 +60,12 @@ public class RentService implements IRentService {
         }
     }
 
-    @Override
+    //@Override
     public Rent getRentById(UUID rentId) {
         return rentRepository.getById(rentId);
     }
 
-    @Override
+    //@Override
     public List<Rent> getAllRents() {
         try {
             return rentRepository.getAll();

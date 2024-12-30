@@ -22,7 +22,7 @@ public class GuestRepositoryTest {
         cassandraRepository = new CassandraRepository();
         session = cassandraRepository.getSession();
         guestRepository = new GuestRepository(session, CqlIdentifier.fromCql("site"));
-       // session.execute("TRUNCATE site.guests;");
+        session.execute("TRUNCATE site.guests;"); //getAllTest nie przechodzi bez tego
     }
 
     @AfterEach

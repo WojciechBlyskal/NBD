@@ -23,7 +23,7 @@ public class RentRepository implements EntityRepository<Rent> {
     public RentRepository(CqlSession session, CqlIdentifier keyspace) {
         setTables(session, keyspace);
 
-        RepositoryMapper builder = new RepositoryMapperBuilder(session).build();;
+        RepositoryMapper builder = new RepositoryMapperBuilder(session).build();
         this.rentDao = builder.rentDao(keyspace);
         this.session = session;
     }
@@ -49,11 +49,10 @@ public class RentRepository implements EntityRepository<Rent> {
 
         rs.forEach(row -> {
             Rent rent = new Rent(
-                    row.getLocalDate("startTime"),
+                    row.getLocalDate("start_time"),
+                    row.getLocalDate("end_time"),
                     row.getUuid("guest"),
                     row.getUuid("room"),
-                    //row.getSet("rent_by_guest", UUID.class),
-                    //row.getSet("rent_by_room", UUID.class),
                     row.getUuid("id")
             );
             rents.add(rent);
@@ -76,12 +75,10 @@ public class RentRepository implements EntityRepository<Rent> {
         session.execute(SchemaBuilder.createTable(keyspace, CqlIdentifier.fromCql("rents"))
                 .ifNotExists()
                 .withPartitionKey(CqlIdentifier.fromCql("id"), DataTypes.UUID)
-                .withColumn(CqlIdentifier.fromCql("startTime"), DataTypes.DATE)
-                .withColumn(CqlIdentifier.fromCql("endTime"), DataTypes.DATE)
-                .withPartitionKey(CqlIdentifier.fromCql("guest"), DataTypes.UUID)
-                .withPartitionKey(CqlIdentifier.fromCql("room"), DataTypes.UUID)
-                //.withColumn(CqlIdentifier.fromCql("rent_by_guest"), DataTypes.setOf(DataTypes.UUID))
-                //.withColumn(CqlIdentifier.fromCql("rent_by_room"), DataTypes.setOf(DataTypes.UUID))
+                .withColumn(CqlIdentifier.fromCql("start_time"), DataTypes.DATE)
+                .withColumn(CqlIdentifier.fromCql("end_time"), DataTypes.DATE)
+                .withColumn(CqlIdentifier.fromCql("guest"), DataTypes.UUID)
+                .withColumn(CqlIdentifier.fromCql("room"), DataTypes.UUID)
                 .build());
     }
 }

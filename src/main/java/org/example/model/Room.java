@@ -7,19 +7,24 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Entity(defaultKeyspace = "rent_a_room")
+@Entity(defaultKeyspace = "site")
 @CqlName("rooms")
 public class Room {
+    @CqlName("number")
     private int number;
+    @CqlName("floor")
     private int floor;
+    @CqlName("surface")
     private double surface;
+    @CqlName("price")
     private double price;
+    @CqlName("type")
     public enum RoomType {
         Studio, MicroSuite
     }
 
     //@ClusteringColumn
-    //@CqlName("type")
+    @CqlName("type")
     private String type;
 
     @PartitionKey

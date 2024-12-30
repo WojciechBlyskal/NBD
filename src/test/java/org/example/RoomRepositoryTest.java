@@ -25,7 +25,6 @@ public class RoomRepositoryTest {
         session = cassandraRepository.getSession();
         roomRepository = new RoomRepository(session, CqlIdentifier.fromCql("site"));
         session.execute("TRUNCATE site.rooms;");
-        session.execute("DROP TABLE IF EXISTS site.rooms;");
     }
 
     @AfterEach

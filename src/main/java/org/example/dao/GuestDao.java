@@ -8,8 +8,8 @@ import java.util.UUID;
 @Dao
 public interface GuestDao {
 
-    @StatementAttributes(consistencyLevel = "QUORUM")
-    @Insert
+    @StatementAttributes(consistencyLevel = "QUORUM") //Quorum-wiekszosc replik musi sie zgodzic. W przypadku 2 replik jest
+    @Insert //rownowazne ALL, ale tak na wypadek, gdyby ktos pozniej zwiekszyl liczbe wezlow,
     void create(Guest guest);
 
     @StatementAttributes(consistencyLevel = "QUORUM")

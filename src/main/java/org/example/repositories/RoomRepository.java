@@ -23,7 +23,7 @@ public class RoomRepository implements EntityRepository<Room>{
     public RoomRepository(CqlSession session, CqlIdentifier keyspace) {
         setTables(session, keyspace);
 
-        RepositoryMapper builder = new RepositoryMapperBuilder(session).build();;
+        RepositoryMapper builder = new RepositoryMapperBuilder(session).build();
         this.roomDao = builder.roomDao(keyspace);
         this.session = session;
     }

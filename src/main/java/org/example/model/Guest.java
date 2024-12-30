@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-@Entity(defaultKeyspace = "rent_a_room")
+@Entity(defaultKeyspace = "site")
 @CqlName("guests")
 public class Guest {
     @PartitionKey
