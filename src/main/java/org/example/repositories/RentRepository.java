@@ -50,8 +50,10 @@ public class RentRepository implements EntityRepository<Rent> {
         rs.forEach(row -> {
             Rent rent = new Rent(
                     row.getLocalDate("startTime"),
-                    row.getSet("rent_by_guest", UUID.class),
-                    row.getSet("rent_by_room", UUID.class),
+                    row.getUuid("guest"),
+                    row.getUuid("room"),
+                    //row.getSet("rent_by_guest", UUID.class),
+                    //row.getSet("rent_by_room", UUID.class),
                     row.getUuid("id")
             );
             rents.add(rent);
@@ -76,8 +78,10 @@ public class RentRepository implements EntityRepository<Rent> {
                 .withPartitionKey(CqlIdentifier.fromCql("id"), DataTypes.UUID)
                 .withColumn(CqlIdentifier.fromCql("startTime"), DataTypes.DATE)
                 .withColumn(CqlIdentifier.fromCql("endTime"), DataTypes.DATE)
-                .withColumn(CqlIdentifier.fromCql("rent_by_guest"), DataTypes.setOf(DataTypes.UUID))
-                .withColumn(CqlIdentifier.fromCql("rent_by_room"), DataTypes.setOf(DataTypes.UUID))
+                .withPartitionKey(CqlIdentifier.fromCql("guest"), DataTypes.UUID)
+                .withPartitionKey(CqlIdentifier.fromCql("room"), DataTypes.UUID)
+                //.withColumn(CqlIdentifier.fromCql("rent_by_guest"), DataTypes.setOf(DataTypes.UUID))
+                //.withColumn(CqlIdentifier.fromCql("rent_by_room"), DataTypes.setOf(DataTypes.UUID))
                 .build());
     }
 }

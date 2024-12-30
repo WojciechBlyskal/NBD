@@ -12,11 +12,11 @@ import org.example.dao.RentDao;
 public interface RepositoryMapper {
 
     @DaoFactory
-    GuestDao accountDao(@DaoKeyspace CqlIdentifier keyspace);
+    GuestDao guestDao(@DaoKeyspace CqlIdentifier keyspace);
 
     @DaoFactory
-    RoomDao boardDao(@DaoKeyspace CqlIdentifier keyspace);
+    RoomDao roomDao(@DaoKeyspace CqlIdentifier keyspace);
 
     @DaoFactory
-    RentDao commentDao(@DaoKeyspace CqlIdentifier keyspace);
+    RentDao rentDao(@DaoKeyspace CqlIdentifier keyspace);
 }

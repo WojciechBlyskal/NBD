@@ -4,21 +4,24 @@ import org.example.exception.GuestException;
 import com.datastax.oss.driver.api.mapper.annotations.*;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity(defaultKeyspace = "rent_a_room")
 @CqlName("guests")
 public class Guest {
-    @CqlName("name")
-    private String name;
-    @CqlName("lastname")
-    private String lastName;
-    @CqlName("phoneNumber")
-    private String phoneNumber;
-
     @PartitionKey
     private UUID id;
+
+    @CqlName("name")
+    private String name;
+
+    @CqlName("lastname")
+    private String lastName;
+
+    @CqlName("phoneNumber")
+    private String phoneNumber;
 
     @CqlName("rent_ids")
     private Set<UUID> rentIds = new HashSet<>();
@@ -79,5 +82,21 @@ public class Guest {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public Set<UUID> getRentIds() {
+        return rentIds;
+    }
+
+    public void setRentIds(Set<UUID> rentIds) {
+        this.rentIds = rentIds;
     }
 }

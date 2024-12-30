@@ -15,12 +15,15 @@ public class Rent {
     private UUID id;
     private LocalDate startTime;
     private LocalDate endTime;
-    @CqlName("rent_by_guest")
-    private Set<UUID> guestIds = new HashSet<>();
-    @CqlName("rent_by_room")
-    private Set<UUID> roomIds = new HashSet<>();
+    @CqlName("guest")
+    private UUID guestIds;
+    @CqlName("room")
+    private UUID roomIds;
 
-    public Rent(LocalDate startTime, Set<UUID> guestIds, Set<UUID> roomIds, UUID id) throws RentException {
+    public Rent() {
+    }
+
+    public Rent(LocalDate startTime, UUID guestIds, UUID roomIds, UUID id) throws RentException {
         if (startTime == null) {
             throw new RentException(" Improper start time.");
         } else {
@@ -29,10 +32,10 @@ public class Rent {
         }
     }
 
-    public Rent(LocalDate startTime, Room room, Guest guest) throws RentException {
+    public Rent(LocalDate startTime, Guest guest, Room room) throws RentException {
         if (startTime == null) {
             throw new RentException(" Improper start time.");
-        }else {
+        } else {
             this.startTime = startTime;
             this.id = UUID.randomUUID();
         }
@@ -48,5 +51,33 @@ public class Rent {
 
     public void setEndTime(LocalDate endTime) {
         this.endTime = endTime;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public UUID getGuestIds() {
+        return guestIds;
+    }
+
+    public UUID getRoomIds() {
+        return roomIds;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setStartTime(LocalDate startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setGuestIds(UUID guestIds) {
+        this.guestIds = guestIds;
+    }
+
+    public void setRoomIds(UUID roomIds) {
+        this.roomIds = roomIds;
     }
 }
