@@ -126,18 +126,3 @@ public class RedisDecoratedRepository
         }
     }
 }
-
-/*@Override
-    public void updateRemote(Bson filter, Bson update) {
-        iMongoRepositorywrapper.updateRemote(filter, update);
-
-        String uniqueIdString = filter.toBsonDocument().getString("_id").getValue();
-        UniqueIdMgd uniqueId = new UniqueIdMgd(UUID.fromString(uniqueIdString));
-        if (uniqueId != null) {
-            try {
-                deleteFromCache(uniqueId);
-            } catch (JedisConnectionException e) {
-                System.out.println("Could not connect to Redis");
-            }
-        }
-    }*/

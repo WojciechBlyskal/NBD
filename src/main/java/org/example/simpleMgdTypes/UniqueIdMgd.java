@@ -13,8 +13,8 @@ public class UniqueIdMgd {
     }
 
     @BsonCreator
-    public UniqueIdMgd(@BsonProperty("uuid") UUID uniqieId) {
-        this.uuid = uniqieId;
+    public UniqueIdMgd(@BsonProperty("uuid") UUID uniqueId) {
+        this.uuid = uniqueId;
     }
 
     public UUID getUuid() {

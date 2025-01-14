@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1f97c16c-6a6b-4c22-ac52-62bf327d2f87" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/redisRepositories/RedisRoomDecoratedRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/redisRepositories/RedisRoomDecoratedRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/UniqueIdMgd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/redisRepositories/RedisDecoratedRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/redisRepositories/RedisDecoratedRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/UniqueIdMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/UniqueIdMgd.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +57,9 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.BenchmarkRunner.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Consumer.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Producer.executor&quot;: &quot;Run&quot;,
     &quot;Docker.Docker Image (1).executor&quot;: &quot;Run&quot;,
     &quot;Docker.Docker Image (2).executor&quot;: &quot;Run&quot;,
     &quot;Docker.Docker Image (3).executor&quot;: &quot;Run&quot;,
@@ -64,10 +70,12 @@
     &quot;Docker.docker.mongodb3: Compose Deployment.executor&quot;: &quot;Run&quot;,
     &quot;Docker.docker.mongoinit: Compose Deployment.executor&quot;: &quot;Run&quot;,
     &quot;Docker.docker/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker/kafkaCluster.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
     &quot;Docker.docker/mongoCluster.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
     &quot;Docker.docker/redisNode.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
     &quot;Docker.docker: Compose Deployment (1).executor&quot;: &quot;Run&quot;,
     &quot;Docker.docker: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.KafkaTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.MongoGuestRepositoryTest.RemoteRepositoryTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.MongoGuestRepositoryTest.addFindTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.MongoGuestRepositoryTest.executor&quot;: &quot;Run&quot;,
@@ -87,7 +95,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;redis&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;kafka&quot;,
     &quot;hotel.wasFacetEverAdded&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/wojte/Documents/studia/semestr 5/NBD/hotel/hotel/docker&quot;,
@@ -111,15 +119,15 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\docker" />
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\redisRepositories" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\mongoRepositories" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\test\java\org\example" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\Mgd" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example\redisRepositories" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\docker" />
-      <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java\org\example" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\src\main\java" />
       <recent name="C:\Users\wojte\Documents\studia\semestr 5\NBD\hotel\hotel\.idea" />
     </key>
@@ -279,6 +287,9 @@
       <workItem from="1733317038302" duration="2481000" />
       <workItem from="1733319879307" duration="2157000" />
       <workItem from="1733417252480" duration="5000" />
+      <workItem from="1735650126265" duration="9028000" />
+      <workItem from="1735724064236" duration="11186000" />
+      <workItem from="1735746784047" duration="558000" />
     </task>
     <servers />
   </component>
