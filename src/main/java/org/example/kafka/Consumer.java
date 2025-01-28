@@ -75,7 +75,6 @@ public class Consumer {
                 .allowIfSubType("model.MicroSuiteMgd")
                 .allowIfSubType("model.RentMgd")
                 .allowIfSubType("simpleMgdTypes.UniqueIdMgd")
-                //.allowIfSubType("simpleMgdTypes.BoolMgd")
                 .build();
         mapper = new ObjectMapper().activateDefaultTyping(
                 ptv,
@@ -83,7 +82,7 @@ public class Consumer {
         this.jsonb = JsonbBuilder.create();
 
         redisRepository
-                = new RedisRepository("redisConnectionFiles/workingCluster");
+                = new RedisRepository("docker/redisCluster");
         connectionManager
                 = new ConnectionManager();
 
@@ -168,7 +167,7 @@ public class Consumer {
 
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode jsonNode = objectMapper.readTree(record.value());
-                ((ObjectNode) jsonNode).remove("ReservationPlace");
+                ((ObjectNode) jsonNode).remove("RentPlace");
                 String jsonBasic = objectMapper.writeValueAsString(jsonNode);
 
                 IEntity entity = mapper.readValue(jsonBasic,
@@ -208,6 +207,7 @@ public class Consumer {
                         "Partition: " + record.partition() + " | " +
                         "Entity consumed: " + record.key());
             }
+
 
             consumer.commitSync();
         }

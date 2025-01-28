@@ -19,7 +19,6 @@ public class TopicManager {
     private boolean topicCreated = true;
 
     public TopicManager(KafkaConf.Topic topicName) throws InterruptedException {
-
         createTopic(topicName.toString().toLowerCase());
     }
 
@@ -36,7 +35,7 @@ public class TopicManager {
         topicConfigs.put(TopicConfig.RETENTION_BYTES_CONFIG,
                 String.valueOf(1000000000));
 
-        try (Admin admin = Admin.create(topicProperties)){
+        try (Admin admin = Admin.create(topicProperties)) {
 
             NewTopic topic = new NewTopic(topicName,
                     partitionNumber,
@@ -62,7 +61,6 @@ public class TopicManager {
     }
 
     public boolean isTopicCreated() {
-
         return topicCreated;
     }
 }

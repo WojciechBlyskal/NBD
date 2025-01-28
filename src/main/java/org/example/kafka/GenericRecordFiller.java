@@ -48,10 +48,12 @@ public class GenericRecordFiller {
 
         genericRecord.put("entityId",
                 rentMgd.getEntityId());
-//        genericRecord.put("seatNumber",
-//                rentMgd.getSeatNumber());
-//        genericRecord.put("tripLengthByStations",
-//                rentMgd.getTripLengthByStations());
+        genericRecord.put("rentNumber",
+                rentMgd.getRentNumber());
+        genericRecord.put("startTime",
+                rentMgd.getStartTime());
+        genericRecord.put("endTime",
+                rentMgd.getEndTime());
         genericRecord.put("guest",
                 rentMgd.getGuest());
         genericRecord.put("room",

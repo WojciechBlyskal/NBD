@@ -1,5 +1,6 @@
 package org.example.kafka;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -10,16 +11,16 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.avro.AvroMapper;
 import com.fasterxml.jackson.dataformat.avro.AvroSchema;
 //import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import org.apache.kafka.clients.producer.*;
 import org.example.Mgd.*;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.common.serialization.UUIDSerializer;
 import org.example.simpleMgdTypes.UniqueIdMgd;
+
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -30,7 +31,6 @@ public class Producer {
 
     private KafkaProducer<UUID, String> producer;
     private PolymorphicTypeValidator ptv;
-
     private ObjectMapper mapper;
 
     public static void main(String[] args)
@@ -78,11 +78,13 @@ public class Producer {
                 .allowIfSubType("model.StudioMgd")
                 .allowIfSubType("model.RentMgd")
                 .allowIfSubType("simpleMgdTypes.UniqueIdMgd")
-                //.allowIfSubType("simpleMgdTypes.BoolMgd")
                 .build();
-        mapper = new ObjectMapper().activateDefaultTyping(
-                ptv,
-                ObjectMapper.DefaultTyping.NON_FINAL);
+        mapper = new ObjectMapper()
+                .activateDefaultTyping(
+                        ptv,
+                        ObjectMapper.DefaultTyping.NON_FINAL
+                )
+                .registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
     }
 
     private KafkaProducer<UUID, String> initProducer(){
@@ -90,13 +92,13 @@ public class Producer {
         Properties producerProperties = new Properties();
         producerProperties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 "kafka1:9192,kafka2:9292,kafka3:9392");
-                //"172.25.0.2:9192,172.25.0.4:9292,172.25.0.3:9392");
         producerProperties.put(ProducerConfig.CLIENT_ID_CONFIG,
                 "local");
         producerProperties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
                 UUIDSerializer.class);
         producerProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class);
+        producerProperties.put(ProducerConfig.ACKS_CONFIG, "all");
         producerProperties.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG,
                 true);
 
@@ -145,6 +147,8 @@ public class Producer {
 
             Future<RecordMetadata> sent = producer.send(record);
             RecordMetadata recordMetadata = sent.get();
+            System.out.println("Message sent to topic: " + topic + ", Partition: " + recordMetadata.partition() +
+                    ", Offset: " + recordMetadata.offset());
         }
     }
 

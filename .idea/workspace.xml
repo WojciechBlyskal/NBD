@@ -6,10 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="1f97c16c-6a6b-4c22-ac52-62bf327d2f87" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/kafkaCluster.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker/kafkaCluster.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/UniqueIdMgd.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/redisRepositories/RedisDecoratedRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/redisRepositories/RedisDecoratedRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/UniqueIdMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/simpleMgdTypes/UniqueIdMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RentMgd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Mgd/RentMgd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/kafka/AvroFileCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/kafka/AvroFileCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/kafka/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/kafka/Consumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/kafka/GenericRecordFiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/kafka/GenericRecordFiller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/kafka/Producer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/kafka/Producer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/kafka/TopicManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/kafka/TopicManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/KafkaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/KafkaTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRentRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/MongoRepositoriesTest/MongoRentRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +31,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="cassandra" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -56,6 +68,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.AvroFileCreator.executor&quot;: &quot;Run&quot;,
     &quot;Application.BenchmarkRunner.executor&quot;: &quot;Run&quot;,
     &quot;Application.Consumer.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
@@ -137,7 +150,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.AvroFileCreator">
     <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
       <option name="appName" />
       <option name="appServicePlanName" />
@@ -168,6 +181,46 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AvroFileCreator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.kafka.AvroFileCreator" />
+      <module name="hotel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.kafka.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Consumer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.kafka.Consumer" />
+      <module name="hotel" />
+      <option name="PROGRAM_PARAMETERS" value="GUESTS 2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.kafka.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Producer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.kafka.Producer" />
+      <module name="hotel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.kafka.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
       <deployment type="docker-compose.yml">
         <settings />
@@ -194,6 +247,19 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.AvroFileCreator" />
+      <item itemvalue="Application.Consumer" />
+      <item itemvalue="Application.Producer" />
+      <item itemvalue="Docker.docker: Compose Deployment" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Producer" />
+        <item itemvalue="Application.Consumer" />
+        <item itemvalue="Application.AvroFileCreator" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -290,6 +356,20 @@
       <workItem from="1735650126265" duration="9028000" />
       <workItem from="1735724064236" duration="11186000" />
       <workItem from="1735746784047" duration="558000" />
+      <workItem from="1737470549552" duration="14607000" />
+      <workItem from="1737552676912" duration="4804000" />
+      <workItem from="1737560767365" duration="12457000" />
+      <workItem from="1737641333382" duration="11145000" />
+      <workItem from="1737709247274" duration="1990000" />
+      <workItem from="1737742473229" duration="2992000" />
+      <workItem from="1737821668587" duration="1794000" />
+      <workItem from="1737823501569" duration="3000" />
+      <workItem from="1737902951716" duration="3069000" />
+      <workItem from="1737907173396" duration="7000" />
+      <workItem from="1737998663996" duration="606000" />
+      <workItem from="1738000328149" duration="4000" />
+      <workItem from="1738003870323" duration="16000" />
+      <workItem from="1738091264037" duration="6000" />
     </task>
     <servers />
   </component>

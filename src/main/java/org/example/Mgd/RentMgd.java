@@ -1,11 +1,17 @@
 package org.example.Mgd;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.example.simpleMgdTypes.UniqueIdMgd;
 
 import java.time.LocalDateTime;
 
+//@JsonSerialize(using = LocalDateTimeSerializer.class)
+//@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 public class RentMgd extends AbstractEntityMgd {
     @BsonProperty("rentNumber")
     private String rentNumber;
